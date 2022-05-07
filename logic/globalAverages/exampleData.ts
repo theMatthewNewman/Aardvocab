@@ -1,0 +1,50 @@
+import { averageState } from "./types"
+
+export const exampleAverages:averageState = [
+    {
+        uid:"exampleUser1",
+        grammarLessonProgress:1,
+        averageGrammarTestResults:5,
+        vocabLessonProgress:1,
+        averageVocabTestResults:5,
+        spellingLessonProgress:1,
+        averageSpellingTestResults:5
+
+    },
+    {
+        uid:"exampleUser2",
+        grammarLessonProgress:3,
+        averageGrammarTestResults:0,
+        vocabLessonProgress:2,
+        averageVocabTestResults:0,
+        spellingLessonProgress:4,
+        averageSpellingTestResults:0
+    },
+    {
+        uid:"exampleUser3",
+        grammarLessonProgress:0,
+        averageGrammarTestResults:0,
+        vocabLessonProgress:0,
+        averageVocabTestResults:0,
+        spellingLessonProgress:0,
+        averageSpellingTestResults:0
+    },
+    {
+        uid:"exampleUser4",
+        grammarLessonProgress:0,
+        averageGrammarTestResults:0,
+        vocabLessonProgress:0,
+        averageVocabTestResults:0,
+        spellingLessonProgress:0,
+        averageSpellingTestResults:0
+    },
+    {
+        uid:"exampleUser5",
+        grammarLessonProgress:0,
+        averageGrammarTestResults:0,
+        vocabLessonProgress:0,
+        averageVocabTestResults:0,
+        spellingLessonProgress:0,
+        averageSpellingTestResults:0
+    },
+]

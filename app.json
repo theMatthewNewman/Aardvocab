@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "webgrim-native",
-    "slug": "webgrim-native",
+    "owner": "matthewnewman",
+    "name": "AardVocab",
+    "slug": "AardVocab",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
