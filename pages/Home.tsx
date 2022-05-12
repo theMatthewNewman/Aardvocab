@@ -1,8 +1,9 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Button } from "react-native";
 import { useSelector } from "../logic/store";
 import LessonPath from "./lessons/LessonPath/LessonPath";
 import Results from "./Results/Results";
 import Profile from "./profile/Profile";
+import { useEffect } from "react";
 
 import Navbar from "../componants/Navbar/Navbar";
 
@@ -11,6 +12,15 @@ import {auth} from "../firebase.config"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
 import Chat from "./Chat/Chat";
+import {
+    AdMobBanner,
+    AdMobInterstitial,
+    PublisherBanner,
+    AdMobRewarded,
+    setTestDeviceIDAsync,
+  } from 'expo-ads-admob';
+
+
 
 
 
@@ -20,6 +30,8 @@ function Home() {
 
     return ( 
         <View style={styles.container}>
+            
+            
             {user? 
                 <>
                 <Navbar />

@@ -1,14 +1,15 @@
-import {View, Text, Image, Pressable} from 'react-native'
-import {promptType, multiChoiceType} from '../../../../../logic/lessonHandling/IndividualLessonHandler/types'
-import {globalStyling, buttons, images} from "../../../../../componants/globalStyle"
+import {View, StyleSheet, Button} from 'react-native'
+import { multiChoiceType} from '../../../../../logic/lessonHandling/IndividualLessonHandler/types'
 
-import {useDispatch} from '../../../../../logic/store';
+import {useDispatch, useSelector} from '../../../../../logic/store';
 import * as LmiddleWare from '../../../../../logic/lessonHandling/IndividualLessonHandler/middleware'
 import {useState} from 'react';
 import IncorrectMessage from '../../../../../componants/Alert/IncorrectMessage';
 import CorrectMessage from '../../../../../componants/Alert/CorrectMessage';
 
 import {Audio} from 'expo-av';
+import Buttons from '../../../../../componants/Buttons/Button';
+import {loseHeart, gainHeart} from "../../../../../logic/userHandler/middleware"
 
 
 type multichoiceType = {
@@ -19,37 +20,47 @@ const MultiChoice = ({prompt}:multichoiceType) => {
     const dispatch = useDispatch()
     const [active, setActive] = useState(false)
     const [activeCorrect, setActiveCorrect] = useState(false)
+    const user = useSelector((state) => state.user)
 
     const handlePress = async(correct:number, id:number) => {
+        
         if (correct===id){
+            /** 
             const {sound} = await Audio.Sound.createAsync(
-                require('../../../assets/Correct.mp3')
+                require('../../../../../assets/Correct.mp3')
             );
             await sound.playAsync();
+            **/
             setActiveCorrect(true);
             setTimeout(() => {
                 LmiddleWare.CorrectAnswer() (dispatch)
-            },2000)
+            },1000)
         } else {
             setActive(true)
+            loseHeart(user) (dispatch)
         }
     }
 
     return ( 
-        <View>
-            <Text style={globalStyling.promptTitle}>{prompt.prompt}</Text>
-            <Image source={{uri: prompt.photoURL}} style={images.promptImage}/>
-            <View>
+        <>
+            <View style={styles.buttons}>
                 {prompt.choices.map((choice, id) => 
-                    <Pressable onPress={()=>handlePress(prompt.correct,id)} key={id} style={buttons.MultiChoice} android_ripple={{color: 'rgb(200,200,200)'}}>
-                        <Text style={buttons.MultiChoiceText}>{choice}</Text>
-                    </Pressable>
+                    <Buttons onPress={()=>{handlePress(prompt.correct,id)}} style="Choice" title={choice}/>
                 )}
             </View>
+            
             <IncorrectMessage active={active} setActive={setActive}/>
             <CorrectMessage active={activeCorrect} setActive={setActiveCorrect}/>
-        </View>
+        </>
      );
 }
+const styles = StyleSheet.create({
+    buttons:{
+        display:"flex",
+        justifyContent:"space-evenly",
+        padding:10,
+        flex:1,
+    }
+})
 
 export default MultiChoice;

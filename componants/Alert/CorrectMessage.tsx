@@ -27,16 +27,17 @@ function CorrectMessage({active, setActive}:correctType) {
 
 const correctStyle = StyleSheet.create({
     box:{
-        backgroundColor:'white',
-        borderWidth:3,
-        borderColor:'mediumseagreen',
-        borderRadius:10,
+        backgroundColor:'#89ff89',
+        borderTopWidth:2,
         padding:10,
-        margin:20,
+        position:"absolute",
+        bottom:0,
+        width:"100%",
+        minHeight:100,
     },
     text:{
-        color:'mediumseagreen',
-        fontSize:20,
+        color:'black',
+        fontSize:30,
     }
 })
 export default CorrectMessage;

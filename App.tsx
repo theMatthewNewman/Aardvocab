@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import Navbar from './componants/Navbar/Navbar';
 import {Provider} from "react-redux"
@@ -17,6 +17,7 @@ import { db } from './firebase.config';
 export default function App() {
 
 
+  
   return (
     <Provider store={store}>
           <StatusBar style="auto" />

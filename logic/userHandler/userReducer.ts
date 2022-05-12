@@ -27,6 +27,10 @@ export const userReducer = (state:userState = example, action:userAction) => {
                 draft.photoUrl = action.payload
                 return(draft)
             }
+            case "CHANGE HEARTS":{
+                draft.hearts = action.payload.hearts
+                return(draft)
+            }
         }
     }))
 }

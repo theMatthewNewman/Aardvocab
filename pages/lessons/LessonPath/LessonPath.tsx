@@ -14,6 +14,8 @@ import LessonCard from "./componants/LessonCard";
 
 
 
+
+
 function lessonPath() {
     const globalLessons = useSelector(state => state.globalLessons)
     const singleLesson = useSelector(state => state.lesson)
@@ -32,7 +34,7 @@ function lessonPath() {
 
 
     return ( 
-        <View>
+        <>
             {activeLesson? <ActiveLesson setActive={setActiveLesson} lessonId={lessonChoice}/> :
             <ScrollView>
             {globalLessons.lessons.map(lesson => 
@@ -42,7 +44,7 @@ function lessonPath() {
             )}
             </ScrollView>
             }
-        </View>
+        </>
      );
 }
 

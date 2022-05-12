@@ -16,8 +16,10 @@ import { ImagePickerIOS } from "react-native";
 import { userReducer } from "./userReducer";
 
 
-export const completedLesson = () => (dispatch:Dispatch) => {
-    dispatch<userAction>({type:"COMPLETED LESSON"})
+export const completedLesson = (user:userState) => (dispatch:Dispatch) => {
+    user.datasets.lessonProgress +=1
+    setUserObjectOnDatabase(user) 
+    updateUserState(user) (dispatch)
 }
 
 export const updateUserState = (user:userState) => (dispatch:Dispatch) => {
@@ -69,4 +71,20 @@ export const changeProfilePicture = (user:userState) => async(dispatch:Dispatch)
 export const saveChanges = (user:userState) => (dispatch:Dispatch) => {
     setUserObjectOnDatabase(user)
     updateUserState(user) (dispatch)
+}
+
+export const loseHeart = (user:userState) => (dispatch:Dispatch) => {
+
+    var newHearts = 0
+    if (user.hearts >= 1){
+        newHearts = user.hearts-1
+    }
+    
+    dispatch<userAction>({type:"CHANGE HEARTS",payload:{hearts:newHearts}})
+}
+
+export const gainHeart = (user:userState) => (dispatch:Dispatch) => {
+    var newHearts = 0
+    newHearts = user.hearts +1
+    dispatch<userAction>({type:"CHANGE HEARTS",payload:{hearts:newHearts}})
 }

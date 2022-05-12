@@ -6,8 +6,7 @@ export const LessonReducer = (state:lessonType = exampleLesson, action:lessonAct
     return(produce(state, draft => {
         switch(action.type){
             case 'SET DATA':{
-                draft = {...action.payload.data, lessonIndex:0}
-                
+                draft = {...action.payload.data}
                 
                 return(draft)
             }
@@ -16,7 +15,7 @@ export const LessonReducer = (state:lessonType = exampleLesson, action:lessonAct
                 return(draft)
             }
             case 'CORRECT ANSWER':{
-                draft.lessonIndex +=1
+                draft.sublessons[action.payload.userLevel].lessonIndex +=1
                 return(draft)
             }
             

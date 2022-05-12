@@ -2,10 +2,6 @@ import { Button, StyleSheet, Text, View, Pressable, Image } from 'react-native';
 
 import {useDispatch, useSelector} from "../../../logic/store"
 import { useState, useEffect } from 'react';
-import {CompletePrompt} from "../../../logic/lessonHandling/IndividualLessonHandler/middleware"
-
-import MultiChoice from "./componants/TypeOfAnswer/MultiChoice";
-import BuildUp from "./componants/TypeOfAnswer/BuildUp";
 
 import ProgressBar from "./componants/ProgressBar";
 
@@ -15,6 +11,7 @@ import Message from './componants/TypeOfAnswer/Message';
 import Question from './componants/Question';
 import Hearts from "./componants/Hearts";
 import Answers from './componants/Answers';
+
 
 type activeLessonType ={
     lessonId:number
@@ -26,34 +23,27 @@ function ActiveLesson({lessonId, setActive}:activeLessonType) {
     const user = useSelector(state => state.user)
     const [choice, setChoice] = useState(0);
     const dispatch = useDispatch();
-
-
-
-
-    const prompt = lesson.prompts[lesson.lessonIndex]
-    const progress = lesson.lessonIndex / lesson.prompts.length
-
-    useEffect(() => {
-    if (lesson.lessonIndex === lesson.prompts.length){
-        UmiddleWare.completedLesson() (dispatch)
-        const lessonResults = user.datasets.lessonResults
-        const lessonProgress = user.datasets.lessonProgress
-        UmiddleWare.setUserObjectOnDatabase({...user, datasets:{lessonResults,lessonProgress:lessonProgress+1}})
-        setActive(false)
-    }}, [lesson.lessonIndex])
+    const progress=5
 
     return ( 
         <>
             {prompt?
-                <>
-                    <Question />
-                    <ProgressBar progress={progress*100}/>
+                <View style={styles.all}>
+                    <Question prompt={prompt}/>
                     <Hearts/>
-                    <Answers typeOfPrompt={prompt.typeOfPrompt} prompt={prompt}/>
-                </>
+                    <ProgressBar progress={progress*100}/>
+                    <Answers prompt={prompt}/>
+                </View>
             : null}
         </> 
     );
 }
+
+const styles = StyleSheet.create({
+    all:{
+        display:'flex',
+        height:"100%",
+    }
+})
 
 export default ActiveLesson;

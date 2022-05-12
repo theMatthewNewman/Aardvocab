@@ -10,7 +10,7 @@ type activeType = {
 function IncorrectMessage({active, setActive}:activeType) {
 
     useEffect(() => {
-        setTimeout(() => {setActive(false)},5000)
+        setTimeout(() => {setActive(false)},1000)
     },[active])
     
     
@@ -26,18 +26,17 @@ function IncorrectMessage({active, setActive}:activeType) {
 }
 const IncorrectStyle = StyleSheet.create({
     box:{
-        backgroundColor:'white',
-        borderWidth:3,
-        borderColor:'coral',
-        borderRadius:10,
+        backgroundColor:'#ff8989',
+        borderTopWidth:2,
         padding:10,
-        margin:20,
-
+        position:"absolute",
+        bottom:0,
+        width:"100%",
+        minHeight:100,
     },
     text:{
-        color:'coral',
-        fontSize:20,
-
+        color:'black',
+        fontSize:30,
     }
 })
 

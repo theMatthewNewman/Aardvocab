@@ -4,6 +4,8 @@ import ProgressBar from "../../ActiveLesson/componants/ProgressBar";
 import {useState} from "react"
 import Buttons from "../../../../componants/Buttons/Button";
 
+import {SvgUri} from 'react-native-svg';
+
 
 type LessonCardType = {
     activateLesson:any,

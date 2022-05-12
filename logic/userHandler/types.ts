@@ -36,4 +36,14 @@ type pictureAction = {
     type: "CHANGE PICTURE"
     payload:string
 }
-export type userAction = newRes | completedLesson | userObjAction | pictureAction
+type changeHeart = {
+    type: "CHANGE HEARTS"
+    payload:{hearts:number}
+}
+type correct = {
+    type: "CORRECT ANSWER"
+    payload:{
+        userLevel:number
+    }
+}
+export type userAction = newRes | completedLesson | userObjAction | pictureAction | changeHeart | correct

@@ -1,38 +1,19 @@
 
 
-export type multiChoiceType = {
-    prompt: string
-    choices: string[]
-    correct: number
-    typeOfPrompt:'MultiChoice'
-    photoURL?:string
+
+export type sublessonType = {
+    prompts:string[]
+    level:number
+    lessonIndex:number
+
 }
-
-export type buildUpType = {
-    prompt: string
-    parts: string[]
-    correct: string
-    typeOfPrompt: 'BuildUp'
-    photoURL?:string
-}
-export type message = {
-    title:string
-    photoURL?:string
-    description:string
-    example:string
-    typeOfPrompt:'Message'
-}
-
-export type promptType = multiChoiceType | buildUpType | message
-
-
-
 
 
 export type lessonType = {
-    prompts:promptType[]
     lessonType:"Grammar"|"Vocabulary"|"Spelling"
-    lessonIndex:0|1|2|3|4|5|6|7|8|9
+    sublessons:sublessonType[]
+
+
 }
 
 type next = {
@@ -51,6 +32,9 @@ type setDataType = {
 
 type correctAnswer = {
     type:'CORRECT ANSWER'
+    payload:{
+        userLevel:number
+    }
 }
 
 export type lessonAction = next | setDataType | correctAnswer

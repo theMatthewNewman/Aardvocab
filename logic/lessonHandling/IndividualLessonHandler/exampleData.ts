@@ -1,26 +1,16 @@
-import { lessonType, promptType } from "./types"
+import { lessonType, sublessonType } from "./types"
+import { promptType } from "../promptHandler/types"
 
-export const examplePrompts:promptType[] = [
-    {
-        prompt:"Define Invidious:",
-        choices:["Dark and gloomy","Cessation or slowing of activity during the summer","Tending to rouse ill will, animosity, or resentment","The arrangement or interplay of light and dark in an artwork"],
-        correct:2,
-        typeOfPrompt:"MultiChoice",
-        photoURL:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwhatemoji.org%2Fwp-content%2Fuploads%2F2020%2F07%2FAngry-Face-Emoji.png&f=1&nofb=1"
-    },
-    {
-        prompt:'define asdfefdsas:',
-        parts:['sdfsdf','sefefef'],
-        correct:'sdfsdf',
-        typeOfPrompt:'BuildUp',
-        photoURL:'myphoto'
-    }
-]
+
+
+export const exampleSubLesson:sublessonType = {
+    prompts:["Jy878nTEQKv3L0YDOOjm"],
+    level:0,
+    lessonIndex:0,
+    
+}
 
 export const exampleLesson:lessonType = {
     lessonType:"Vocabulary",
-    lessonIndex:0,
-    prompts:examplePrompts
-
-
+    sublessons: [exampleSubLesson],
 }

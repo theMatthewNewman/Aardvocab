@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "aardvocab-app-demo",
     "public": "web-build",
     "ignore": [
       "firebase.json",

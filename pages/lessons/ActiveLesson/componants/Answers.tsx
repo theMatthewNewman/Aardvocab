@@ -1,18 +1,20 @@
 import { View } from "react-native";
 import BuildUp from "./TypeOfAnswer/BuildUp";
 import MultiChoice from "./TypeOfAnswer/MultiChoice";
-import Message from "./TypeOfAnswer/Message";
+import * as types from "../../../../logic/lessonHandling/IndividualLessonHandler/types";
 
-type AnswersType = {
-    typeOfPrompt:string,
-    prompt:any,
+
+type answerType = {
+    prompt:types.promptType
 }
 
-function Answers(props:AnswersType) {
-    return ( 
-        <View>
 
-        </View>
+function Answers({prompt}:answerType) {
+    return ( 
+        <>
+            {prompt.typeOfPrompt==="BuildUp"? <BuildUp prompt={prompt}/>:
+            prompt.typeOfPrompt==="MultiChoice"? <MultiChoice prompt={prompt}/>: null}
+        </>
      );
 }
 

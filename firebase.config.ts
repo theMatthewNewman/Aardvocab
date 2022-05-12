@@ -6,13 +6,17 @@ import 'firebase/compat/storage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCOp2bojLU1VdoLc113u0V9oSGpeX-Yhqk",
-  authDomain: "webgrim.firebaseapp.com",
-  projectId: "webgrim",
-  storageBucket: "webgrim.appspot.com",
-  messagingSenderId: "851403839642",
-  appId: "1:851403839642:web:ccc365938d170735dce723"
+  apiKey: "AIzaSyCcoCUVvutwrZdRVqFo39wDAOHl6GkYzAc",
+  authDomain: "aardvocab-c1169.firebaseapp.com",
+  databaseURL: "https://aardvocab-c1169-default-rtdb.firebaseio.com",
+  projectId: "aardvocab-c1169",
+  storageBucket: "aardvocab-c1169.appspot.com",
+  messagingSenderId: "201987574965",
+  appId: "1:201987574965:web:b230a605f521b6a4f602fc",
+  measurementId: "G-2G1YHJVW48"
 };
 
 
