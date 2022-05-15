@@ -39,7 +39,7 @@ function LessonCard(props:LessonCardType) {
         <>
             <Pressable onPress={handlePress} style={(props.progress>=100 || props.lesson.level>props.level)? styles.deactive: styles.all}>
                 <View style={styles.content}>
-                    <Image source={{uri: props.lesson.picture}} style={styles.image}/>
+                    <Image source={{uri: props.lesson.pictureURL}} style={styles.image}/>
                     <View style={styles.description}>
                         <Text style={styles.lessonNumber}>Lesson #{props.lesson.id +1}</Text>
                         <Text style={styles.title}>{props.lesson.name}</Text>
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     image:{
         width:100,
         height:100,
+        resizeMode:"contain",
         margin:10,
     },
     title:{

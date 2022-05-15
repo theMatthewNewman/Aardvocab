@@ -3,7 +3,7 @@ import {actions, Actions} from "./actions";
 import {Prompt, lessonState, lessonFirebase, globalLessonFirebase} from "./dataTypes"
 import {userState, userAction}from "../user"
 
-
+import {produce} from "immer"
 
 //firebase
 import { doc, getDoc} from "firebase/firestore";
@@ -62,6 +62,21 @@ const correct = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
         }
     }
 }
+const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
+    userAction.loseHeart(user) (dispatch)
+    const newLessonState:lessonState = produce(lesson, draft => {
+        if (draft.lesson.active && lesson.lesson.active){
+            const subLessonIndex = lesson.lesson.subLessonIndex
+            const promptIndex = lesson.lesson.promptIndex
+            draft.lesson.subLessons[subLessonIndex].prompts.splice(promptIndex,1)
+            draft.lesson.subLessons[subLessonIndex].prompts.push(lesson.lesson.subLessons[subLessonIndex].prompts[promptIndex])
+            console.log(draft.lesson.subLessons[subLessonIndex].prompts)
+        }
+        return(draft)
+    })
+    dispatch<Actions>(actions.updateLesson(newLessonState["lesson"]))
+}
+
 
 export const lessonAction = {
     getLessonFirebase,
@@ -70,5 +85,6 @@ export const lessonAction = {
     setLessonState,
     setGlobalLessonsState,
     correct,
+    Incorrect,
     updateLesson
 }

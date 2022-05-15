@@ -39,8 +39,10 @@ const styles = StyleSheet.create({
         
     },
     picture:{
-        height:200,
-        width:200,
+        height:180,
+        width:180,
+        resizeMode:"contain",
+        margin:10,
         alignSelf:"center",
         
     }

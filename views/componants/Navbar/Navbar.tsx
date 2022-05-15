@@ -23,10 +23,6 @@ function Navbar() {
                      style={page.page==="Profile"? "NavSelected":"Nav"}
                      title="Profile"/>
 
-            <Buttons onPress={() => {middleware.changePage("Chat") (dispatch)}}
-                     style={page.page==="Chat"? "NavSelected":"Nav"}
-                     title="Chat"/>
-
             <Buttons onPress={() => {middleware.changePage("Results") (dispatch)}}
                      style={page.page==="Results"? "NavSelected":"Nav"}
                      title="Results"/>

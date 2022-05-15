@@ -26,19 +26,20 @@ const MultiChoice = ({prompt}:multichoiceType) => {
     const handlePress = async(correct:number, id:number) => {
         
         if (correct===id){
-            /** 
+            setActiveCorrect(true);
+            lessonAction.correct(user, lesson) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
-                require('../../../../../assets/Correct.mp3')
+                require('../../../../../../assets/Correct.mp3')
             );
             await sound.playAsync();
-            **/
-            setActiveCorrect(true);
-            setTimeout(() => {
-                lessonAction.correct(user, lesson) (dispatch)
-            },1000)
+            
         } else {
             setActive(true)
-            userAction.loseHeart(user) (dispatch)
+            lessonAction.Incorrect(user, lesson) (dispatch)
+            const {sound} = await Audio.Sound.createAsync(
+                require('../../../../../../assets/Wrong.mp3')
+            );
+            await sound.playAsync();
         }
     }
 

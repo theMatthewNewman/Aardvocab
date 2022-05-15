@@ -36,9 +36,7 @@ function BuildUp({prompt}:buildup) {
             await sound.playAsync();
             **/
             setActiveCorrect(true);
-            setTimeout(() => {
-                lessonAction.correct(user, lesson) (dispatch)
-            },1000)
+            lessonAction.correct(user, lesson) (dispatch)
         } else {
             setActive(true)
             setAnswer('')
