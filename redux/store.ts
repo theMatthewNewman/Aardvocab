@@ -6,12 +6,12 @@ import logger from "redux-logger";
 // reducers
 import * as user from "./user";
 import * as lessons from "./lessons"
-import {initialPageState, pageReducer} from "./pages/reducer";
+import * as pages from "./pages";
 import { averageReducer } from "./globalAverages/reducer";
 
 
 const rootReducer = combineReducers({
-    page:pageReducer,
+    page:pages.reducer,
     user:user.reducer,
     averages:averageReducer,
     lesson:lessons.reducer,

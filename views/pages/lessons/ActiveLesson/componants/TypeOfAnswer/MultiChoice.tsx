@@ -4,8 +4,7 @@ import {Prompt} from "../../../../../../redux/lessons"
 import {useDispatch, useSelector} from '../../../../../../redux/hooks';
 import { lessonAction } from '../../../../../../redux/lessons';
 import {useState} from 'react';
-import IncorrectMessage from '../../../../../componants/Alert/IncorrectMessage';
-import CorrectMessage from '../../../../../componants/Alert/CorrectMessage';
+import Message from '../../../../../componants/Alert/Message';
 
 import {Audio} from 'expo-av';
 import Buttons from '../../../../../componants/Buttons/Button';
@@ -18,15 +17,12 @@ type multichoiceType = {
 
 const MultiChoice = ({prompt}:multichoiceType) => {
     const dispatch = useDispatch()
-    const [active, setActive] = useState(false)
-    const [activeCorrect, setActiveCorrect] = useState(false)
     const user = useSelector((state) => state.user)
     const lesson = useSelector(state => state.lesson)
 
     const handlePress = async(correct:number, id:number) => {
         
         if (correct===id){
-            setActiveCorrect(true);
             lessonAction.correct(user, lesson) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Correct.mp3')
@@ -34,7 +30,6 @@ const MultiChoice = ({prompt}:multichoiceType) => {
             await sound.playAsync();
             
         } else {
-            setActive(true)
             lessonAction.Incorrect(user, lesson) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Wrong.mp3')
@@ -51,8 +46,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
                 )}
             </View>
             
-            <IncorrectMessage active={active} setActive={setActive}/>
-            <CorrectMessage active={activeCorrect} setActive={setActiveCorrect}/>
+            
         </>
      );
 }

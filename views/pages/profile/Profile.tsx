@@ -7,7 +7,6 @@ import {auth} from "../../../firebase.config";
 import {useDispatch} from "../../../redux/hooks";
 
 import { useState } from "react";
-import IncorrectMessage from "../../componants/Alert/IncorrectMessage";
 
 import {userAction} from "../../../redux/user";
 
@@ -77,7 +76,6 @@ function Profile() {
                         style="Strong"
                         title="Log Out"/>
             </View>
-            <IncorrectMessage active={active} setActive={setActive} />
         </> 
     );
 }

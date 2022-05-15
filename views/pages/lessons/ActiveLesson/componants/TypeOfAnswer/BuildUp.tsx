@@ -7,11 +7,11 @@ import {Prompt} from "../../../../../../redux/lessons"
 import { userAction } from "../../../../../../redux/user";
 
 import { buttons} from '../../../../../componants/globalStyle';
-import IncorrectMessage from "../../../../../componants/Alert/IncorrectMessage";
+
 
 
 import {Audio} from 'expo-av';
-import CorrectMessage from "../../../../../componants/Alert/CorrectMessage";
+import CorrectMessage from "../../../../../componants/Alert/Message";
 import Buttons from "../../../../../componants/Buttons/Button";
 import { genLessons } from "../../../../Results/ProgressCharts/percentageCalculation";
 
@@ -67,8 +67,6 @@ function BuildUp({prompt}:buildup) {
                 <Text style={buttons.strongText}>Check Answer</Text>
             </Pressable>
             </View>
-            <IncorrectMessage active={active} setActive={setActive}/>
-            <CorrectMessage active={activeCorrect} setActive={setActiveCorrect}/>
         </>
      );
 }

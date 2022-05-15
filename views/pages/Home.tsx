@@ -5,6 +5,9 @@ import Results from "./Results/Results";
 import Profile from "./profile/Profile";
 import { useEffect } from "react";
 
+import Message from "../componants/Alert/Message";
+import {pageAction}from "../../redux/pages";
+
 import Navbar from "../componants/Navbar/Navbar";
 
 //authentication
@@ -43,6 +46,7 @@ function Home() {
                 
                 </>
             : <Login/>}
+            <Message message={page.message.message} active={page.message.active} type={page.message.type}/>
         </View>
     );
 }

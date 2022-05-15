@@ -3,7 +3,7 @@ import Buttons from "../Buttons/Button";
 import { NavbarStyles } from "./NavbarStyles";
 import { useState } from 'react';
 
-import * as middleware from "../../../redux/pages/middleware"
+import { pageAction } from "../../../redux/pages";
 import { useDispatch, useSelector } from "../../../redux/hooks";
 
 
@@ -19,15 +19,15 @@ function Navbar() {
 
             <Image style={styles.image} source={require('../../../images/logo.png')} />
 
-            <Buttons onPress={() => {middleware.changePage("Profile") (dispatch)}}
+            <Buttons onPress={() => {pageAction.changePage("Profile") (dispatch)}}
                      style={page.page==="Profile"? "NavSelected":"Nav"}
                      title="Profile"/>
 
-            <Buttons onPress={() => {middleware.changePage("Results") (dispatch)}}
+            <Buttons onPress={() => {pageAction.changePage("Results") (dispatch)}}
                      style={page.page==="Results"? "NavSelected":"Nav"}
                      title="Results"/>
             
-            <Buttons onPress={() => {middleware.changePage("Lessons") (dispatch)}}
+            <Buttons onPress={() => {pageAction.changePage("Lessons") (dispatch)}}
                      style={page.page==="Lessons"? "NavSelected":"Nav"}
                      title="Lessons"/>
 
