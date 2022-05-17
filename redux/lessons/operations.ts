@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import {actions, Actions} from "./actions";
 import {Prompt, lessonState, lessonFirebase, globalLessonFirebase} from "./dataTypes"
 import {userState, userAction}from "../user"
+import {pageState, pageAction}from "../pages"
 
 import {produce} from "immer"
 
@@ -60,6 +61,7 @@ const correct = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
         } else {
             dispatch<Actions>(actions.completePrompt())
         }
+        pageAction.updateMessage({active:true, message:"Correct!", type:"correct"})
     }
 }
 const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {

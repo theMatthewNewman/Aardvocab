@@ -28,9 +28,6 @@ const LessonGraph = () => {
         <Text style={globalStyling.head}>Results</Text>
         <View style={styles.graph}>
             <View style={styles.chart}>
-                <View style={styles.side}>
-                    
-                </View>
             <LineChart
                 data={{
                     labels:labels,
@@ -42,27 +39,23 @@ const LessonGraph = () => {
                     ]
                 }}
                 width={360}
+                bezier
+                withHorizontalLines={false}
+                withVerticalLines={false}
                 height={220}
-                yAxisLabel=""
-                yAxisSuffix=""
-                fromZero={true}
+                fromZero={false}
                 getDotColor={(dataPoint, dataPointIndex) => {
                     if(dataPointIndex === yourIndex) 
-                    return 'coral';// red
-                    else  return '#aeafb7';// green
+                    return 'red';
+                    else  return 'rgb(1,1,1,0)';
                   }}
                 chartConfig={{
-                    
                     barPercentage:1,
-                    backgroundColor: "#3c427c",
-                    backgroundGradientFrom: "#4e559f",
-                    backgroundGradientTo: "#3c427c",
+                    backgroundGradientFrom: "white",
+                    backgroundGradientTo: "white",
                     decimalPlaces: 0, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    style: {
-                      borderRadius: 20
-                    },
+                    color: (opacity = 1) => 'cornflowerblue',
+                    labelColor: (opacity = 1) => 'black',
                     propsForDots: {
                         r: "6",
                         strokeWidth: "2",
@@ -71,11 +64,9 @@ const LessonGraph = () => {
                   style={{
                     marginVertical: 8,
                     borderRadius: 16,
-                    shadowColor: 'black',
-                    elevation: 50,
+                    borderWidth:3,
                   }}
                   >
-
             </LineChart>
             
             
@@ -101,6 +92,7 @@ const styles = StyleSheet.create({
         paddingTop:15,
         margin:15,
         
+        
     },
     side:{
         display:'flex',
@@ -109,23 +101,13 @@ const styles = StyleSheet.create({
     },
     chart:{
         display:'flex',
+        
 
     },
     base:{
         alignSelf:'center',
     },
-    head:{
-        marginTop:20,
-        alignSelf:'center',
-        padding:10,
-        color:'#3c427c',
-        borderWidth:2,
-        backgroundColor:'lightgray',
-        borderRadius:5,
-        shadowColor: 'black',
-        elevation: 20,
-        fontSize:20,
-    },
+    
     title:{
         display:"flex",
         flexDirection:'row',

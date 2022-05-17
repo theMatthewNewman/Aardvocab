@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     lesson:lessons.reducer,
 })
 
-const middleware = [thunk]
+const middleware = [thunk, logger]
 export const store = createStore(rootReducer, applyMiddleware(...middleware))
 
 export type State = ReturnType<typeof store.getState>

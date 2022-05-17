@@ -2,6 +2,7 @@ import produce from "immer"
 import types from "./types";
 import {Actions, actions} from "./actions"
 import { userState } from "./dataTypes";
+import DaysPracticed from "../../views/pages/Results/DaysPracticed";
 
 
 const example:userState = {
@@ -10,10 +11,17 @@ const example:userState = {
     email:"example@example.com",
     emailVerified:false,
     photoURL:"https://avatars.dicebear.com/api/identicon/5.8906013843601315.png",
-    createdAt:1000,
+    createdAt:{
+        nanoseconds:423000000,
+        seconds:1652651988
+    },
     level:0,
     hearts:5,
-    lessonData:new Array(100).fill({subLessons:0, percentage:0})
+    lessonData:new Array(100).fill({subLessons:0, percentage:0}),
+    daysPracticed:[{
+        nanoseconds:423000000,
+        seconds:1652651988
+    }]
 }
 
 export const reducer = (state:userState = example, action:Actions) => {

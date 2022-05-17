@@ -1,6 +1,8 @@
 import {View, Text, StyleSheet, useWindowDimensions} from 'react-native';
 import {Audio} from 'expo-av';
 import { useEffect } from 'react';
+import {useDispatch} from "../../../redux/hooks"
+import {pageAction}from "../../../redux/pages";
 
 
 type messageType = {
@@ -11,9 +13,16 @@ type messageType = {
 
 function Message({active,message, type}:messageType) {
     const {height, width} = useWindowDimensions()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        
+        setTimeout(() => {
+            pageAction.updateMessage({
+                active:false,
+                type:'correct',
+                message:"Error",
+            }) (dispatch)
+        },1000)
     },[active])
 
     return ( 

@@ -13,6 +13,7 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
+import DaysPracticed from "../../views/pages/Results/DaysPracticed";
 
 const setUserFirebase = async(user:userState) => {
     const docRef = doc(db,"users",user.uid)
@@ -22,9 +23,31 @@ const setUserFirebase = async(user:userState) => {
 
 const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
     const docRef = doc(db, "users", uid);
-    const document = await getDoc(docRef)
-    const dat:any = document.data()
-    dispatch<Actions>(actions.updateUser(dat))
+    try{
+        const document = await getDoc(docRef)
+        const dat = document.data()!
+        try{
+            const data:userState = {
+                uid:dat.uid,
+                displayName:dat.displayName,
+                email:dat.email,
+                photoURL:dat.photoURL,
+                emailVerified:dat.emailVerified,
+                createdAt:dat.createdAt,
+                level:dat.level,
+                hearts:dat.hearts,
+                lessonData:dat.lessonData,
+                daysPracticed:dat.daysPracticed
+            }
+            dispatch<Actions>(actions.updateUser(data))
+        } catch(error){
+                console.log("data is not in correct format")
+                console.log(error)
+        }
+    } catch(error){
+        console.log("error Connecting to database")
+        console.log(error)
+    }   
 }
 
 const updateUser = (user:userState) => (dispatch:Dispatch) => {

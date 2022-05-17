@@ -10,9 +10,6 @@ export const bucketUsers = (averages:number[]) =>{
         }
         averages.forEach((average)=>{
             if(average >= bucketBottom ){
-                console.log("check")
-                console.log(bucketBottom)
-                console.log(average)
                 userCount+=1;
             }
         })

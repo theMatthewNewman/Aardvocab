@@ -4,10 +4,17 @@ export type userState = {
     email:string
     emailVerified:boolean
     photoURL:string
-    createdAt:any
+    createdAt:{
+        nanoseconds:number,
+        seconds:number
+    }
     level:number
     hearts:number
     lessonData:{subLessons:number, percentage:number}[]
+    daysPracticed:{
+        nanoseconds:number,
+        seconds:number
+    }[]
 };
 
 export type userFirebase = {
@@ -16,8 +23,15 @@ export type userFirebase = {
     email:string
     emailVerified:boolean
     photoURL:string
-    createdAt:any
+    createdAt:{
+        nanoseconds:number,
+        seconds:number
+    }
     level:number
     hearts:number
     lessonData:{subLessons:number,percentage:number}[]
+    daysPracticed:{
+        seconds:number,
+        nanoseconds:number
+    }[]
 };
