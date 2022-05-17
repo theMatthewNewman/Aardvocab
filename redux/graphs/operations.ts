@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 
 import {actions, Actions} from "./actions";
-import { createUser } from "./utils";
 import { userState } from "../user"
 import { lessonState, lessonAction } from "../lessons";
 import produce from "immer"
