@@ -12,13 +12,16 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
-import { dataState } from "./dataTypes";
+import { dataFirebase, dataState } from "./dataTypes";
 
-const setDataFirebase = async(user:userState, userLevels:dataState) => {
+import {bucketUsers} from "./utils";
+
+const setDataFirebase = async(user:userState, userLevels:dataFirebase) => {
     const docRef = doc(db,"data", "userLevels")
-    const data:dataState ={
-        levels:userLevels.levels.map((level) => {
+    let found = false
+    const data:dataFirebase['levels'] = userLevels.levels.map((level) => {
             if (level.uid === user.uid) {
+                found = true
                 return({
                     level:user.level,
                     uid:user.uid
@@ -27,6 +30,8 @@ const setDataFirebase = async(user:userState, userLevels:dataState) => {
                 return(level)
             }
         })
+    if (found === false){
+        data.push({level:user.level,uid:user.uid})
     }
     await setDoc(docRef,data)
     return(data)
@@ -38,7 +43,7 @@ const getDataFirebase = async() => {
         const document = await getDoc(docRef)
         const dat = document.data()!
         try{
-            const data:dataState = {
+            const data:dataFirebase = {
                 levels:dat.levels
             }
             return(data)
@@ -56,7 +61,8 @@ const updateData = (user:userState) => async(dispatch:Dispatch) => {
     const userlevels = await getDataFirebase()
     if (userlevels) {
         const newData = await setDataFirebase(user, userlevels)
-        dispatch<Actions>(actions.updateUserdata(newData))
+        const dat = bucketUsers({levels:newData}, user)
+        dispatch<Actions>(actions.updateUserdata(dat))
     }
 
 }

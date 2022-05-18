@@ -7,17 +7,19 @@ import logger from "redux-logger";
 import * as user from "./user";
 import * as lessons from "./lessons"
 import * as pages from "./pages";
+import * as graph from "./graphs";
 import { averageReducer } from "./globalAverages/reducer";
 
 
 const rootReducer = combineReducers({
     page:pages.reducer,
     user:user.reducer,
+    graph:graph.reducer,
     averages:averageReducer,
     lesson:lessons.reducer,
 })
 
-const middleware = [thunk, logger]
+const middleware = [thunk]
 export const store = createStore(rootReducer, applyMiddleware(...middleware))
 
 export type State = ReturnType<typeof store.getState>

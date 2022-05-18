@@ -2,7 +2,7 @@ import produce from "immer"
 import types from "./types";
 import {Actions, actions} from "./actions"
 import { userState } from "./dataTypes";
-import DaysPracticed from "../../views/pages/Results/DaysPracticed";
+import DaysPracticed from "../../views/pages/Results/graphs/DaysGraph";
 
 
 const example:userState = {

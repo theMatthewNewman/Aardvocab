@@ -13,7 +13,7 @@ import { buttons} from '../../../../../componants/globalStyle';
 import {Audio} from 'expo-av';
 import CorrectMessage from "../../../../../componants/Alert/Message";
 import Buttons from "../../../../../componants/Buttons/Button";
-import { genLessons } from "../../../../Results/ProgressCharts/percentageCalculation";
+
 
 type buildup = {
     prompt: Extract<Prompt,{type:"build"}>

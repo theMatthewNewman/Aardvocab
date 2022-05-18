@@ -37,6 +37,7 @@ function Home() {
             
             {user? 
                 <>
+                
                 <Navbar />
                 <View style={styles.pages}>
                     {page.page==="Lessons"? <LessonPath/>: null}
@@ -45,7 +46,7 @@ function Home() {
                 </View>
                 
                 </>
-            : <Login/>}
+            :<Login/>}
             <Message message={page.message.message} active={page.message.active} type={page.message.type}/>
         </View>
     );

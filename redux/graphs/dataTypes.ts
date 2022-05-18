@@ -1,8 +1,7 @@
 export type dataState = {
-    levels:{
-        uid:string
-        level:number
-    }[]
+    bucketedLevels:number[]
+    selfIndex:number
+
 };
 
 export type dataFirebase = {
