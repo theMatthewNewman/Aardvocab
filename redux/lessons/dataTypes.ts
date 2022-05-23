@@ -1,9 +1,16 @@
 export type Prompt = {
                 prompt: string
-                choices: string[]
-                correct: number
+                choices: {
+                    title:string
+                    correct:boolean
+                }[]
                 type:'multi'
                 photoURL?:string
+                messages:{
+                    title:string
+                    definition:string
+                    example:string
+                }
               }|
               {
                 prompt: string
@@ -11,13 +18,11 @@ export type Prompt = {
                 correct: string
                 type: 'build'
                 photoURL?:string
-              }|
-              {
-                title:string
-                photoURL?:string
-                description:string
-                example:string
-                type:'Message'
+                messages:{
+                    title:string
+                    definition:string
+                    example:string
+                }
               }
 
 
@@ -42,7 +47,6 @@ export type lessonState = {
         subLessonIndex:number
         subLessons:{
             prompts:Prompt[]
-            
         }[]
     }|{active:false}
 }

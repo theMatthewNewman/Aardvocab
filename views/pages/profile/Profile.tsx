@@ -9,6 +9,7 @@ import {useDispatch} from "../../../redux/hooks";
 import { useState } from "react";
 
 import {userAction} from "../../../redux/user";
+import {globalStyling} from "../../componants/globalStyle";
 
 
 function Profile() {
@@ -45,6 +46,7 @@ function Profile() {
     
     return ( 
         <>
+        <Text style={globalStyling.head}>Profile</Text>
             <View style={ProfileStyles.info}>
                 <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
                 <View style={ProfileStyles.about}>
@@ -57,7 +59,7 @@ function Profile() {
                         <Text style={ProfileStyles.userName}>{displayName}</Text>
                     }
                     <Text style={ProfileStyles.date}>
-                        {`Created: ${new Date(user.createdAt.seconds*1000).toDateString()}`}
+                        {`Created: ${new Date(user.createdAt).toDateString()}`}
                     </Text>
                 </View>
 

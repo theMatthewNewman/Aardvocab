@@ -6,10 +6,11 @@ import { useState } from 'react';
 import { pageAction } from "../../../redux/pages";
 import { useDispatch, useSelector } from "../../../redux/hooks";
 
+type navActions = {
+  action:any[]
+}
 
-
-function Navbar() {
-    const dispatch = useDispatch()
+function Navbar({action}:navActions) {
     const page = useSelector(state => state.page)
 
 
@@ -17,17 +18,17 @@ function Navbar() {
         <>
         <View style={styles.background}>
 
-            <Image style={styles.image} source={require('../../../images/logo.png')} />
+        <Image style={styles.image} source={require('../../../images/logo.png')} />
 
-            <Buttons onPress={() => {pageAction.changePage("Profile") (dispatch)}}
+            <Buttons onPress={action[0]}
                      style={page.page==="Profile"? "NavSelected":"Nav"}
                      title="Profile"/>
 
-            <Buttons onPress={() => {pageAction.changePage("Results") (dispatch)}}
+            <Buttons onPress={action[1]}
                      style={page.page==="Results"? "NavSelected":"Nav"}
                      title="Results"/>
             
-            <Buttons onPress={() => {pageAction.changePage("Lessons") (dispatch)}}
+            <Buttons onPress={action[2]}
                      style={page.page==="Lessons"? "NavSelected":"Nav"}
                      title="Lessons"/>
 

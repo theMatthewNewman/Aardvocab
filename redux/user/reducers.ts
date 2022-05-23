@@ -11,17 +11,11 @@ const example:userState = {
     email:"example@example.com",
     emailVerified:false,
     photoURL:"https://avatars.dicebear.com/api/identicon/5.8906013843601315.png",
-    createdAt:{
-        nanoseconds:423000000,
-        seconds:1652651988
-    },
+    createdAt:1652651988,
     level:0,
     hearts:5,
     lessonData:new Array(100).fill({subLessons:0, percentage:0}),
-    daysPracticed:[{
-        nanoseconds:423000000,
-        seconds:1652651988
-    }]
+    daysPracticed:[1652651988,1652751988]
 }
 
 export const reducer = (state:userState = example, action:Actions) => {

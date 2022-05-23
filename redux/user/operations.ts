@@ -87,6 +87,7 @@ const completeLesson = (user:userState, lesson:lessonState) => (dispatch:Dispatc
 }
 const newUser = (authorizedUser:User, username?:string) => async(dispatch:Dispatch) => {
     const user = createUser(authorizedUser, username);
+    console.log(user)
     updateUser(user) (dispatch)
 }
 
@@ -108,7 +109,11 @@ const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
     }
 }
 
+const addDay = (user:userState) => async(dispatch:Dispatch) =>{
+    const newDay = new Date()
+    user.daysPracticed.push(newDay.getSeconds())
 
+}
 
 
 

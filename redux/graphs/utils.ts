@@ -30,27 +30,12 @@ export const chartConfig = {
 };
 
 export const bucketUsers = (data:dataFirebase, user:userState) => {
-    const levels = data.levels.map(level => level.level)
-    let selfIndex = 0
-    const largestLevel = Math.max(...levels)
-    const numberOfBuckets = 30
-    const buckets = new Array(numberOfBuckets).fill(0)
-    const bucketedLevels = buckets.map((count:number, index) => {
-        
-        let top = (largestLevel/numberOfBuckets)*(index+1)
-        const bottom = (largestLevel/numberOfBuckets)*(index)
-        if (index===buckets.length-1){ // make sure highest number gets bucketed
-            top+=1;
-        }
-        data.levels.forEach((level)=>{
-            if(level.level >= bottom && level.level < top ){
-                count+=1;
-            }
-            if (level.uid === user.uid){
-                selfIndex = index
-            }
-        })
-        return(count)
+    const levelValues = data.levels.map(level => level.level)
+    const largestLevel = Math.max(...levelValues)
+    let bucketedLevels = new Array(largestLevel+1).fill(0)
+    let selfIndex = user.level
+    data.levels.forEach(level => {
+        bucketedLevels[level.level] +=1
     })
     return({bucketedLevels,selfIndex})
 

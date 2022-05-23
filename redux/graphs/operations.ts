@@ -33,7 +33,7 @@ const setDataFirebase = async(user:userState, userLevels:dataFirebase) => {
     if (found === false){
         data.push({level:user.level,uid:user.uid})
     }
-    await setDoc(docRef,data)
+    await setDoc(docRef,{levels:data})
     return(data)
 }
 

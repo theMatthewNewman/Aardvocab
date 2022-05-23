@@ -1,15 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 export const AardVocabBlue = '#3c427c'
+
+const {height, width} = Dimensions.get("window")
+const headWidth = (3*width)
 
 export const globalStyling = StyleSheet.create({
     head:{
         backgroundColor:AardVocabBlue,
+        alignSelf:'center',
         color:'white',
         textAlign:'center',
-        width:'100%',
+        width:headWidth,
         fontSize:25,
-        marginBottom:5,
     },
     box:{
         backgroundColor:'white',

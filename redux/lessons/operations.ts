@@ -3,6 +3,7 @@ import {actions, Actions} from "./actions";
 import {Prompt, lessonState, lessonFirebase, globalLessonFirebase} from "./dataTypes"
 import {userState, userAction}from "../user"
 import {pageState, pageAction}from "../pages"
+import {shuffleArray} from "./utils";
 
 import {produce} from "immer"
 
@@ -32,12 +33,11 @@ const getPromptFirebase = async(id:number) => {
 }
 const setLessonState = (id:number, user:userState) => async(dispatch:Dispatch) => {
     const preLesson:lessonFirebase = await getLessonFirebase(id)
-    console.log(preLesson.subLessons)
     const subLessons:any = await Promise.all(preLesson.subLessons.map(async(lesson) => {
-        const prompts = await Promise.all(lesson.prompts.map(async(id) => {
+        const prompts = shuffleArray(await Promise.all(lesson.prompts.map(async(id) => {
             const prompt:Prompt = await getPromptFirebase(id)
             return(prompt)
-        }))
+        })))
         return({prompts})
     }))
     const lesson = {...preLesson,
@@ -56,12 +56,13 @@ const updateLesson = (lesson:lessonState) => (dispatch:Dispatch) => {
 }
 const correct = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
     if (lesson.lesson.active) {
+        
         if (lesson.lesson.promptIndex +1 >= lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts.length){
             userAction.completeLesson(user, lesson) (dispatch)
         } else {
             dispatch<Actions>(actions.completePrompt())
         }
-        pageAction.updateMessage({active:true, message:"Correct!", type:"correct"})
+        
     }
 }
 const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {

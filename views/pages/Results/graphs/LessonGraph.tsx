@@ -22,9 +22,11 @@ const LessonGraph = () => {
 
     return(
         <> 
-        <Text style={globalStyling.head}>Results</Text>
+        
         <View style={styles.graph}>
-            <View style={styles.graphic} >
+        <View style={styles.graphicVert}>
+            <View style={styles.graphicHoriz} >
+                
                 <Text style={{
                 transform: [{ rotate: '-90deg' },
                             { translateY: (70) }],
@@ -37,7 +39,6 @@ const LessonGraph = () => {
                 withVerticalLines={false}
                 height={220}
                 fromZero={false}
-                xAxisLabel="Levels Progressed"
                 getDotColor={(dataPoint, dataPointIndex) => {
                     if(dataPointIndex === selfIndex) 
                     return 'red';
@@ -48,9 +49,13 @@ const LessonGraph = () => {
                     paddingTop:10,
                     paddingHorizontal:8,
 
+
                     
                 }}></LineChart>
             </View>
+            <Text style={styles.xLabel}>Levels Completed</Text>
+            </View>
+            
             <View style={styles.key}>
             <Image style={styles.dot} source={require('../../../../images/userDot.png')}/>
             <Text style={styles.note}>Your Current Level</Text>
@@ -69,13 +74,23 @@ const styles = StyleSheet.create({
         paddingVertical:8,
         borderRadius:16
     },
-    graphic:{
+    graphicHoriz:{
         backgroundColor:'white',
         borderRadius: 16,
-        borderWidth:3,
         display:"flex",
         flexDirection:"row",
         maxWidth:'100%'
+    },
+    graphicVert:{
+        borderRadius: 16,
+        borderWidth:3,
+        backgroundColor:'white',
+    },
+    xLabel:{
+        textAlign:'center',
+        marginBottom:20,
+        marginTop:-20,
+
     },
     dot:{
         height:20,

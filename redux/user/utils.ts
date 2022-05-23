@@ -35,9 +35,10 @@ export const createUser =(user:User, username?:string):userState => {
         emailVerified: user.emailVerified,
         uid,
         level:0,
-        createdAt:new Date(),
+        createdAt: new Date().getTime(),
         hearts:5,
-        lessonData: new Array(100).fill({subLessons:0, percentage:0}),
+        lessonData: new Array(100).fill({subLessons:0, percentage:0, accuracy:0, type:""}),
+        daysPracticed:[new Date().getTime()]
     })
 }
 
@@ -47,3 +48,4 @@ export const changePictureLogic = (user:userState,photoURL:string) => {
     }
     return({...userInfo})
 }
+

@@ -1,9 +1,9 @@
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Pressable,TouchableHighlight, StyleSheet, Animated} from 'react-native';
 
 
 type propsType= {
     onPress:any
-    style:"Nav" | "NavSelected" | "Strong" | "Choice"
+    style:"Nav" | "NavSelected" | "Strong" | "Choice" |"correct"
     title:string
 }
 
@@ -27,15 +27,24 @@ function Buttons(props:propsType) {
             ButtonStyle = ButtonStyles.Choice;
             TextStyle = TextStyles.Choice;
         break;
+        case 'correct':
+            ButtonStyle = ButtonStyles.correct;
+            TextStyle = TextStyles.correct;
     }
 
     return (    
         <View>
-            <Pressable onPress={props.onPress} style={ButtonStyle}>
+            {props.style==='correct'?
+            <TouchableHighlight onPress={props.onPress} style={ButtonStyle}>
                 <View>
                     <Text style={TextStyle}>{props.title}</Text>
                 </View>
-            </Pressable>
+            </TouchableHighlight>:
+            <Pressable onPress={props.onPress} style={ButtonStyle}>
+            <View>
+                <Text style={TextStyle}>{props.title}</Text>
+            </View>
+            </Pressable>}
         </View>
      );
 }
@@ -68,6 +77,23 @@ const ButtonStyles = StyleSheet.create({
         padding:5,
         
     },
+    correct:{
+        backgroundColor:'#27ae60',
+        padding:10,
+        paddingLeft:10,
+        paddingRight:10,
+        borderRadius:16,
+        marginHorizontal:4,
+        marginBottom:40,
+        borderWidth:3,
+        
+    },
+    hover:{
+
+    },
+    active:{
+
+    },
     default:{
         
     }
@@ -82,8 +108,14 @@ const TextStyles = StyleSheet.create({
         fontSize:20,
 
     },
+    correct:{
+        textAlign:"center",
+        fontSize:30,
+        color:"white",
+    },
     default:{
 
     }
 })
+
 export default Buttons;

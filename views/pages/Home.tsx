@@ -1,12 +1,14 @@
-import { View, StyleSheet, ScrollView, Button } from "react-native";
-import { useSelector } from "../../redux/hooks";
+import { View, StyleSheet, Animated, useWindowDimensions } from "react-native";
+import { useSelector, useDispatch } from "../../redux/hooks";
 import LessonPath from "./lessons/LessonPath/LessonPath";
 import Results from "./Results/Results";
 import Profile from "./profile/Profile";
-import { useEffect } from "react";
+import { useRef} from "react";
 
-import Message from "../componants/Alert/Message";
+
 import {pageAction}from "../../redux/pages";
+import { lessonAction } from "../../redux/lessons";
+import Message from "../componants/Alert/Message";
 
 import Navbar from "../componants/Navbar/Navbar";
 
@@ -30,6 +32,53 @@ import {
 function Home() {
     const [user] = useAuthState(auth)
     const page = useSelector(state => state.page)
+    const lesson = useSelector(state => state.lesson)
+    const dispatch = useDispatch()
+    const {height, width} = useWindowDimensions()
+
+    const anim = useRef(new Animated.Value(0)).current;
+
+    const movePage = (page:Animated.Value,direction:string) => {
+        var start = 0
+        var end = 0
+
+        if (direction==='left'){
+            start = width
+        }
+        if (direction==='right'){
+            start = -width
+        }
+        page.setValue(start)
+        Animated.spring(page, {
+            useNativeDriver:true,
+            toValue: end,
+        }).start();
+    }
+
+
+    const actions = [
+        () => {
+            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+            pageAction.changePage('Profile') (dispatch)
+            movePage(anim,'left')
+        },
+        () => {
+            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+            var direction = 'left'
+            if (page.page==='Profile'){
+                direction='right'
+            } 
+            pageAction.changePage('Results') (dispatch)
+            movePage(anim, direction)
+        },
+        () => {
+            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+            pageAction.changePage('Lessons') (dispatch)
+            movePage(anim,'right')
+
+            
+        }
+    ]
 
     return ( 
         <View style={styles.container}>
@@ -38,16 +87,18 @@ function Home() {
             {user? 
                 <>
                 
-                <Navbar />
+                <Navbar action={actions}/>
                 <View style={styles.pages}>
-                    {page.page==="Lessons"? <LessonPath/>: null}
-                    {page.page==="Results"? <Results/> : null}
-                    {page.page==="Profile"? <Profile/> : null}
+                    {page.page==="Lessons"? <Animated.View style={{translateX:anim}}><LessonPath/></Animated.View>: null}
+                    {page.page==="Results"? <Animated.View style={{translateX:anim}}><Results/></Animated.View> : null}
+                    {page.page==="Profile"? <Animated.View style={{translateX:anim}}><Profile/></Animated.View> : null}
+                    
                 </View>
                 
                 </>
             :<Login/>}
-            <Message message={page.message.message} active={page.message.active} type={page.message.type}/>
+            <Message/>
+            
         </View>
     );
 }

@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 
 import ProgressBar from "./componants/ProgressBar";
 
-import { userAction } from '../../../../redux/user';
-
 
 import Question from './componants/Question';
 import Hearts from "./componants/Hearts";
@@ -21,6 +19,7 @@ type activeLessonType ={
 function ActiveLesson() {
     const lesson = useSelector(state => state.lesson.lesson)
     const user = useSelector(state => state.user)
+    const page = useSelector(state => state.page)
     const [choice, setChoice] = useState(0);
     const dispatch = useDispatch();
 
@@ -33,6 +32,7 @@ function ActiveLesson() {
                     <ProgressBar progress={(lesson.promptIndex/lesson.subLessons[lesson.subLessonIndex].prompts.length)*100}/>
                     
                     <Answers prompt={lesson.subLessons[lesson.subLessonIndex].prompts[lesson.promptIndex]}/>
+                    
                 </View>
             : null}
         </> 
