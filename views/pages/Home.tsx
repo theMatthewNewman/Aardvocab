@@ -75,7 +75,7 @@ function Home() {
         <View style={styles.container}>
             
             
-
+            {user? 
                 <>
                 
                 <Navbar action={actions}/>
@@ -87,7 +87,7 @@ function Home() {
                 </View>
                 
                 </>
-
+            :<Login/>}
             <Message/>
             
         </View>
