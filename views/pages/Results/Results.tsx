@@ -24,6 +24,7 @@ const Results = () => {
           <LessonGraph/>
           <DaysGraph/>
           <AccuracyGraph/>
+          <Image style={{width:'100%', resizeMode:'contain'}} source={require('../../../images/cautionTape.png')}/>
         </ScrollView>
         </>
           )

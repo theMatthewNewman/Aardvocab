@@ -1,7 +1,5 @@
-import { User } from "firebase/auth"
-import { dataFirebase, dataState } from "./dataTypes";
+import { dataFirebase } from "./dataTypes";
 import { userState } from "../user";
-import produce from "immer";
 
 export type graphData = {
     labels:string[]

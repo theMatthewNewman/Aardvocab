@@ -1,9 +1,9 @@
-import {View, Text, Dimensions, Image, StyleSheet, Button} from "react-native";
-import { LineChart,BarChart,PieChart,ProgressChart,ContributionGraph,StackedBarChart} from 'react-native-chart-kit'
+import {View, Text, Image, StyleSheet} from "react-native";
+import { LineChart} from 'react-native-chart-kit'
 import { useSelector } from "../../../../redux/hooks";
-import { globalStyling } from "../../../componants/globalStyle";
 
-import {dataAction, chartConfig} from "../../../../redux/graphs"
+
+import { chartConfig} from "../../../../redux/graphs"
 import {useState} from 'react'
 
 

@@ -1,6 +1,5 @@
-import {View, Dimensions, Text, StyleSheet, Image} from "react-native";
-import {chartConfig} from '../../../../redux/graphs';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {View, Text, StyleSheet, Image} from "react-native";
+import {Calendar} from 'react-native-calendars';
 import {useSelector} from '../../../../redux/hooks'
 
 function DaysGraph() {

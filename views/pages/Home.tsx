@@ -17,15 +17,6 @@ import {auth} from "../../firebase.config"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
 
-import {
-    AdMobBanner,
-    AdMobInterstitial,
-    PublisherBanner,
-    AdMobRewarded,
-    setTestDeviceIDAsync,
-  } from 'expo-ads-admob';
-
-
 
 
 
@@ -84,7 +75,7 @@ function Home() {
         <View style={styles.container}>
             
             
-            {user? 
+
                 <>
                 
                 <Navbar action={actions}/>
@@ -96,7 +87,7 @@ function Home() {
                 </View>
                 
                 </>
-            :<Login/>}
+
             <Message/>
             
         </View>

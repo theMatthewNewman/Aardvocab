@@ -1,10 +1,7 @@
-import { Text, StyleSheet, View, Image, Pressable} from "react-native";
+import { StyleSheet, View, Image} from "react-native";
 import Buttons from "../Buttons/Button";
-import { NavbarStyles } from "./NavbarStyles";
-import { useState } from 'react';
 
-import { pageAction } from "../../../redux/pages";
-import { useDispatch, useSelector } from "../../../redux/hooks";
+import { useSelector } from "../../../redux/hooks";
 
 type navActions = {
   action:any[]

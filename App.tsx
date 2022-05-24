@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import Navbar from './views/componants/Navbar/Navbar';
 import {Provider} from "react-redux"
 import {store} from "./redux/store"
-import { useSelector } from './redux/store';
+
 import Home from "./views/pages/Home"
 import { useAuthState } from "react-firebase-hooks/auth";
 import {auth} from "./firebase.config";

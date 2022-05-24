@@ -3,13 +3,6 @@ import ProgressBar from "../../ActiveLesson/componants/ProgressBar";
 import {useState} from "react"
 import Buttons from "../../../../componants/Buttons/Button";
 
-import { userState } from "../../../../../redux/user";
-import { lessonState } from "../../../../../redux/lessons";
-
-import {SvgUri} from 'react-native-svg';
-
-
-
 type LessonCardType = {
     activateLesson:any,
     lesson:any

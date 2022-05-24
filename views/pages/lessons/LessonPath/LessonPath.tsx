@@ -1,5 +1,5 @@
-import {View, ScrollView, Text, Button, Image} from "react-native";
-import {useEffect, useState} from "react";
+import {View, ScrollView, Text, Image} from "react-native";
+import {useEffect} from "react";
 
 import ActiveLesson from "../ActiveLesson/ActiveLesson";
 import {useDispatch, useSelector} from "../../../../redux/hooks";

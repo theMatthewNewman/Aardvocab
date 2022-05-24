@@ -1,4 +1,4 @@
-import {View, Text, Pressable,TouchableHighlight, StyleSheet, Animated} from 'react-native';
+import {View, Text, Pressable,TouchableHighlight, StyleSheet} from 'react-native';
 
 
 type propsType= {

@@ -1,6 +1,6 @@
 import {View, Image, StyleSheet} from "react-native"
 import {useDispatch, useSelector} from "../../../../../redux/hooks";
-import {userAction} from "../../../../../redux/user";
+
 
 
 function Hearts() {

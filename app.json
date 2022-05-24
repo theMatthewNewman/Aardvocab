@@ -1,13 +1,6 @@
 {
   "expo": {
-    "plugins": [
-      [
-        "expo-ads-admob",
-        {
-          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        }
-      ]
-    ],
+    "plugins": [],
     "owner": "matthewnewman",
     "name": "AardVocab",
     "slug": "AardVocab",
@@ -26,19 +19,21 @@
       "**/*"
     ],
     "ios": {
-      "config":{
-        "googleMobileAdsAppId":"ca-app-pub-1814005393488222~8836588515"
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1814005393488222~8836588515"
       },
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.matthewnewman.AardVocab"
     },
     "android": {
-      "config":{
+      "config": {
         "googleMobileAdsAppId": "ca-app-pub-1814005393488222~3928447580"
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.matthewnewman.AardVocab"
     },
     "web": {
       "favicon": "./assets/favicon.png"

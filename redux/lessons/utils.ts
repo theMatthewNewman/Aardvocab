@@ -1,14 +1,19 @@
-export const shuffleArray = (array:any[]) => {
-    let curId = array.length;
-    // There remain elements to shuffle
-    while (0 !== curId) {
-      // Pick a remaining element
-      let randId = Math.floor(Math.random() * curId);
-      curId -= 1;
-      // Swap it with the current element.
-      let tmp = array[curId];
-      array[curId] = array[randId];
-      array[randId] = tmp;
-    }
-    return array;
+export const shuffleArray = (originalArray:any) => {
+  var array = [].concat(originalArray);
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
+
+  return array;
+}

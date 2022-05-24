@@ -8,7 +8,7 @@ import { userAction } from "../../../redux/user";
 
 //styles
 import {styles} from "./LoginStyles"
-import {globalStyling, buttons, textInput} from "../../componants/globalStyle";
+import { buttons, textInput} from "../../componants/globalStyle";
 
 function Signup({setNewUser}:any) {
     const [email, setEmail] = useState("")

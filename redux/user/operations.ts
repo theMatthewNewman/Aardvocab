@@ -13,7 +13,6 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
-import DaysPracticed from "../../views/pages/Results/graphs/DaysGraph";
 
 const setUserFirebase = async(user:userState) => {
     const docRef = doc(db,"users",user.uid)

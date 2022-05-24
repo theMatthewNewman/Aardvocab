@@ -8,7 +8,6 @@ const example:pageState = {
     page:"Lessons",
     message:{
         active:false,
-        message:"Error",
         type:"wrong"
     }
 

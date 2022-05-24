@@ -1,4 +1,4 @@
-import {View, Text, Image, Pressable, StyleSheet} from "react-native";
+import {View, Text, Pressable, StyleSheet} from "react-native";
 import { useState } from "react";
 
 import {useSelector, useDispatch} from '../../../../../../redux/hooks';
@@ -9,9 +9,6 @@ import { userAction } from "../../../../../../redux/user";
 import { buttons} from '../../../../../componants/globalStyle';
 
 
-
-import {Audio} from 'expo-av';
-import CorrectMessage from "../../../../../componants/Alert/Message";
 import Buttons from "../../../../../componants/Buttons/Button";
 
 

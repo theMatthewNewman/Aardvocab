@@ -1,5 +1,4 @@
-import { lessonState, Prompt, lessonFirebase, globalLessonFirebase } from "./dataTypes";
-import {userState}  from "../user"
+import { lessonState, globalLessonFirebase } from "./dataTypes";
 import types from "./types";
 
 const completeLesson = () => ({

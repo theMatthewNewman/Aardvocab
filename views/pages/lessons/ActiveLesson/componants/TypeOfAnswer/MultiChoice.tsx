@@ -1,14 +1,10 @@
-import {View, StyleSheet, Button} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import {Prompt, shuffleArray} from "../../../../../../redux/lessons"
 import {useDispatch, useSelector} from '../../../../../../redux/hooks';
-import { lessonAction } from '../../../../../../redux/lessons';
-import {useState} from 'react';
-import Message from '../../../../../componants/Alert/Message';
 
 import {Audio} from 'expo-av';
 import Buttons from '../../../../../componants/Buttons/Button';
-import {userAction} from "../../../../../../redux/user";
 import {pageAction} from "../../../../../../redux/pages";
 
 
@@ -20,7 +16,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
     const lesson = useSelector(state => state.lesson)
-    const randomPrompts = shuffleArray(prompt.choices)
+    const randomPrompts:any = shuffleArray(prompt.choices)
 
     const handlePress = async(choice:{title:string, correct:boolean}) => {
         
@@ -44,7 +40,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
     return ( 
         <>
             <View style={styles.buttons}>
-                {randomPrompts.map((choice, id) => 
+                {randomPrompts.map((choice:any, id:number) => 
                     <Buttons key={id} onPress={()=>{handlePress(choice)}} style="Choice" title={choice.title}/>
                 )}
             </View>

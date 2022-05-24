@@ -2,17 +2,12 @@ import { Dispatch } from "redux";
 
 import {actions, Actions} from "./actions";
 import { userState } from "../user"
-import { lessonState, lessonAction } from "../lessons";
-import produce from "immer"
+
 
 //firebase
 import {setDoc, doc, getDoc} from "firebase/firestore";
-import { db, storage } from "../../firebase.config";
-import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
-import {User} from "firebase/auth";
-
-import * as ImagePicker  from 'expo-image-picker';
-import { dataFirebase, dataState } from "./dataTypes";
+import { db } from "../../firebase.config";
+import { dataFirebase} from "./dataTypes";
 
 import {bucketUsers} from "./utils";
 

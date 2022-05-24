@@ -1,6 +1,5 @@
 import { pageState } from "./dataTypes";
 import types from "./types";
-import { lessonState } from "../lessons";
 
 
 const changePage = (page:pageState["page"]) => ({

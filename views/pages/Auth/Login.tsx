@@ -1,18 +1,17 @@
-import { Platform } from "react-native";
+
 import {View, Text, Pressable, TextInput} from "react-native";
 
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {useDispatch} from "../../../redux/hooks";
 
 //authentication
-import { GoogleSignin, GoogleSigninButton, statusCodes} from "react-native-google-signin";
 import { auth } from "../../../firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { userAction } from "../../../redux/user";
 
 //styling
 import {styles} from "./LoginStyles";
-import { globalStyling, textInput, buttons } from "../../componants/globalStyle";
+import { textInput, buttons } from "../../componants/globalStyle";
 
 import Signup from "./Signup";
 
@@ -20,8 +19,6 @@ function Login() {
     const [newUser, setNewUser] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loggedIn, setloggedIn] = useState(false);
-    const [userInfo, setuserInfo] = useState([]);
 
     const dispatch = useDispatch()
 

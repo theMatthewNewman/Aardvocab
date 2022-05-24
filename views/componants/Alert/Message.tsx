@@ -1,10 +1,7 @@
-import {View, Text, StyleSheet, useWindowDimensions, Image, Animated, SafeAreaView} from 'react-native';
-import {Audio} from 'expo-av';
-import { useEffect } from 'react';
+import {View, Text, StyleSheet, useWindowDimensions, Image, Animated} from 'react-native';
 import {useDispatch, useSelector} from "../../../redux/hooks"
 import {pageAction}from "../../../redux/pages";
 import Buttons from '../Buttons/Button';
-import { setLogLevel } from 'firebase/firestore';
 import {lessonAction}  from "../../../redux/lessons";
 import {useRef} from "react";
 
@@ -74,8 +71,8 @@ function Message() {
                 </Animated.View>
             </Animated.View>
             : message.active && lesson.lesson.active && message.type==='correct'? 
-            <Animated.View style={{...style.correct, height:(height/3.5), width, opacity:fadeAnim}}>
-                <Animated.View style={{translateY:anim,display:'flex',height:(height/3.5), flexDirection:"column", justifyContent:'space-between'}}>
+            <Animated.View style={{...style.correct, height:(height-430), width, opacity:fadeAnim}}>
+                <Animated.View style={{translateY:anim,display:'flex',height:(height-430), flexDirection:"column", justifyContent:'space-between'}}>
                     <View style={style.ccheck}>
                     <View style={style.cbox}>
                         <Image style={style.cimage} source={ require('../../../images/check.png')} />
@@ -97,10 +94,6 @@ const style = StyleSheet.create({
         padding:10,
         bottom:0,
         borderTopWidth:3,
-        borderRightWidth:3,
-        borderLeftWidth:3,
-        borderTopRightRadius:16,
-        borderTopLeftRadius:16,
         
     },
     check:{
@@ -116,19 +109,21 @@ const style = StyleSheet.create({
         borderRadius:16,
         borderWidth:3,
         marginHorizontal:4,
-        marginTop:20,
+        marginVertical:20,
+        flex:1,
     },
     cbox:{
         display:'flex',
-        flexDirection:'row',
         alignItems:'center',
-        justifyContent:'space-evenly'
+        justifyContent:'space-between',
+        height:"100%",
+        padding:30,
 
     },
     cimage:{
         resizeMode:"contain",
-        height:50,
-        width:50,
+        height:100,
+        width:100,
         margin:10,
     },
     ctext:{

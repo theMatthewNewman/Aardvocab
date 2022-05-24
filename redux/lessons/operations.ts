@@ -1,8 +1,7 @@
 import { Dispatch } from "redux";
 import {actions, Actions} from "./actions";
-import {Prompt, lessonState, lessonFirebase, globalLessonFirebase} from "./dataTypes"
+import {Prompt, lessonState, lessonFirebase} from "./dataTypes"
 import {userState, userAction}from "../user"
-import {pageState, pageAction}from "../pages"
 import {shuffleArray} from "./utils";
 
 import {produce} from "immer"
