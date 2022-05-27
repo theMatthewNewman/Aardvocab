@@ -3,6 +3,8 @@ import ProgressBar from "../../ActiveLesson/componants/ProgressBar";
 import {useState} from "react"
 import Buttons from "../../../../componants/Buttons/Button";
 
+import {size} from "../../../../componants/globalStyle";
+
 type LessonCardType = {
     activateLesson:any,
     lesson:any
@@ -60,30 +62,30 @@ export default LessonCard;
 
 const styles = StyleSheet.create({
     image:{
-        width:100,
-        height:100,
+        width:size.huge,
+        height:size.huge,
         resizeMode:"contain",
-        margin:10,
+        margin:size.smaller,
     },
     title:{
         alignSelf:"center",
         textAlign:"center",
-        fontSize:30,
+        fontSize:size.large,
     },
     lessonNumber:{
         alignSelf:"center",
         textAlign:"center",
-        fontSize:20,
+        fontSize:size.medium,
     },
     lessonType:{
-        fontSize:15,
-        marginBottom:10,
+        fontSize:size.small,
+        marginBottom:size.small,
 
     },
     about:{
         backgroundColor:"lightgray",
-        padding:10,
-        borderRadius:10,
+        padding:size.small,
+        borderRadius:size.smaller,
     },
     content:{
         display:"flex",
@@ -97,22 +99,18 @@ const styles = StyleSheet.create({
     all:{
         backgroundColor:"white",
         display:"flex",
-        marginLeft:20,
-        marginRight:60,
-        marginTop:40,
-        borderRadius:20,
-        borderWidth:2,
-        padding:10,
+        margin:size.medium,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+        padding:size.small,
     },
     deactive:{
         backgroundColor:"gray",
         display:"flex",
-        marginLeft:20,
-        marginRight:60,
-        marginTop:40,
-        borderRadius:20,
-        borderWidth:2,
-        padding:10,
+        margin:size.medium,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+        padding:size.small,
     }
 
 })

@@ -6,9 +6,7 @@ import {lessonAction} from "../../../../../../redux/lessons"
 import {Prompt} from "../../../../../../redux/lessons"
 import { userAction } from "../../../../../../redux/user";
 
-import { buttons} from '../../../../../componants/globalStyle';
-
-
+import { buttons, size} from '../../../../../componants/globalStyle';
 import Buttons from "../../../../../componants/Buttons/Button";
 
 
@@ -81,10 +79,10 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         backgroundColor:"lightgray",
         width:"90%",
-        marginBottom:20,
-        padding:5,
-        borderWidth:2,
-        borderRadius:10,
+        marginBottom:size.small,
+        padding:size.small,
+        borderWidth:size.small,
+        borderRadius:size.thin,
     },
     buttons:{
         margin:5,
@@ -93,13 +91,13 @@ const styles = StyleSheet.create({
         width:"90%",
         alignSelf:"center",
         backgroundColor:"white",
-        fontSize:20,
-        minHeight:75,
-        padding:10,
-        marginVertical:20,
-        borderWidth:2,
+        fontSize:size.small,
+        minHeight:size.large,
+        padding:size.small,
+        marginVertical:size.medium,
+        borderWidth:size.thin,
         textAlign:"center",
-        borderRadius:10,
+        borderRadius:size.small,
 
     }
 })

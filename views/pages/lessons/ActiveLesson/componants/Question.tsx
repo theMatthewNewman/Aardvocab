@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import {Prompt} from "../../../../../redux/lessons";
+import { size } from "../../../../componants/globalStyle";
 
 
 type questionType = {
     prompt:Prompt
 }
 
-function Question({prompt}:questionType) {
+function Question({prompt}:any) {
     return ( 
         <View>
             {prompt.type==="build"? 
@@ -27,22 +28,22 @@ function Question({prompt}:questionType) {
 const styles = StyleSheet.create({
     title:{
         textAlign:"center",
-        fontSize:30,
+        fontSize:size.large,
         backgroundColor:"lightgray",
-        borderRadius:5,
+        borderRadius:size.smaller,
     },
     background:{
         backgroundColor:"white",
         display:"flex",
-        padding:20,
-        borderBottomWidth:2,
+        padding:size.small,
+        borderBottomWidth:size.thin,
         
     },
     picture:{
-        height:180,
-        width:180,
+        height:size.giant,
+        width:size.giant,
         resizeMode:"contain",
-        margin:10,
+        margin:size.small,
         alignSelf:"center",
         
     }

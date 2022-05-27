@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import {size} from "../../../../componants/globalStyle";
 
 type progressType = {
     progress:number
@@ -7,16 +8,16 @@ type progressType = {
 function ProgressBar({progress}:progressType) {
     return ( 
     <View style={{
-        margin:10,
+        margin:size.small,
         backgroundColor:'lightgray',
-        height:10,
-        borderRadius:5,}}>
+        height:size.small,
+        borderRadius:size.smaller,}}>
 
         <View style={{
-            height:10,
+            height:size.small,
             backgroundColor:'#3c427c',
             width:`${progress}%`,
-            borderRadius:5,}}>
+            borderRadius:size.smaller,}}>
         </View>
     </View>
      );

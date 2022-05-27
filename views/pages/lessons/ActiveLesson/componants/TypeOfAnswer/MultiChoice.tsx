@@ -7,6 +7,8 @@ import {Audio} from 'expo-av';
 import Buttons from '../../../../../componants/Buttons/Button';
 import {pageAction} from "../../../../../../redux/pages";
 
+import {size} from "../../../../../componants/globalStyle";
+
 
 type multichoiceType = {
     prompt:Extract<Prompt, {type:"multi"}>
@@ -53,9 +55,8 @@ const styles = StyleSheet.create({
     buttons:{
         display:"flex",
         justifyContent:"space-evenly",
-        paddingHorizontal:20,
+        paddingHorizontal:size.small,
         flex:1,
-        paddingBottom:50,
     }
 })
 

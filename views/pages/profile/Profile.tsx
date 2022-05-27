@@ -1,15 +1,11 @@
-import { View, Image, Text, TextInput } from "react-native";
+import { View, Image, Text, TextInput, StyleSheet } from "react-native";
 import {useSelector} from "../../../redux/hooks";
 import Button from "../../componants/Buttons/Button"
-import { ProfileStyles } from "./ProfileStyles";
 import {auth} from "../../../firebase.config";
-
 import {useDispatch} from "../../../redux/hooks";
-
 import { useState } from "react";
-
 import {userAction} from "../../../redux/user";
-import {globalStyling} from "../../componants/globalStyle";
+import {globalStyling, size} from "../../componants/globalStyle";
 
 
 function Profile() {
@@ -83,3 +79,48 @@ function Profile() {
 }
 
 export default Profile;
+
+const ProfileStyles = StyleSheet.create({
+    input:{ 
+        backgroundColor:"white",
+        borderRadius:size.smallest,
+        fontSize:size.medium,
+        paddingHorizontal:size.small,
+        paddingVertical:size.smallest,
+        marginBottom:size.medium,
+        borderWidth:size.thin,
+    },
+    date:{
+        textAlign:'center',
+    },
+    pic:{
+        height:size.huge,
+        width:size.huge,
+        resizeMode:"contain",
+    },
+    info:{
+        backgroundColor:'white',
+        display:"flex",
+        flexDirection:'row',
+        margin:size.medium,
+        padding:size.medium,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+    },
+    buttons:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-evenly",
+    },
+    userName:{
+        fontSize:size.medium,
+        paddingVertical:size.smallest,
+        marginBottom:size.medium,
+        textAlign:'center',
+    },
+    about:{
+        paddingHorizontal:size.small,
+        flex:1,
+        
+    }
+})

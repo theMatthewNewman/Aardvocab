@@ -2,9 +2,36 @@ import { StyleSheet, Dimensions } from "react-native";
 
 export const AardVocabBlue = '#3c427c'
 
-const {height, width} = Dimensions.get("window")
-const headWidth = (3*width)
+const {height, width} = Dimensions.get("window");
 
+export const size = {
+    thin:height/250,
+    smallest:height/120,
+    smaller:height/90,
+    small:height/60,
+    medium:height/40,
+    large:height/30,
+    larger:height/20,
+    
+    largest:height/10,
+    huge:height/8,
+    giant:height/5,
+    gianter:height/4,
+    half:height/2,
+    full:height,
+
+    Wthin:width/180,
+    Wsmaller:width/26,
+    Wsmall:width/12,
+    Wlarge:width/6,
+    Wlarger:width/3,
+    Whalf:width/2,
+    Wlargest:width/1.4,
+    Wlargester:width/1.2,
+
+}
+
+const headWidth = (3*width)
 export const globalStyling = StyleSheet.create({
     head:{
         backgroundColor:AardVocabBlue,

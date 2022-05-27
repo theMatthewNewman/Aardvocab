@@ -1,5 +1,5 @@
 import {View, Text, Pressable,TouchableHighlight, StyleSheet} from 'react-native';
-
+import {size} from "../globalStyle"
 
 type propsType= {
     onPress:any
@@ -50,49 +50,38 @@ function Buttons(props:propsType) {
 }
 const ButtonStyles = StyleSheet.create({
     Nav:{
-        paddingHorizontal:15,
-        paddingVertical:10, 
+        paddingHorizontal:size.small,
+        paddingVertical:size.smaller
     },
     NavSelected:{
-        paddingHorizontal:15,
-        paddingVertical:10,
+        paddingHorizontal:size.small,
+        paddingVertical:size.smaller,
         backgroundColor:"lightgray",
-        borderRadius:5,
+        borderRadius:size.smallest,
     },
     Strong:{
         backgroundColor:'#3c427c',
         alignSelf:'center',
-        padding:10,
-        paddingLeft:10,
-        paddingRight:10,
-        borderRadius:5,
-        margin:4,
+        padding:size.smaller,
+        borderRadius:size.smallest,
+        margin:size.smallest
     },
     Choice:{
         backgroundColor:'white',
-        borderRadius:10,
-        borderWidth:2,
+        borderRadius:size.smaller,
+        borderWidth:size.thin,
         borderColor:'black',
         width:"100%",
-        padding:5,
+        padding:size.smallest,
         
     },
     correct:{
         backgroundColor:'#27ae60',
-        padding:10,
-        paddingLeft:10,
-        paddingRight:10,
-        borderRadius:16,
-        marginHorizontal:4,
-        marginBottom:40,
-        borderWidth:3,
+        padding:size.small,
+        borderRadius:size.small,
+        marginBottom:size.larger,
+        borderWidth:size.thin,
         
-    },
-    hover:{
-
-    },
-    active:{
-
     },
     default:{
         
@@ -105,12 +94,12 @@ const TextStyles = StyleSheet.create({
     },
     Choice:{
         textAlign:"center",
-        fontSize:20,
+        fontSize:size.medium,
 
     },
     correct:{
         textAlign:"center",
-        fontSize:30,
+        fontSize:size.large,
         color:"white",
     },
     default:{

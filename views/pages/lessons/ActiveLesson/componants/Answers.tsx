@@ -12,8 +12,12 @@ type answerType = {
 function Answers({prompt}:answerType) {
     return ( 
         <>
+        {prompt.active?
+            <>
             {prompt.type==="build"? <BuildUp prompt={prompt}/>:
             prompt.type==="multi"? <MultiChoice prompt={prompt}/>: null}
+            </>
+        :null}
         </>
      );
 }

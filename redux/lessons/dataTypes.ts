@@ -11,6 +11,7 @@ export type Prompt = {
                     definition:string
                     example:string
                 }
+                active:true
               }|
               {
                 prompt: string
@@ -23,7 +24,21 @@ export type Prompt = {
                     definition:string
                     example:string
                 }
-              }
+                active:true
+              }|
+              {
+                  type:"compare"
+                  prompt:string
+                  from:{
+                    title:string
+                    id:number
+                  }[]
+                  to:{
+                      title:string
+                      id:number
+                  }
+                  active:true
+              }|{active:false}
 
 
 export type lessonState = {

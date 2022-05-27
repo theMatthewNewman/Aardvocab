@@ -3,6 +3,8 @@ import Buttons from "../Buttons/Button";
 
 import { useSelector } from "../../../redux/hooks";
 
+import {size} from "../globalStyle";
+
 type navActions = {
   action:any[]
 }
@@ -37,20 +39,19 @@ const styles = StyleSheet.create({
     background: {
       flexDirection:"row-reverse",
       backgroundColor: 'white',
-      borderBottomWidth:2,
+      borderBottomWidth:size.thin,
 
-      paddingTop:40,
-      paddingBottom:5,
-
+      paddingTop:size.larger,
+      paddingBottom:size.smallest,
       width:'100%',
-
       justifyContent:"space-evenly",
       alignItems:"center",
       
     },
     image: {
-        height:40,
-        width:40,
+        height:size.larger,
+        width:size.larger,
+        resizeMode:'contain'
     },
   });
   

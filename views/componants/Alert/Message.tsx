@@ -4,6 +4,9 @@ import {pageAction}from "../../../redux/pages";
 import Buttons from '../Buttons/Button';
 import {lessonAction}  from "../../../redux/lessons";
 import {useRef} from "react";
+import {Prompt} from "../../../redux/lessons";
+
+import {size} from "../globalStyle"
 
 
 
@@ -14,6 +17,52 @@ function Message() {
     const user = useSelector(state => state.user)
     const {height, width} = useWindowDimensions()
     const dispatch = useDispatch()
+
+    const alertType = (() => {
+        var prompt:Prompt = {active:false}
+        type inactiveType = {prompt:typeof prompt, type:"INACTIVE"}
+        if (!lesson.lesson.active || !message.active){
+            const ret:inactiveType = {prompt:prompt,type:"INACTIVE"}
+            return(ret)
+        }
+        prompt = lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts[lesson.lesson.promptIndex]
+        if (!prompt.active){
+            const ret:inactiveType = {prompt:prompt,type:"INACTIVE"}
+            return(ret)
+        }
+        if (message.type==='correct'){
+            if (prompt.type==='build'){
+                const ret:{prompt:typeof prompt, type:'correctbuild'} = {prompt,type:"correctbuild"}
+                return(ret)
+            }
+            if (prompt.type==='multi'){
+                const ret:{prompt:typeof prompt, type:"correctmulti"} = {prompt,type:"correctmulti"}
+                return(ret)
+            }
+            if (prompt.type==='compare'){
+                const ret:{prompt:typeof prompt, type:'correctcompare'} = {prompt,type:"correctcompare"}
+                return(ret)
+            }
+        }
+        if (message.type==='wrong'){
+            if (prompt.type==='build'){
+                const ret:{prompt:typeof prompt, type:"wrongbuild"} = {prompt,type:"wrongbuild"}
+                return(ret)
+            }
+            if (prompt.type==='multi'){
+                const ret:{prompt:typeof prompt, type:"wrongmulti"} = {prompt,type:"wrongmulti"}
+                return(ret)
+            }
+            if (prompt.type==='compare'){
+                const ret:{prompt:typeof prompt, type:"wrongcompare"} = {prompt,type:"wrongcompare"}
+                return(ret)
+            }
+        }
+        type unk = {prompt:typeof prompt, type:"UNKNOWN"}
+        const ret:unk = {prompt,type:'UNKNOWN'}
+        return(ret)
+        
+    })()
 
     const handlePress = () => {
         if (message.type==='correct'){
@@ -54,7 +103,7 @@ function Message() {
 
     return ( 
         <>
-            {message.active && lesson.lesson.active && message.type==="wrong"?
+            {alertType.type==="wrongmulti"?
             <Animated.View style={{...style.wrong, height, width, opacity:fadeAnim}}>
                 <Animated.View style={{translateY:anim,display:'flex',height, flexDirection:"column", justifyContent:'space-between'}}>
                     <View style={style.check}>
@@ -62,17 +111,17 @@ function Message() {
                         <Image style={style.image} source={ require('../../../images/x.png')} />
                         
                     </View>
-                    <Text style={style.text}>{lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts[lesson.lesson.promptIndex].messages.title}</Text>
-                    <Text style={style.desc}>{lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts[lesson.lesson.promptIndex].messages.definition}</Text>
+                    <Text style={style.text}>{alertType.prompt.messages.title}</Text>
+                    <Text style={style.desc}>{alertType.prompt.messages.definition}</Text>
                     <Text style={style.text}>Example:</Text>
-                    <Text style={style.desc}>{lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts[lesson.lesson.promptIndex].messages.example}</Text>
+                    <Text style={style.desc}>{alertType.prompt.messages.example}</Text>
                     </View>
                     <Buttons onPress={() => {out()}} style="correct" title="Next Question"/>
                 </Animated.View>
             </Animated.View>
-            : message.active && lesson.lesson.active && message.type==='correct'? 
-            <Animated.View style={{...style.correct, height:(height-430), width, opacity:fadeAnim}}>
-                <Animated.View style={{translateY:anim,display:'flex',height:(height-430), flexDirection:"column", justifyContent:'space-between'}}>
+            : alertType.type==="correctmulti"? 
+            <Animated.View style={{...style.correct, height:(size.half), width, opacity:fadeAnim}}>
+                <Animated.View style={{translateY:anim,display:'flex',height:(size.half), flexDirection:"column", justifyContent:'space-between'}}>
                     <View style={style.ccheck}>
                     <View style={style.cbox}>
                         <Image style={style.cimage} source={ require('../../../images/check.png')} />
@@ -91,25 +140,23 @@ const style = StyleSheet.create({
     correct:{
         backgroundColor:'#68cb30',
         position:"absolute",
-        padding:10,
+        padding:size.small,
         bottom:0,
-        borderTopWidth:3,
+        borderTopWidth:size.thin,
         
     },
     check:{
         backgroundColor:'lightgray',
-        borderRadius:16,
-        borderWidth:3,
-        marginHorizontal:4,
-        marginTop:40,
-        paddingBottom:20,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+        marginTop:size.larger,
+        paddingBottom:size.medium,
     },
     ccheck:{
         backgroundColor:'lightgray',
-        borderRadius:16,
-        borderWidth:3,
-        marginHorizontal:4,
-        marginVertical:20,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+        marginVertical:size.small,
         flex:1,
     },
     cbox:{
@@ -117,51 +164,49 @@ const style = StyleSheet.create({
         alignItems:'center',
         justifyContent:'space-between',
         height:"100%",
-        padding:30,
+        padding:size.larger,
 
     },
     cimage:{
         resizeMode:"contain",
-        height:100,
-        width:100,
-        margin:10,
+        height:size.huge,
+        width:size.huge,
     },
     ctext:{
-        marginHorizontal:20,
-        fontSize:40,
+        fontSize:size.large,
     },
     wrong:{
         backgroundColor:'#ff8989',
-        padding:10,
+        padding:size.medium,
         position:"absolute",
         bottom:0,
 
     },
     text:{
         color:'black',
-        fontSize:30,
-        marginHorizontal:15,
-        marginVertical:10,
+        fontSize:size.medium,
+        marginHorizontal:size.small,
+        marginVertical:size.small,
     },
     desc:{
         color:'black',
-        fontSize:20,
+        fontSize:size.medium,
         backgroundColor:'white',
-        marginHorizontal:30,
-        padding:10,
-        borderRadius:5,
+        marginHorizontal:size.medium,
+        padding:size.small,
+        borderRadius:size.smaller,
         textAlign:'center',
     },
     image:{
         resizeMode:"contain",
-        height:200,
-        width:200,
-        margin:20,
+        height:size.giant,
+        width:size.giant,
+        margin:size.large,
     },
     box:{
         backgroundColor:'white',
         alignItems:'center',
-        borderRadius:16,
+        borderRadius:size.small,
     }
 })
 export default Message;

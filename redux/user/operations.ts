@@ -3,7 +3,6 @@ import { Dispatch } from "redux";
 import {actions, Actions} from "./actions";
 import { createUser } from "./utils";
 import { userState } from "./dataTypes";
-import { lessonState, lessonAction } from "../lessons";
 import produce from "immer"
 
 //firebase
@@ -67,23 +66,7 @@ const gainHeart = (user:userState) => (dispatch:Dispatch) => {
     })
     updateUser(newUser) (dispatch)
 }
-const completeLesson = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
-    const newUser = produce(user,draft => {
-        if (lesson.lesson.active){
-            draft.lessonData[lesson.lesson.id].subLessons += 1
-            draft.lessonData[lesson.lesson.id].percentage += (100/lesson.lesson.subLessons.length)
-        }
-        draft.level +=1
-        return(draft)
-    })
-    const newLesson = produce(lesson, draft => {
-        draft.lesson={active:false}
-        return(draft)
-    })
-    updateUser(newUser) (dispatch)
-    lessonAction.updateLesson(newLesson) (dispatch)
-    
-}
+
 const newUser = (authorizedUser:User, username?:string) => async(dispatch:Dispatch) => {
     const user = createUser(authorizedUser, username);
     console.log(user)
@@ -109,8 +92,24 @@ const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
 }
 
 const addDay = (user:userState) => async(dispatch:Dispatch) =>{
-    const newDay = new Date()
-    user.daysPracticed.push(newDay.getSeconds())
+    var newuser = produce(user, draft => {
+    var newDay = new Date()
+    var newDayNoTime = newDay.getFullYear()+'/'+(newDay.getMonth()+1)+'/'+newDay.getDate(); 
+    var present = false
+    draft.daysPracticed.forEach(day => {
+        var date = new Date(day)
+        var NoTimeDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(); 
+        if (newDayNoTime === NoTimeDate){
+            present = true
+        }
+    })
+    if (!present){
+        draft.daysPracticed.push(newDay.getSeconds())
+        
+    }
+    return(draft)})
+    setUserFirebase(newuser)
+    dispatch<Actions>(actions.updateUser(user))
 
 }
 
@@ -124,6 +123,6 @@ export const userAction = {
     changeProfilePicture,
     newUser,
     getUserFirebase,
-    completeLesson,
     setUserFirebase,
+    addDay
 }

@@ -1,7 +1,7 @@
 
-import {View, Text, Pressable, TextInput} from "react-native";
+import {View, Text, Pressable, TextInput, StyleSheet} from "react-native";
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useDispatch} from "../../../redux/hooks";
 
 //authentication
@@ -10,8 +10,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { userAction } from "../../../redux/user";
 
 //styling
-import {styles} from "./LoginStyles";
+import {size} from "../../componants/globalStyle"
 import { textInput, buttons } from "../../componants/globalStyle";
+
+
 
 import Signup from "./Signup";
 
@@ -22,10 +24,13 @@ function Login() {
 
     const dispatch = useDispatch()
 
+
+
     const signIn = async() => {
         await signInWithEmailAndPassword(auth,email,password)
         if (auth.currentUser) userAction.getUserFirebase(auth.currentUser.uid) (dispatch)
     }
+
     
 
     return ( 
@@ -46,3 +51,17 @@ function Login() {
 }
 
 export default Login;
+
+const styles=StyleSheet.create({
+    container:{
+        backgroundColor:"white",
+        margin:size.small,
+        padding:size.small,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+
+    },
+    textInput:{
+        
+    }
+})

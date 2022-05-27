@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, Image} from "react-native";
 import {Calendar} from 'react-native-calendars';
-import {useSelector} from '../../../../redux/hooks'
+import {useSelector} from '../../../../redux/hooks';
+import {size} from "../../../componants/globalStyle";
 
 function DaysGraph() {
     const user = useSelector(state => state.user)
@@ -32,32 +33,34 @@ function DaysGraph() {
 
 const styles = StyleSheet.create({
   cal:{
-    borderWidth:2,
-    minWidth:350,
-    borderRadius:16,
-    padding:5,
+    borderWidth:size.Wthin,
+    minWidth:size.Wlargester,
+    borderRadius:size.Wsmaller,
+    padding:size.Wsmaller,
   },
   backdrop:{
-    padding:10,
-    margin:10,
+
     alignItems:'center',
     backgroundColor:"#3c427c",
-    borderRadius:16,
+    margin:size.Wsmaller,
+    padding:size.Wsmaller,
+    borderRadius:size.Wsmaller
   },
   dot:{
-    height:20,
-    width:20,
-    marginRight:10,
-},
-key:{
-    display:'flex',
-    flexDirection:'row',
-    marginVertical:5
-},
-note:{
-    color:"white",
-    fontSize:15,
-}
+      height:size.medium,
+      width:size.medium,
+      resizeMode:'contain',
+      marginTop:size.smallest,
+      marginHorizontal:size.smaller
+  },
+  key:{
+      display:'flex',
+      flexDirection:'row',
+  },
+  note:{
+      color:"white",
+      fontSize:size.medium,
+  }
 })
 
 export default DaysGraph;

@@ -1,4 +1,4 @@
-import {View, Text, Dimensions, Image, ScrollView} from "react-native";
+import { Text,  Image, ScrollView} from "react-native";
 import DaysGraph from "./graphs/DaysGraph";
 import LessonGraph from "./graphs/LessonGraph";
 import { useEffect } from "react";

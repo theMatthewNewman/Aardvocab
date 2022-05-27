@@ -6,6 +6,7 @@ import { useSelector } from "../../../../redux/hooks";
 import { chartConfig} from "../../../../redux/graphs"
 import {useState} from 'react'
 
+import { size } from "../../../componants/globalStyle";
 
 
 
@@ -29,15 +30,15 @@ const LessonGraph = () => {
                 
                 <Text style={{
                 transform: [{ rotate: '-90deg' },
-                            { translateY: (70) }],
-                marginRight:-80
+                            { translateY: (size.Wlarge) }],
+                marginRight:-size.Wlarge
                 }}>Number of Users</Text>
             <LineChart
                 data={{labels:[""],datasets:[{data}]}}
-                width={300}
+                width={size.Wlargest}
                 withHorizontalLines={false}
                 withVerticalLines={false}
-                height={220}
+                height={size.Whalf}
                 fromZero={false}
                 getDotColor={(dataPoint, dataPointIndex) => {
                     if(dataPointIndex === selfIndex) 
@@ -46,10 +47,7 @@ const LessonGraph = () => {
                 }}
                 chartConfig={chartConfig}
                 style={{
-                    paddingTop:10,
-                    paddingHorizontal:8,
-
-
+                    paddingTop:size.small,
                     
                 }}></LineChart>
             </View>
@@ -70,41 +68,42 @@ const styles = StyleSheet.create({
     graph:{
         alignItems:'center',
         backgroundColor:'#3c427c',
-        margin:10,
-        paddingVertical:8,
-        borderRadius:16
+        margin:size.Wsmaller,
+        padding:size.Wsmaller,
+        borderRadius:size.Wsmaller
     },
     graphicHoriz:{
         backgroundColor:'white',
-        borderRadius: 16,
+        borderRadius: size.Wsmaller,
         display:"flex",
         flexDirection:"row",
         maxWidth:'100%'
     },
     graphicVert:{
-        borderRadius: 16,
-        borderWidth:3,
+        borderRadius: size.Wsmaller,
+        borderWidth:size.Wthin,
         backgroundColor:'white',
     },
     xLabel:{
         textAlign:'center',
-        marginBottom:20,
-        marginTop:-20,
+        marginBottom:size.small,
+        marginTop:-size.medium,
 
     },
     dot:{
-        height:20,
-        width:20,
-        marginRight:10,
+        height:size.medium,
+        width:size.medium,
+        resizeMode:'contain',
+        marginTop:size.smallest,
+        marginHorizontal:size.smaller
     },
     key:{
         display:'flex',
         flexDirection:'row',
-        marginVertical:5
     },
     note:{
         color:"white",
-        fontSize:15,
+        fontSize:size.medium,
     }
 })
 

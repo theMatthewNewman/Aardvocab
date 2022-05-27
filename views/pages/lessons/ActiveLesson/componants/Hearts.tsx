@@ -1,5 +1,6 @@
 import {View, Image, StyleSheet} from "react-native"
 import {useDispatch, useSelector} from "../../../../../redux/hooks";
+import {size} from "../../../../componants/globalStyle";
 
 
 
@@ -27,19 +28,16 @@ function Hearts() {
 
 const styles = StyleSheet.create({
     heart:{
-        width:25,
-        height:25,
-        marginRight:10,
+        width:size.large,
+        height:size.large,
+        marginRight:size.small,
     },
     heartBar:{
         display:"flex",
         flexDirection:"row",
         justifyContent:"flex-end",
         width:"100%",
-        marginTop:20,
-        minHeight:25,
-        
-        
+        marginTop:size.medium,
     }
 })
 export default Hearts;

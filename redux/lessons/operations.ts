@@ -9,7 +9,6 @@ import {produce} from "immer"
 //firebase
 import { doc, getDoc} from "firebase/firestore";
 import { db } from "../../firebase.config";
-import types from "./types";
 
 
 const getGlobalLessonsFirebase = async() => {
@@ -57,7 +56,7 @@ const correct = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
     if (lesson.lesson.active) {
         
         if (lesson.lesson.promptIndex +1 >= lesson.lesson.subLessons[lesson.lesson.subLessonIndex].prompts.length){
-            userAction.completeLesson(user, lesson) (dispatch)
+            completeLesson(user, lesson) (dispatch)
         } else {
             dispatch<Actions>(actions.completePrompt())
         }
@@ -78,7 +77,23 @@ const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) =>
     })
     dispatch<Actions>(actions.updateLesson(newLessonState["lesson"]))
 }
-
+const completeLesson = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
+    const newUser = produce(user,draft => {
+        if (lesson.lesson.active){
+            draft.lessonData[lesson.lesson.id].subLessons += 1
+            draft.lessonData[lesson.lesson.id].percentage += (100/lesson.lesson.subLessons.length)
+        }
+        draft.level +=1
+        return(draft)
+    })
+    const newLesson = produce(lesson, draft => {
+        draft.lesson={active:false}
+        return(draft)
+    })
+    userAction.addDay(newUser) (dispatch)
+    updateLesson(newLesson) (dispatch)
+    
+}
 
 export const lessonAction = {
     getLessonFirebase,
@@ -88,5 +103,6 @@ export const lessonAction = {
     setGlobalLessonsState,
     correct,
     Incorrect,
-    updateLesson
+    updateLesson,
+    completeLesson
 }

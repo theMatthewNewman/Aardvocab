@@ -1,14 +1,14 @@
-import { View, TextInput, Pressable, Text} from "react-native";
+import { View, TextInput, Pressable, Text, StyleSheet} from "react-native";
 import {useState} from "react";
 import {useDispatch} from "../../../redux/hooks"
 
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {auth} from "../../../firebase.config";
 import { userAction } from "../../../redux/user";
+import * as Keychain from 'react-native-keychain';
 
 //styles
-import {styles} from "./LoginStyles"
-import { buttons, textInput} from "../../componants/globalStyle";
+import { buttons, textInput, size} from "../../componants/globalStyle";
 
 function Signup({setNewUser}:any) {
     const [email, setEmail] = useState("")
@@ -17,9 +17,11 @@ function Signup({setNewUser}:any) {
     const [username, setUsername] = useState("")
     const dispatch = useDispatch()
 
+
+
     const submitNewUser = async() => {
 
-        await createUserWithEmailAndPassword(auth,email,password)
+        await createUserWithEmailAndPassword(auth,email,password);
         await signInWithEmailAndPassword(auth, email, password);
         if (auth.currentUser){
             userAction.newUser(auth.currentUser, username) (dispatch)
@@ -50,3 +52,17 @@ function Signup({setNewUser}:any) {
 }
 
 export default Signup;
+
+export const styles=StyleSheet.create({
+    container:{
+        backgroundColor:"white",
+        margin:size.small,
+        padding:size.small,
+        borderRadius:size.small,
+        borderWidth:size.thin,
+
+    },
+    textInput:{
+        
+    }
+})
