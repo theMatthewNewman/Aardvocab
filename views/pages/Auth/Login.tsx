@@ -43,6 +43,7 @@ function Login() {
             <TextInput onChangeText={setPassword} style={textInput.form}/>
             <View style={{flexDirection:'row'}}>
             <Pressable onPress={() => {signIn()}} style={buttons.strong}><Text style={{color:'white'}}>Sign in</Text></Pressable>
+            <Pressable onPress={() => {signIn()}} style={buttons.strong}><Text style={{color:'white'}}>Try Example</Text></Pressable>
             <Pressable onPress={() => {setNewUser(true)}} style={buttons.strong}><Text style={{color:'white'}}>New User</Text></Pressable>
             </View>
         </View>}

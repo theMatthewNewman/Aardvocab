@@ -1,4 +1,5 @@
 import { View, StyleSheet, Animated, useWindowDimensions } from "react-native";
+import {Animation} from "react-native-reanimated"
 import { useSelector, useDispatch } from "../../redux/hooks";
 import LessonPath from "./lessons/LessonPath/LessonPath";
 import Results from "./Results/Results";
