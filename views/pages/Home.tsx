@@ -1,10 +1,11 @@
-import { View, StyleSheet, Animated, useWindowDimensions } from "react-native";
-import {Animation} from "react-native-reanimated"
+import { View, StyleSheet, useWindowDimensions } from "react-native";
+import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, runOnJS} from "react-native-reanimated"
+import { PanGestureHandler,GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "../../redux/hooks";
 import LessonPath from "./lessons/LessonPath/LessonPath";
 import Results from "./Results/Results";
 import Profile from "./profile/Profile";
-import { useRef} from "react";
+import { useEffect, useRef} from "react";
 
 
 import {pageAction}from "../../redux/pages";
@@ -17,6 +18,7 @@ import Navbar from "../componants/Navbar/Navbar";
 import {auth} from "../../firebase.config"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 
@@ -28,68 +30,118 @@ function Home() {
     const dispatch = useDispatch()
     const {height, width} = useWindowDimensions()
 
-    const anim = useRef(new Animated.Value(0)).current;
-
-    const movePage = (page:Animated.Value,direction:string) => {
-        var start = 0
-        var end = 0
-
-        if (direction==='left'){
-            start = width
+    const anim = useSharedValue(0)
+    const animationStyles = useAnimatedStyle(() =>{
+        return{
+            transform: [{translateX:anim.value}]
         }
-        if (direction==='right'){
-            start = -width
-        }
-        page.setValue(start)
-        Animated.spring(page, {
-            useNativeDriver:true,
-            toValue: end,
-        }).start();
+    })
+    const goProfile = async() => {
+        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        await pageAction.changePage('Profile') (dispatch)
+        anim.value = width
+        anim.value = withSpring(0)
+    }
+    const goResults = async() => {
+        
+        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        await pageAction.changePage('Results') (dispatch)
+        anim.value = width
+        if (page.page==='Profile'){
+            anim.value = -width
+        } 
+        anim.value = withSpring(0)
+    }
+    const goLessons = async() => {
+        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        await pageAction.changePage('Lessons') (dispatch)
+        anim.value = -width
+        anim.value = withSpring(0)
     }
 
 
     const actions = [
-        () => {
-            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-            pageAction.changePage('Profile') (dispatch)
-            movePage(anim,'left')
-        },
-        () => {
-            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-            var direction = 'left'
-            if (page.page==='Profile'){
-                direction='right'
-            } 
-            pageAction.changePage('Results') (dispatch)
-            movePage(anim, direction)
-        },
-        () => {
-            lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-            pageAction.changePage('Lessons') (dispatch)
-            movePage(anim,'right')
+        goProfile,
+        goResults,
+        goLessons
+    ]
 
+    const startingPosition = 0;
+    const pressed = useSharedValue(false);
+    const x = useSharedValue(startingPosition);
+
+    const eventHandler = useAnimatedGestureHandler({  
+        onStart: (event, ctx) => {
+            pressed.value = true;  
+        },  
+        onActive: (event, ctx) => {     
+            x.value = startingPosition + event.translationX;
+            
+        },  
+        onEnd: (event, ctx) => {
+            pressed.value = false;
+            if (x.value<=-150){
+                x.value= width
+            } else if (x.value>=150){
+                x.value = -width
+            } else{ 
+                x.value = withSpring(startingPosition); 
+            }
+             
+    },});
+
+    const uas = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: x.value }],  
+    };});
+
+    const checkSwitch = async() => {
+        if (x.value>=150) {
+            if (page.page==='Lessons'){
+                goResults()
+            }else if (page.page==='Results'){
+                goProfile()
+            }else{
+                x.value=0
+            }
+        }
+        if (x.value<=-150){
+            if (page.page==='Profile'){
+                goResults()
+            }else if (page.page==='Results'){
+                goLessons()
+            }else{
+                x.value=0
+            }
             
         }
-    ]
+        
+    }
+    useEffect(() => {x.value = 0},[page.page])
 
     return ( 
         <View style={styles.container}>
+            <GestureHandlerRootView style={styles.container}>
             
             
             {user? 
                 <>
                 
                 <Navbar action={actions}/>
-                <View style={styles.pages}>
-                    {page.page==="Lessons"? <Animated.View style={{translateX:anim}}><LessonPath/></Animated.View>: null}
-                    {page.page==="Results"? <Animated.View style={{translateX:anim}}><Results/></Animated.View> : null}
-                    {page.page==="Profile"? <Animated.View style={{translateX:anim}}><Profile/></Animated.View> : null}
-                    
-                </View>
+                
+                <PanGestureHandler onGestureEvent={eventHandler} activeOffsetX={[-10, 10]} onEnded={checkSwitch} >
+                <Animated.View style={[styles.pages, uas]}>
+                    {page.page==="Lessons"? <Animated.View style={animationStyles}><LessonPath/></Animated.View>: null}
+                    {page.page==="Results"? <Animated.View style={animationStyles}><Results/></Animated.View> : null}
+                    {page.page==="Profile"? <Animated.View style={animationStyles}><Profile/></Animated.View> : null}
+                </Animated.View>
+                </PanGestureHandler>
                 
                 </>
+                
             :<Login/>}
             <Message/>
+            </GestureHandlerRootView>
             
         </View>
     );
@@ -103,7 +155,8 @@ const styles = StyleSheet.create({
         backgroundColor:'cornflowerblue',
         display:"flex",
         flexDirection:"column",
-        justifyContent:"space-evenly",
+        justifyContent:"space-evenly",  
+        overflow:'hidden',
 
 
       },

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "aardvocab-app-demo"
+  },
+  "targets": {
+    "aardvocab-c1169": {
+      "hosting": {
+        "app": [
+          "aardvocab-app-demo"
+        ]
+      }
+    }
+  }
+}

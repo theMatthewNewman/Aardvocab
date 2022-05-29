@@ -28,17 +28,13 @@ const LessonGraph = () => {
         <View style={styles.graphicVert}>
             <View style={styles.graphicHoriz} >
                 
-                <Text style={{
-                transform: [{ rotate: '-90deg' },
-                            { translateY: (size.Wlarge) }],
-                marginRight:-size.Wlarge
-                }}>Number of Users</Text>
+                <Text style={{fontSize:size.Wsmallest}}>Number of Users</Text>
             <LineChart
                 data={{labels:[""],datasets:[{data}]}}
                 width={size.Wlargest}
                 withHorizontalLines={false}
                 withVerticalLines={false}
-                height={size.Whalf}
+                height={size.Wlarger + size.Wlarge}
                 fromZero={false}
                 getDotColor={(dataPoint, dataPointIndex) => {
                     if(dataPointIndex === selfIndex) 
@@ -47,7 +43,8 @@ const LessonGraph = () => {
                 }}
                 chartConfig={chartConfig}
                 style={{
-                    paddingTop:size.small,
+                    paddingBottom:-size.Wsmallest,
+                    borderRadius:size.curve
                     
                 }}></LineChart>
             </View>
@@ -70,24 +67,26 @@ const styles = StyleSheet.create({
         backgroundColor:'#3c427c',
         margin:size.Wsmaller,
         padding:size.Wsmaller,
-        borderRadius:size.Wsmaller
+        borderRadius:size.curve,
     },
     graphicHoriz:{
         backgroundColor:'white',
-        borderRadius: size.Wsmaller,
+        borderRadius: size.curve,
         display:"flex",
-        flexDirection:"row",
-        maxWidth:'100%'
+        alignItems:"center",
+        justifyContent:'space-evenly'
+
     },
     graphicVert:{
-        borderRadius: size.Wsmaller,
+        borderRadius: size.curve,
         borderWidth:size.Wthin,
         backgroundColor:'white',
+        width:size.Wlargester
     },
     xLabel:{
         textAlign:'center',
-        marginBottom:size.small,
-        marginTop:-size.medium,
+        marginBottom:size.Wsmall,
+        fontSize:size.Wsmallest
 
     },
     dot:{

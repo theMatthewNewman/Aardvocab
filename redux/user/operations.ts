@@ -97,19 +97,20 @@ const addDay = (user:userState) => async(dispatch:Dispatch) =>{
     var newDayNoTime = newDay.getFullYear()+'/'+(newDay.getMonth()+1)+'/'+newDay.getDate(); 
     var present = false
     draft.daysPracticed.forEach(day => {
-        var date = new Date(day)
-        var NoTimeDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(); 
+        var date = new Date(day*1000)
+        var NoTimeDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
         if (newDayNoTime === NoTimeDate){
+            
             present = true
         }
     })
     if (!present){
-        draft.daysPracticed.push(newDay.getSeconds())
+        draft.daysPracticed.push(newDay.getTime()/1000)
         
     }
     return(draft)})
     setUserFirebase(newuser)
-    dispatch<Actions>(actions.updateUser(user))
+    dispatch<Actions>(actions.updateUser(newuser))
 
 }
 

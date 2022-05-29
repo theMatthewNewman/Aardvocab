@@ -73,14 +73,16 @@ const ButtonStyles = StyleSheet.create({
         borderColor:'black',
         width:"100%",
         padding:size.smallest,
+        marginVertical:size.medium,
         
     },
     correct:{
         backgroundColor:'#27ae60',
         padding:size.small,
         borderRadius:size.small,
-        marginBottom:size.larger,
+        marginVerticle:size.larger,
         borderWidth:size.thin,
+
         
     },
     default:{

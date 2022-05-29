@@ -5,9 +5,9 @@ import {size} from "../../../componants/globalStyle";
 
 function DaysGraph() {
     const user = useSelector(state => state.user)
-    
-    const markedDates:any = Object.assign({}, ...user.daysPracticed.map((day:any) => {return({
-      [new Date(day).toISOString().substring(0,10)]:{selected:true, selectedColor:'cornflowerblue'}
+    console.log('wha')
+    const markedDates:any = Object.assign({}, ...user.daysPracticed.map((day:any) => {console.log(new Date(day*1000));return({
+      [new Date(day*1000).toISOString().substring(0,10)]:{selected:true, selectedColor:'cornflowerblue'}
     })}))
     return ( 
         <View style={styles.backdrop}>
@@ -34,8 +34,8 @@ function DaysGraph() {
 const styles = StyleSheet.create({
   cal:{
     borderWidth:size.Wthin,
-    minWidth:size.Wlargester,
-    borderRadius:size.Wsmaller,
+    width:size.Wlargester,
+    borderRadius:size.curve,
     padding:size.Wsmaller,
   },
   backdrop:{
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#3c427c",
     margin:size.Wsmaller,
     padding:size.Wsmaller,
-    borderRadius:size.Wsmaller
+    borderRadius:size.curve
   },
   dot:{
       height:size.medium,

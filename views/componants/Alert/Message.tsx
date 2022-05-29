@@ -1,12 +1,13 @@
-import {View, Text, StyleSheet, useWindowDimensions, Image, Animated} from 'react-native';
+import {View, Text, StyleSheet, useWindowDimensions, Image} from 'react-native';
 import {useDispatch, useSelector} from "../../../redux/hooks"
 import {pageAction}from "../../../redux/pages";
 import Buttons from '../Buttons/Button';
 import {lessonAction}  from "../../../redux/lessons";
-import {useRef} from "react";
 import {Prompt} from "../../../redux/lessons";
-
+import { useEffect } from 'react';
 import {size} from "../globalStyle"
+
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 
 
@@ -15,7 +16,6 @@ function Message() {
     const message = useSelector(state => state.page.message)
     const lesson = useSelector(state => state.lesson)
     const user = useSelector(state => state.user)
-    const {height, width} = useWindowDimensions()
     const dispatch = useDispatch()
 
     const alertType = (() => {
@@ -65,71 +65,64 @@ function Message() {
     })()
 
     const handlePress = () => {
+        offset.value = withSpring(size.full)
+        op.value = withSpring(0)
+        setTimeout(() => {
         if (message.type==='correct'){
             lessonAction.correct(user, lesson) (dispatch)
         } else{
             lessonAction.Incorrect(user,lesson) (dispatch)
         }
         pageAction.updateMessage({active:false,type:'correct'}) (dispatch)
+        },500)
     }
 
-
-    const anim = useRef(new Animated.Value(height)).current;
-    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const offset = useSharedValue(size.full)
+    const op = useSharedValue(0)
+    const animatedStyles = useAnimatedStyle(() => {
+        return{
+            transform: [{ translateY: offset.value }],
+        }
+    })
+    const opacityStyles = useAnimatedStyle(() => {
+        return{
+            opacity:op.value
+        }
+    })
+    useEffect(() => {
     if (message.active){
-    Animated.spring(anim, {
-        useNativeDriver:true,
-        toValue: 0,
-    }).start();
-    Animated.spring(fadeAnim, {
-        useNativeDriver:true,
-        toValue: 1,
-    }).start();
+        offset.value = withSpring(0)
+        op.value = withSpring(1)
     }
-    const out = () => {
-        Animated.spring(anim, {
-            useNativeDriver:true,
-            toValue: height,
-        }).start();
-        Animated.spring(fadeAnim, {
-            useNativeDriver:true,
-            toValue: 0,
-        }).start();
-        setTimeout(handlePress,300)
-    }
-
+    },[message.active])
     
 
 
     return ( 
         <>
             {alertType.type==="wrongmulti"?
-            <Animated.View style={{...style.wrong, height, width, opacity:fadeAnim}}>
-                <Animated.View style={{translateY:anim,display:'flex',height, flexDirection:"column", justifyContent:'space-between'}}>
-                    <View style={style.check}>
-                    <View style={style.box}>
-                        <Image style={style.image} source={ require('../../../images/x.png')} />
-                        
-                    </View>
-                    <Text style={style.text}>{alertType.prompt.messages.title}</Text>
-                    <Text style={style.desc}>{alertType.prompt.messages.definition}</Text>
-                    <Text style={style.text}>Example:</Text>
-                    <Text style={style.desc}>{alertType.prompt.messages.example}</Text>
-                    </View>
-                    <Buttons onPress={() => {out()}} style="correct" title="Next Question"/>
-                </Animated.View>
+            <Animated.View style={[style.wrongBack,opacityStyles]}>
+                <View style={style.wrong}>
+                    <Animated.View style={[style.x, animatedStyles]}>
+                        <View style={style.box}>
+                            <Image style={style.image} source={ require('../../../images/x.png')} />
+                        </View>
+                        <Text style={style.text}>{alertType.prompt.messages.title}</Text>
+                        <Text style={style.desc}>{alertType.prompt.messages.definition}</Text>
+                        <Text style={style.text}>Example:</Text>
+                        <Text style={style.desc}>{alertType.prompt.messages.example}</Text>
+                    </Animated.View>
+                    <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
+                </View>
             </Animated.View>
             : alertType.type==="correctmulti"? 
-            <Animated.View style={{...style.correct, height:(size.half), width, opacity:fadeAnim}}>
-                <Animated.View style={{translateY:anim,display:'flex',height:(size.half), flexDirection:"column", justifyContent:'space-between'}}>
-                    <View style={style.ccheck}>
-                    <View style={style.cbox}>
-                        <Image style={style.cimage} source={ require('../../../images/check.png')} />
-                        <Text style={style.ctext}>Correct!</Text>
-                    </View>
-                    </View>
-                    <Buttons onPress={() => {out()}} style="correct" title="Next Question"/>
-                </Animated.View>
+            <Animated.View style={[style.correctBack,opacityStyles]}>
+                <View style={style.correct}>
+                    <Animated.View style={[style.check, animatedStyles]}>
+                        <Image style={style.image} source={ require('../../../images/check.png')} />
+                    </Animated.View>
+                    <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
+                </View>
             </Animated.View>
             : null}
         </>
@@ -137,50 +130,49 @@ function Message() {
 }
 
 const style = StyleSheet.create({
-    correct:{
+    correctBack:{
         backgroundColor:'#68cb30',
         position:"absolute",
-        padding:size.small,
+        padding:size.medium,
+        paddingTop:size.larger,
         bottom:0,
         borderTopWidth:size.thin,
-        
+        height:size.half,
+        width:size.fullWidth,
     },
+    correct:{
+        flex:1,
+        display:'flex',
+        justifyContent:'space-between'
+
+    },
+    
     check:{
+        backgroundColor:'lightgray',
+        borderRadius:size.curve,
+        borderWidth:size.thin,
+
+        alignItems:'center',
+    },
+    wrongBack:{
+        backgroundColor:'#ff8989',
+        padding:size.small,
+        position:"absolute",
+        bottom:0,
+        height:size.full,
+        width:size.fullWidth,
+    },
+    wrong:{
+        flex:1,
+        display:'flex',
+        justifyContent:'space-between'
+    },
+    x:{
         backgroundColor:'lightgray',
         borderRadius:size.small,
         borderWidth:size.thin,
         marginTop:size.larger,
         paddingBottom:size.medium,
-    },
-    ccheck:{
-        backgroundColor:'lightgray',
-        borderRadius:size.small,
-        borderWidth:size.thin,
-        marginVertical:size.small,
-        flex:1,
-    },
-    cbox:{
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'space-between',
-        height:"100%",
-        padding:size.larger,
-
-    },
-    cimage:{
-        resizeMode:"contain",
-        height:size.huge,
-        width:size.huge,
-    },
-    ctext:{
-        fontSize:size.large,
-    },
-    wrong:{
-        backgroundColor:'#ff8989',
-        padding:size.medium,
-        position:"absolute",
-        bottom:0,
-
     },
     text:{
         color:'black',

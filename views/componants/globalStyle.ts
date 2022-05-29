@@ -21,6 +21,7 @@ export const size = {
     full:height,
 
     Wthin:width/180,
+    Wsmallest:width/30,
     Wsmaller:width/26,
     Wsmall:width/12,
     Wlarge:width/6,
@@ -28,6 +29,10 @@ export const size = {
     Whalf:width/2,
     Wlargest:width/1.4,
     Wlargester:width/1.2,
+
+    curve:16,
+
+    fullWidth:width
 
 }
 
