@@ -1,5 +1,5 @@
 import { View, StyleSheet, useWindowDimensions } from "react-native";
-import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, runOnJS} from "react-native-reanimated"
+import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, withTiming} from "react-native-reanimated"
 import { PanGestureHandler,GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "../../redux/hooks";
 import LessonPath from "./lessons/LessonPath/LessonPath";
@@ -19,44 +19,44 @@ import {auth} from "../../firebase.config"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
 import { ScrollView } from "react-native-gesture-handler";
-
-
+import Example from "../componants/Alert/Example";
 
 
 function Home() {
     const [user] = useAuthState(auth)
     const page = useSelector(state => state.page)
     const lesson = useSelector(state => state.lesson)
+    const User = useSelector(state => state.user)
     const dispatch = useDispatch()
     const {height, width} = useWindowDimensions()
+    
 
-    const anim = useSharedValue(0)
-    const animationStyles = useAnimatedStyle(() =>{
-        return{
-            transform: [{translateX:anim.value}]
-        }
-    })
     const goProfile = async() => {
-        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-        await pageAction.changePage('Profile') (dispatch)
-        anim.value = width
-        anim.value = withSpring(0)
+        lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        pageAction.changePage('Profile') (dispatch)
+        pageAction.updateMessage({active:false, type:'correct'}) (dispatch)
+        x.value=width
+        setTimeout(() => {x.value = withSpring(0)},10)
     }
-    const goResults = async() => {
+    const goResults = () => {
         
-        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-        await pageAction.changePage('Results') (dispatch)
-        anim.value = width
-        if (page.page==='Profile'){
-            anim.value = -width
-        } 
-        anim.value = withSpring(0)
-    }
-    const goLessons = async() => {
-        await lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
-        await pageAction.changePage('Lessons') (dispatch)
-        anim.value = -width
-        anim.value = withSpring(0)
+        lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        pageAction.changePage('Results') (dispatch)
+        pageAction.updateMessage({active:false, type:'correct'}) (dispatch)
+        x.value=-width
+        setTimeout(() => {
+        if (page.page==='Lessons'){
+            x.value=width
+        }
+        x.value = withSpring(0)},10)}
+
+    const goLessons = () => {
+        lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
+        pageAction.changePage('Lessons') (dispatch)
+        pageAction.updateMessage({active:false, type:'correct'}) (dispatch)
+
+        x.value=-width
+        setTimeout(() => {x.value = withSpring(0)},10)
     }
 
 
@@ -80,13 +80,10 @@ function Home() {
         },  
         onEnd: (event, ctx) => {
             pressed.value = false;
-            if (x.value<=-150){
-                x.value= width
-            } else if (x.value>=150){
-                x.value = -width
-            } else{ 
-                x.value = withSpring(startingPosition); 
-            }
+            if (x.value<=-150 || x.value>=158){
+                return;
+            } 
+            x.value = withSpring(startingPosition); 
              
     },});
 
@@ -95,8 +92,8 @@ function Home() {
             transform: [{ translateX: x.value }],  
     };});
 
-    const checkSwitch = async() => {
-        if (x.value>=150) {
+    const checkSwitch = () => {
+        if (x.value<=-150) {
             if (page.page==='Lessons'){
                 goResults()
             }else if (page.page==='Results'){
@@ -104,8 +101,9 @@ function Home() {
             }else{
                 x.value=0
             }
+            
         }
-        if (x.value<=-150){
+        else if (x.value>=150){
             if (page.page==='Profile'){
                 goResults()
             }else if (page.page==='Results'){
@@ -117,7 +115,6 @@ function Home() {
         }
         
     }
-    useEffect(() => {x.value = 0},[page.page])
 
     return ( 
         <View style={styles.container}>
@@ -131,16 +128,18 @@ function Home() {
                 
                 <PanGestureHandler onGestureEvent={eventHandler} activeOffsetX={[-10, 10]} onEnded={checkSwitch} >
                 <Animated.View style={[styles.pages, uas]}>
-                    {page.page==="Lessons"? <Animated.View style={animationStyles}><LessonPath/></Animated.View>: null}
-                    {page.page==="Results"? <Animated.View style={animationStyles}><Results/></Animated.View> : null}
-                    {page.page==="Profile"? <Animated.View style={animationStyles}><Profile/></Animated.View> : null}
+                    {page.page==="Lessons"? <Animated.View ><LessonPath/></Animated.View>: null}
+                    {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
+                    {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
                 </Animated.View>
                 </PanGestureHandler>
-                
+                {User.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3' && !lesson.lesson.active? <Example/>: null}
                 </>
                 
             :<Login/>}
+            
             <Message/>
+            
             </GestureHandlerRootView>
             
         </View>

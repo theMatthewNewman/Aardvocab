@@ -19,7 +19,12 @@ function Question({prompt}:any) {
                 <View style={styles.background}>
                     <Text style={styles.title}>{prompt.prompt}</Text>
                     <Image source={{uri: prompt.photoURL}} style={styles.picture}/>
-                </View>: null}
+                </View>: 
+            prompt.type==='match'? 
+                <View style={styles.background}>
+                    <Text style={styles.title}>{prompt.prompt}</Text>
+                </View>
+            :null}
         </View>
      );
 }

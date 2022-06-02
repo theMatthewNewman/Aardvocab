@@ -4,8 +4,8 @@ import {Actions} from "./actions"
 import { userState } from "./dataTypes";
 
 
-const example:userState = {
-    uid:"example",
+export const exam:userState = {
+    uid:"QZ4DAXWWJcdywxbxoidHphggR4F3",
     displayName:"example",
     email:"example@example.com",
     emailVerified:false,
@@ -17,7 +17,7 @@ const example:userState = {
     daysPracticed:[1652651988,1652751988]
 }
 
-export const reducer = (state:userState = example, action:Actions) => {
+export const reducer = (state:userState = exam, action:Actions) => {
     return(produce(state,draft => {
         switch (action.type){
             case types.UPDATE_USER:{

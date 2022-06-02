@@ -1,3 +1,5 @@
+
+
 export const shuffleArray = (originalArray:any) => {
   var array = [].concat(originalArray);
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -17,3 +19,4 @@ export const shuffleArray = (originalArray:any) => {
 
   return array;
 }
+

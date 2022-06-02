@@ -1,4 +1,4 @@
-import {View, ScrollView, Text, Image} from "react-native";
+import {View, ScrollView, Text, Image, StyleSheet} from "react-native";
 import {useEffect} from "react";
 
 import ActiveLesson from "../ActiveLesson/ActiveLesson";
@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "../../../../redux/hooks";
 import LessonCard from "./componants/LessonCard";
 import {lessonAction} from "../../../../redux/lessons";
 import {globalStyling} from "../../../componants/globalStyle"
+import Info from "./componants/Info";
 
 
 
@@ -17,6 +18,7 @@ function lessonPath() {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if(lesson.globalLessons.active) {return;}
          lessonAction.setGlobalLessonsState() (dispatch)
     },[])
 
@@ -36,7 +38,8 @@ function lessonPath() {
             {lesson.lesson.active? <ActiveLesson /> :
             <>
             <Text style={globalStyling.head}>Lessons</Text>
-            <ScrollView>
+            <View>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {lesson.globalLessons.active? lesson.globalLessons.lessons.map(lesson => 
                     <View key={lesson.id}>
                         <LessonCard lesson={lesson} activateLesson={(activateLesson)} level={user.level} progress={
@@ -46,6 +49,8 @@ function lessonPath() {
                 ): null}
                 <Image style={{width:'100%', resizeMode:'contain'}} source={require('../../../../images/cautionTape.png')}/>
             </ScrollView>
+            <Info/>
+            </View>
             </>
             }
         </>
@@ -53,3 +58,10 @@ function lessonPath() {
 }
 
 export default lessonPath;
+
+const styles = StyleSheet.create({
+    layout:{
+        display:'flex',
+        flexDirection:'row'
+    }
+})

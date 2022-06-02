@@ -19,7 +19,7 @@ const Results = () => {
     return(
         <>
         <Text style={globalStyling.head}>Results</Text>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           
           <LessonGraph/>
           <DaysGraph/>

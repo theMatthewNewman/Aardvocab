@@ -5,7 +5,8 @@ import {auth} from "../../../firebase.config";
 import {useDispatch} from "../../../redux/hooks";
 import { useState } from "react";
 import {userAction} from "../../../redux/user";
-import {globalStyling, size} from "../../componants/globalStyle";
+import {color, globalStyling, size} from "../../componants/globalStyle";
+import { lessonAction } from "../../../redux/lessons";
 
 
 function Profile() {
@@ -43,6 +44,7 @@ function Profile() {
     return ( 
         <>
         <Text style={globalStyling.head}>Profile</Text>
+            <View style={ProfileStyles.back}>
             <View style={ProfileStyles.info}>
                 <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
                 <View style={ProfileStyles.about}>
@@ -60,19 +62,20 @@ function Profile() {
                 </View>
 
             </View>
-
+            
             <View style={ProfileStyles.buttons}>
                 <Button onPress={() => userAction.changeProfilePicture(user) (dispatch)}
-                        style="Strong"
+                        style="Choice"
                         title="Edit Picture"/>
 
                 <Button onPress={() => {handleEditNameButton()}}
-                        style="Strong"
-                        title="Change Name"/>
+                        style="Choice"
+                        title="Edit Name"/>
 
-                <Button onPress={() => auth.signOut()}
-                        style="Strong"
+                <Button onPress={() => {lessonAction.deactivateLesson() (dispatch);auth.signOut()}}
+                        style="Choice"
                         title="Log Out"/>
+            </View>
             </View>
         </> 
     );
@@ -92,20 +95,23 @@ const ProfileStyles = StyleSheet.create({
     },
     date:{
         textAlign:'center',
+        color:'red',
     },
     pic:{
-        height:size.huge,
-        width:size.huge,
+        height:size.giant,
+        width:size.giant,
         resizeMode:"contain",
+        alignSelf:'center'
     },
     info:{
         backgroundColor:'white',
         display:"flex",
-        flexDirection:'row',
+        flexDirection:'column',
         margin:size.medium,
         padding:size.medium,
         borderRadius:size.small,
         borderWidth:size.thin,
+        
     },
     buttons:{
         display:"flex",
@@ -113,14 +119,19 @@ const ProfileStyles = StyleSheet.create({
         justifyContent:"space-evenly",
     },
     userName:{
-        fontSize:size.medium,
+        fontSize:size.large,
         paddingVertical:size.smallest,
         marginBottom:size.medium,
         textAlign:'center',
+        color:'cornflowerblue'
     },
     about:{
-        paddingHorizontal:size.small,
-        flex:1,
+        padding:size.small,
         
+    },
+    back:{
+        backgroundColor:color.darkBlue,
+        margin:size.small,
+        borderRadius:size.curve,
     }
 })

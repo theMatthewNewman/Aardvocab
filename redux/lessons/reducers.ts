@@ -20,6 +20,10 @@ export const reducer = (state:lessonState = example, action:Actions) => {
                 draft.globalLessons = {lessons:action.payload.store.lessons, active:true}
                 return(draft)
             }
+            case types.DEACTIVATE_LESSON:{
+                draft.globalLessons = {active:false}
+                return(draft)
+            }
             case types.UPDATE_LESSON:{
                 draft.lesson = action.payload.lesson
                 return(draft)

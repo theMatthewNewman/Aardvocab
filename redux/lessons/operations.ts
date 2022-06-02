@@ -94,7 +94,9 @@ const completeLesson = (user:userState, lesson:lessonState) => (dispatch:Dispatc
     updateLesson(newLesson) (dispatch)
     
 }
-
+const deactivateLesson = () => (dispatch:Dispatch) => {
+    dispatch<Actions>(actions.deactivate_lesson())
+}
 export const lessonAction = {
     getLessonFirebase,
     getPromptFirebase,
@@ -104,5 +106,6 @@ export const lessonAction = {
     correct,
     Incorrect,
     updateLesson,
-    completeLesson
+    completeLesson,
+    deactivateLesson
 }

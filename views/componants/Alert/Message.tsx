@@ -17,6 +17,7 @@ function Message() {
     const lesson = useSelector(state => state.lesson)
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
+    console.log(message)
 
     const alertType = (() => {
         var prompt:Prompt = {active:false}
@@ -39,8 +40,8 @@ function Message() {
                 const ret:{prompt:typeof prompt, type:"correctmulti"} = {prompt,type:"correctmulti"}
                 return(ret)
             }
-            if (prompt.type==='compare'){
-                const ret:{prompt:typeof prompt, type:'correctcompare'} = {prompt,type:"correctcompare"}
+            if (prompt.type==='match'){
+                const ret:{prompt:typeof prompt, type:'correctmatch'} = {prompt,type:"correctmatch"}
                 return(ret)
             }
         }
@@ -53,8 +54,8 @@ function Message() {
                 const ret:{prompt:typeof prompt, type:"wrongmulti"} = {prompt,type:"wrongmulti"}
                 return(ret)
             }
-            if (prompt.type==='compare'){
-                const ret:{prompt:typeof prompt, type:"wrongcompare"} = {prompt,type:"wrongcompare"}
+            if (prompt.type==='match'){
+                const ret:{prompt:typeof prompt, type:"wrongmatch"} = {prompt,type:"wrongmatch"}
                 return(ret)
             }
         }
@@ -100,7 +101,7 @@ function Message() {
 
     return ( 
         <>
-            {alertType.type==="wrongmulti"?
+            {alertType.type==="wrongmulti" || alertType.type ==="wrongbuild"?
             <Animated.View style={[style.wrongBack,opacityStyles]}>
                 <View style={style.wrong}>
                     <Animated.View style={[style.x, animatedStyles]}>
@@ -115,7 +116,7 @@ function Message() {
                     <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
                 </View>
             </Animated.View>
-            : alertType.type==="correctmulti"? 
+            : alertType.type==="correctmulti"|| alertType.type==="correctbuild"|| alertType.type==='correctmatch'? 
             <Animated.View style={[style.correctBack,opacityStyles]}>
                 <View style={style.correct}>
                     <Animated.View style={[style.check, animatedStyles]}>

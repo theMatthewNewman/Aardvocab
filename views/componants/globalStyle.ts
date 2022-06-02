@@ -24,6 +24,7 @@ export const size = {
     Wsmallest:width/30,
     Wsmaller:width/26,
     Wsmall:width/12,
+    Wmedium:width/8,
     Wlarge:width/6,
     Wlarger:width/3,
     Whalf:width/2,
@@ -34,6 +35,9 @@ export const size = {
 
     fullWidth:width
 
+}
+export const color = {
+    darkBlue:'#3c427c'
 }
 
 const headWidth = (3*width)

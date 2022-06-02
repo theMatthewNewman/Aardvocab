@@ -5,8 +5,7 @@ import {size} from "../../../componants/globalStyle";
 
 function DaysGraph() {
     const user = useSelector(state => state.user)
-    console.log('wha')
-    const markedDates:any = Object.assign({}, ...user.daysPracticed.map((day:any) => {console.log(new Date(day*1000));return({
+    const markedDates:any = Object.assign({}, ...user.daysPracticed.map((day:any) => {return({
       [new Date(day*1000).toISOString().substring(0,10)]:{selected:true, selectedColor:'cornflowerblue'}
     })}))
     return ( 

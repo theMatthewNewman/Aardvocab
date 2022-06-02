@@ -24,15 +24,21 @@ const completePrompt = () => ({
 
 })
 
+const deactivate_lesson = () =>({
+    type: types.DEACTIVATE_LESSON
+})
+
 
 export type Actions = ReturnType<typeof completeLesson> |
                       ReturnType<typeof updateGlobalLessons> |
                       ReturnType<typeof updateLesson> |
-                      ReturnType<typeof completePrompt>
+                      ReturnType<typeof completePrompt> |
+                      ReturnType<typeof deactivate_lesson>
 
 export const actions = {
     completeLesson,
     updateGlobalLessons,
     updateLesson,
-    completePrompt
+    completePrompt,
+    deactivate_lesson
 };

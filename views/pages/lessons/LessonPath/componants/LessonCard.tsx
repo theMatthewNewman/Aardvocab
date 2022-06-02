@@ -99,18 +99,22 @@ const styles = StyleSheet.create({
     all:{
         backgroundColor:"white",
         display:"flex",
-        margin:size.medium,
-        borderRadius:size.small,
+        marginLeft:size.Wsmallest,
+        marginRight:size.largest,
+        marginTop:size.small,
+        borderRadius:size.curve,
         borderWidth:size.thin,
         padding:size.small,
     },
     deactive:{
         backgroundColor:"gray",
         display:"flex",
-        margin:size.medium,
-        borderRadius:size.small,
+        borderRadius:size.curve,
         borderWidth:size.thin,
         padding:size.small,
+        marginLeft:size.Wsmallest,
+        marginRight:size.largest,
+        marginTop:size.small,
     }
 
 })

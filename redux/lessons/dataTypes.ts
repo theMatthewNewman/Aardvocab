@@ -27,18 +27,25 @@ export type Prompt = {
                 active:true
               }|
               {
-                  type:"compare"
+                  type:"match"
                   prompt:string
-                  from:{
-                    title:string
-                    id:number
+                  match:{
+                      from:{
+                          title:string
+                          id:number
+                      }
+                      to:{
+                          title:string
+                          id:number
+                      }
                   }[]
-                  to:{
-                      title:string
-                      id:number
-                  }
                   active:true
-              }|{active:false}
+                  photoURL?:string
+              }|{active:false}|
+              {
+                  type:'sentance'
+                  active:true
+              }
 
 
 export type lessonState = {
