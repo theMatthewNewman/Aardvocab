@@ -3,7 +3,7 @@ import { LineChart} from 'react-native-chart-kit'
 import { useSelector } from "../../../../redux/hooks";
 
 
-import { chartConfig} from "../../../../redux/graphs"
+import { chartConfig} from "../../../../redux/data"
 import {useState} from 'react'
 
 import { size } from "../../../componants/globalStyle";
@@ -17,6 +17,7 @@ const LessonGraph = () => {
     const data = useSelector(state => state.graph.bucketedLevels);
     const selfIndex = useSelector(state => state.graph.selfIndex)
     const user = useSelector(state => state.user);
+    
     
 
     

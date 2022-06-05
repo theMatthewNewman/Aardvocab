@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 
 import {actions, Actions} from "./actions";
 import { userState } from "../user"
+import { pageAction } from "../pages";
 
 
 //firebase
@@ -14,21 +15,22 @@ import {bucketUsers} from "./utils";
 const setDataFirebase = async(user:userState, userLevels:dataFirebase) => {
     const docRef = doc(db,"data", "userLevels")
     let found = false
-    const data:dataFirebase['levels'] = userLevels.levels.map((level) => {
-            if (level.uid === user.uid) {
+    const data:dataFirebase['users'] = userLevels.users.map((otherUser) => {
+            if (otherUser.uid === user.uid) {
                 found = true
                 return({
                     level:user.level,
-                    uid:user.uid
+                    uid:user.uid,
+                    levelsCompletedToday:user.levelsCompletedToday
                 })
             } else{
-                return(level)
+                return(otherUser)
             }
         })
     if (found === false){
-        data.push({level:user.level,uid:user.uid})
+        data.push({level:user.level,uid:user.uid,levelsCompletedToday:user.levelsCompletedToday})
     }
-    await setDoc(docRef,{levels:data})
+    await setDoc(docRef,{users:data})
     return(data)
 }
 
@@ -39,16 +41,15 @@ const getDataFirebase = async() => {
         const dat = document.data()!
         try{
             const data:dataFirebase = {
-                levels:dat.levels
+                users:dat.users
             }
+            console.log(data)
             return(data)
-        } catch(error){
-                console.log("data is not in correct format")
-                console.log(error)
+        } catch(error:any){
+            pageAction.updateMessage({type:'alert',active:true,message:error.toString()})
         }
-    } catch(error){
-        console.log("error Connecting to database")
-        console.log(error)
+    } catch(error:any){
+        pageAction.updateMessage({type:'alert',active:true,message:error.toString()})
     }   
 }
 
@@ -56,7 +57,7 @@ const updateData = (user:userState) => async(dispatch:Dispatch) => {
     const userlevels = await getDataFirebase()
     if (userlevels) {
         const newData = await setDataFirebase(user, userlevels)
-        const dat = bucketUsers({levels:newData}, user)
+        const dat = bucketUsers({users:newData}, user)
         dispatch<Actions>(actions.updateUserdata(dat))
     }
 

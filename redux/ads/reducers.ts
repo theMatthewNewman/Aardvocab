@@ -6,7 +6,8 @@ import { dataState } from "./dataTypes";
 
 const example:dataState = {
     platform:"android",
-    adLoaded:false
+    adLoaded:false,
+    countDown:1
 }
 
 export const reducer = (state:dataState = example, action:Actions) => {
@@ -19,6 +20,13 @@ export const reducer = (state:dataState = example, action:Actions) => {
             case types.LOAD_AD:{
                 draft.adLoaded = true
             return(draft);
+            }
+            case types.SET_COUNT:{
+                if (action.payload.increase){
+                    draft.countDown+=1
+                } else{
+                    draft.countDown-=1
+                }
             }
         }
     }))

@@ -37,8 +37,10 @@ export const createUser =(user:User, username?:string):userState => {
         level:0,
         createdAt: new Date().getTime(),
         hearts:5,
-        lessonData: new Array(100).fill({subLessons:0, percentage:0, accuracy:0, type:""}),
-        daysPracticed:[new Date().getTime()]
+        lessonData: [{subLessons:0, percentage:0, errors:0, concept:'Vocabulary'}],
+        promptData: [{errors:0, concept:'Vocabulary',id:'test'}],
+        daysPracticed:[new Date().getTime()],
+        levelsCompletedToday:{levels:0,date:new Date().getTime()}
     })
 }
 

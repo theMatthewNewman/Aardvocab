@@ -7,6 +7,9 @@ import { useState } from "react";
 import {userAction} from "../../../redux/user";
 import {color, globalStyling, size} from "../../componants/globalStyle";
 import { lessonAction } from "../../../redux/lessons";
+import { ScrollView } from "react-native-gesture-handler";
+import Chat from "./Chat";
+import LeaderBoard from "./LeaderBoard";
 
 
 function Profile() {
@@ -44,39 +47,41 @@ function Profile() {
     return ( 
         <>
         <Text style={globalStyling.head}>Profile</Text>
+        <ScrollView>
             <View style={ProfileStyles.back}>
-            <View style={ProfileStyles.info}>
-                <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
-                <View style={ProfileStyles.about}>
-                    {editName? 
-                        <TextInput 
-                        style={ProfileStyles.input}
-                        onChangeText={(event) => {nameChange(event)}}
-                        onSubmitEditing = {nameSubmit}/> :
+                <View style={ProfileStyles.info}>
+                    <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
+                    <View style={ProfileStyles.about}>
+                        {editName? 
+                            <TextInput 
+                            style={ProfileStyles.input}
+                            onChangeText={(event) => {nameChange(event)}}
+                            onSubmitEditing = {nameSubmit}/> :
 
-                        <Text style={ProfileStyles.userName}>{displayName}</Text>
-                    }
-                    <Text style={ProfileStyles.date}>
-                        {`Created: ${new Date(user.createdAt).toDateString()}`}
-                    </Text>
+                            <Text style={ProfileStyles.userName}>{displayName}</Text>
+                        }
+                        <Text style={ProfileStyles.date}>
+                            {`Created: ${new Date(user.createdAt).toDateString()}`}
+                        </Text>
+                    </View>
+
                 </View>
+                
+                <View style={ProfileStyles.buttons}>
+                    <Button onPress={() => userAction.changeProfilePicture(user) (dispatch)}
+                            style="Choice"
+                            title="Edit Picture"/>
 
-            </View>
-            
-            <View style={ProfileStyles.buttons}>
-                <Button onPress={() => userAction.changeProfilePicture(user) (dispatch)}
-                        style="Choice"
-                        title="Edit Picture"/>
+                    <Button onPress={() => {handleEditNameButton()}}
+                            style="Choice"
+                            title="Edit Name"/>
 
-                <Button onPress={() => {handleEditNameButton()}}
-                        style="Choice"
-                        title="Edit Name"/>
-
-                <Button onPress={() => {lessonAction.deactivateLesson() (dispatch);auth.signOut()}}
-                        style="Choice"
-                        title="Log Out"/>
+                    <Button onPress={() => {lessonAction.deactivateLesson() (dispatch);auth.signOut()}}
+                            style="Choice"
+                            title="Log Out"/>
+                </View>
             </View>
-            </View>
+            </ScrollView>
         </> 
     );
 }

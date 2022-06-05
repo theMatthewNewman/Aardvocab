@@ -6,7 +6,8 @@ import thunk from "redux-thunk";
 import * as user from "./user";
 import * as lessons from "./lessons"
 import * as pages from "./pages";
-import * as graph from "./graphs";
+import * as graph from "./data";
+import * as ads from "./ads";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     user:user.reducer,
     graph:graph.reducer,
     lesson:lessons.reducer,
+    ads:ads.reducer
 })
 
 const middleware = [thunk]

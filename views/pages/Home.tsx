@@ -1,4 +1,4 @@
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, addons } from "react-native";
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, withTiming} from "react-native-reanimated"
 import { PanGestureHandler,GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "../../redux/hooks";
@@ -13,6 +13,7 @@ import { lessonAction } from "../../redux/lessons";
 import Message from "../componants/Alert/Message";
 
 import Navbar from "../componants/Navbar/Navbar";
+import { adAction } from "../../redux/ads";
 
 //authentication
 import {auth} from "../../firebase.config"
@@ -20,6 +21,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
 import { ScrollView } from "react-native-gesture-handler";
 import Example from "../componants/Alert/Example";
+import { size } from "../componants/globalStyle";
 
 
 function Home() {
@@ -29,6 +31,8 @@ function Home() {
     const User = useSelector(state => state.user)
     const dispatch = useDispatch()
     const {height, width} = useWindowDimensions()
+    const ad = useSelector(state => state.ads)
+    
     
 
     const goProfile = async() => {

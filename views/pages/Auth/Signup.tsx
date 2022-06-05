@@ -9,6 +9,7 @@ import * as Keychain from 'react-native-keychain';
 
 //styles
 import { buttons, textInput, size} from "../../componants/globalStyle";
+import { pageAction } from "../../../redux/pages";
 
 function Signup({setNewUser}:any) {
     const [email, setEmail] = useState("")
@@ -20,11 +21,19 @@ function Signup({setNewUser}:any) {
 
 
     const submitNewUser = async() => {
-
-        await createUserWithEmailAndPassword(auth,email,password);
-        await signInWithEmailAndPassword(auth, email, password);
-        if (auth.currentUser){
-            userAction.newUser(auth.currentUser, username) (dispatch)
+        try {
+            if (password!==passwordVerify){
+                pageAction.updateMessage({active:true,type:'alert',message:"ERROR passwords don't match."}) (dispatch)
+                return;
+            }
+            await createUserWithEmailAndPassword(auth,email,password);
+            await signInWithEmailAndPassword(auth, email, password);
+            if (auth.currentUser){
+                userAction.newUser(auth.currentUser, username) (dispatch)
+            }
+        } 
+        catch(error:any){
+            pageAction.updateMessage({active:true,type:'alert',message:error.toString()}) (dispatch)
         }
     }
 

@@ -5,8 +5,9 @@
  * This helps when debugging more complex applications.*/
 
 const UPDATE_USERDATA:"app/data/UPDATE_USERDATA" = "app/data/UPDATE_USERDATA"
-
+const SET_TOP_USERS:"app/data/SET_TOP_USERS" = "app/data/SET_TOP_USERS"
  
  export default {
-    UPDATE_USERDATA
+    UPDATE_USERDATA,
+    SET_TOP_USERS
  };

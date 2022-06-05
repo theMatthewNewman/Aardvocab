@@ -1,4 +1,7 @@
+export type concept = 'Vocabulary'| 'Spelling'|'Grammar'| 'Pros'
+
 export type Prompt = {
+                concept:concept
                 prompt: string
                 choices: {
                     title:string
@@ -14,6 +17,7 @@ export type Prompt = {
                 active:true
               }|
               {
+                concept:concept
                 prompt: string
                 parts: string[]
                 correct: string
@@ -27,6 +31,7 @@ export type Prompt = {
                 active:true
               }|
               {
+                  concept:concept
                   type:"match"
                   prompt:string
                   match:{
@@ -56,7 +61,7 @@ export type lessonState = {
             pictureURL:string
             level:number
             id:number
-            type:'Vocabulary'| 'Spelling'|'Grammar'
+            concept:concept
             description:string
         }[]
     }|{active:false},
@@ -64,7 +69,7 @@ export type lessonState = {
         id:number
         level:number
         active:true
-        type:'Vocabulary'|'Spelling'|'Grammar'
+        concept:concept
         promptIndex:number
         subLessonIndex:number
         subLessons:{
@@ -74,7 +79,7 @@ export type lessonState = {
 }
 
 export type lessonFirebase ={
-    type:'Vocabulary'|'Spelling'|'Grammar'
+    concept:concept
     id:number
     level:number
     subLessons:{
@@ -87,7 +92,7 @@ export type globalLessonFirebase = {
         name:string
         pictureURL:string
         id:number
-        type:'Vocabulary'| 'Spelling'|'Grammar'
+        concept:concept
         description:string
         level:number
     }[]

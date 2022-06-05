@@ -5,10 +5,12 @@ import { useState } from "react";
 
 
 
+
 function Info() {
     const [active, setActive] = useState(false);
 
     const handlePress = () => {
+        
         if (expand.value===0){
             expand.value=withTiming(1)
             setActive(true)

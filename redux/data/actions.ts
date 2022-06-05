@@ -9,13 +9,20 @@ const updateUserdata = (data:dataState) => ({
         data
     }
 });
+const setTopUsers = (data:dataState) => ({
+    type:types.SET_TOP_USERS,
+    payload:{
+        data
+    }
+})
 
-
-export type Actions = ReturnType<typeof updateUserdata> 
+export type Actions = ReturnType<typeof updateUserdata> |
+                      ReturnType<typeof setTopUsers>
 
 
 
 export const actions = {
-    updateUserdata
+    updateUserdata,
+    setTopUsers
 
 };

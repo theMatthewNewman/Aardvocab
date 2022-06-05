@@ -25,6 +25,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
         if (choice.correct){
             
             pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
+            
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Correct.mp3')
             );

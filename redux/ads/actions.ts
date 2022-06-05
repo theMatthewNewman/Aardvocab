@@ -9,21 +9,26 @@ const setPlatform = (data:dataState) => ({
         data
     }
 });
-const loadAd = (data:dataState) => ({
+const loadAd = () => ({
     type: types.LOAD_AD,
-    payload:{
-        data
-    }
-});
 
+});
+const setCount = (increase:boolean) => ({
+    type: types.SET_COUNT,
+    payload:{
+        increase
+    }
+})
 
 export type Actions = ReturnType<typeof setPlatform> |
-                      ReturnType<typeof loadAd>
+                      ReturnType<typeof loadAd> |
+                      ReturnType<typeof setCount>
 
 
 
 export const actions = {
     setPlatform,
-    loadAd
+    loadAd,
+    setCount
 
 };

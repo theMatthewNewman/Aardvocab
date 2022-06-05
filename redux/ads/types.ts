@@ -6,9 +6,11 @@
 
 const LOAD_AD:"app/ads/LOAD_AD" = "app/ads/LOAD_AD"
 const SET_PLATFORM:"app/SET_PLATFORM" = "app/SET_PLATFORM"
+const SET_COUNT:"app/ads/SET_COUNT"= "app/ads/SET_COUNT"
 
  
  export default {
     LOAD_AD,
-    SET_PLATFORM
+    SET_PLATFORM,
+    SET_COUNT
  };

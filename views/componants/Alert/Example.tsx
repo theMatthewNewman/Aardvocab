@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
         position:'absolute',
         bottom:0,
         padding:size.small,
-        width:'100%'
+        width:'100%',
+        height:size.largest,
+        borderWidth:size.thin
     },
     text:{
         color:'white'

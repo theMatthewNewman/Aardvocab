@@ -2,7 +2,7 @@ import { Text,  Image, ScrollView} from "react-native";
 import DaysGraph from "./graphs/DaysGraph";
 import LessonGraph from "./graphs/LessonGraph";
 import { useEffect } from "react";
-import { dataAction } from "../../../redux/graphs";
+import { dataAction } from "../../../redux/data";
 import { useSelector, useDispatch } from "../../../redux/hooks";
 import { globalStyling } from "../../componants/globalStyle";
 import AccuracyGraph from "./graphs/AccuracyGraph";

@@ -4,6 +4,7 @@ import {actions, Actions} from "./actions";
 import { createUser } from "./utils";
 import { userState } from "./dataTypes";
 import produce from "immer"
+import { pageAction } from "../pages";
 
 //firebase
 import {setDoc, doc, getDoc} from "firebase/firestore";
@@ -12,6 +13,7 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
+
 
 const setUserFirebase = async(user:userState) => {
     const docRef = doc(db,"users",user.uid)
@@ -35,16 +37,17 @@ const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
                 level:dat.level,
                 hearts:dat.hearts,
                 lessonData:dat.lessonData,
-                daysPracticed:dat.daysPracticed
+                promptData:dat.promptData,
+                daysPracticed:dat.daysPracticed,
+                levelsCompletedToday:dat.levelsCompletedToday
+
             }
             dispatch<Actions>(actions.updateUser(data))
-        } catch(error){
-                console.log("data is not in correct format")
-                console.log(error)
+        } catch(error:any){
+            pageAction.updateMessage({type:'alert',active:true,message:error.toString()})
         }
-    } catch(error){
-        console.log("error Connecting to database")
-        console.log(error)
+    } catch(error:any){
+        pageAction.updateMessage({type:'alert',active:true,message:error.toString()})
     }   
 }
 
@@ -78,6 +81,7 @@ const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
         mediaTypes:ImagePicker.MediaTypeOptions.Images
     })
     if (!result.cancelled) {
+        try{
         const {height, width, type, uri} = result;
         dispatch<Actions>(actions.changePicture(uri))
         const blob = await fetch(uri);
@@ -87,7 +91,9 @@ const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
         await uploadBytes(storageRef,file)
         const url = await getDownloadURL(storageRef)
         setUserFirebase({...user, photoURL:url})
-        
+        }catch(error){
+            console.log(error)
+        }
     }
 }
 

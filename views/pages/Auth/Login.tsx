@@ -17,6 +17,8 @@ import { textInput, buttons } from "../../componants/globalStyle";
 
 
 import Signup from "./Signup";
+import { pageAction } from "../../../redux/pages";
+import { dataAction } from "../../../redux/data";
 
 function Login() {
     const user = useSelector(state => state.user)
@@ -30,14 +32,25 @@ function Login() {
 
 
     const signIn = async() => {
-        await signInWithEmailAndPassword(auth,email,password)
-        if (auth.currentUser) {userAction.getUserFirebase(auth.currentUser.uid) (dispatch)}
-        else{ console.log("Sorry Incorrect UserName or Password")}
+        try{
+            await signInWithEmailAndPassword(auth,email,password)
+            if (auth.currentUser) {userAction.getUserFirebase(auth.currentUser.uid) (dispatch)}
+            dataAction.updateData(user) (dispatch)
+        }
+        catch(error:any){
+            pageAction.updateMessage({active:true,type:'alert',message:error.toString()}) (dispatch)
+        }
 
     }
     const example = async() => {
-        userAction.updateUser(exam) (dispatch)
-        await signInWithEmailAndPassword(auth,"example@example.com","example")
+        try {
+            userAction.updateUser(exam) (dispatch)
+            await signInWithEmailAndPassword(auth,"example@example.com","example")
+            dataAction.updateData(user) (dispatch)
+        }
+        catch(error:any){
+            pageAction.updateMessage({active:true,type:'alert',message:error.toString()}) (dispatch)
+        }
     }
 
     

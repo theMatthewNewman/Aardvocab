@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import {size} from "../globalStyle"
 
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { repeat } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/repeat';
+import { styles } from '../../pages/Auth/Signup';
 
 
 
@@ -16,12 +18,16 @@ function Message() {
     const message = useSelector(state => state.page.message)
     const lesson = useSelector(state => state.lesson)
     const user = useSelector(state => state.user)
+    const ad = useSelector(state => state.ads)
     const dispatch = useDispatch()
-    console.log(message)
 
     const alertType = (() => {
         var prompt:Prompt = {active:false}
         type inactiveType = {prompt:typeof prompt, type:"INACTIVE"}
+        if (message.type==='alert'){
+            const ret:{type:'alert', message:string} = {type:'alert', message:message.message}
+            return(ret)
+        }
         if (!lesson.lesson.active || !message.active){
             const ret:inactiveType = {prompt:prompt,type:"INACTIVE"}
             return(ret)
@@ -59,6 +65,7 @@ function Message() {
                 return(ret)
             }
         }
+        
         type unk = {prompt:typeof prompt, type:"UNKNOWN"}
         const ret:unk = {prompt,type:'UNKNOWN'}
         return(ret)
@@ -70,7 +77,7 @@ function Message() {
         op.value = withSpring(0)
         setTimeout(() => {
         if (message.type==='correct'){
-            lessonAction.correct(user, lesson) (dispatch)
+            lessonAction.correct(user, lesson, ad) (dispatch)
         } else{
             lessonAction.Incorrect(user,lesson) (dispatch)
         }
@@ -90,10 +97,16 @@ function Message() {
             opacity:op.value
         }
     })
+
     useEffect(() => {
     if (message.active){
         offset.value = withSpring(0)
         op.value = withSpring(1)
+    }
+    if (message.type==='alert'){
+        setTimeout(() => {
+            pageAction.updateMessage({active:false,type:'correct'}) (dispatch)
+        },2000)
     }
     },[message.active])
     
@@ -125,7 +138,10 @@ function Message() {
                     <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
                 </View>
             </Animated.View>
-            : null}
+            : alertType.type==='alert'?
+            <Text style={style.alert}>{alertType.message}
+            </Text>
+            :null}
         </>
      );
 }
@@ -200,6 +216,14 @@ const style = StyleSheet.create({
         backgroundColor:'white',
         alignItems:'center',
         borderRadius:size.small,
+    },
+    alert:{
+        backgroundColor:'red',
+        height:size.largest,
+        color:'white',
+        padding:size.small,
+        fontSize:size.small,
+        borderWidth:size.thin
     }
 })
 export default Message;
