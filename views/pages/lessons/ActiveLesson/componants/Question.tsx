@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import {Prompt} from "../../../../../redux/lessons";
 import { size } from "../../../../componants/globalStyle";
@@ -8,6 +9,7 @@ type questionType = {
 }
 
 function Question({prompt}:any) {
+    
     return ( 
         <View>
             {prompt.type==="build"? 
@@ -23,6 +25,11 @@ function Question({prompt}:any) {
             prompt.type==='match'? 
                 <View style={styles.background}>
                     <Text style={styles.title}>{prompt.prompt}</Text>
+                </View>
+            :
+            prompt.type==='sentence'?
+                <View style={styles.background}>
+                    <Text style={styles.title}>Complete the sentence.</Text>
                 </View>
             :null}
         </View>
@@ -45,7 +52,7 @@ const styles = StyleSheet.create({
         
     },
     picture:{
-        height:size.giant,
+        height:size.huge+size.larger,
         width:size.giant,
         resizeMode:"contain",
         margin:size.small,

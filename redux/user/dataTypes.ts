@@ -1,6 +1,7 @@
 import { concept } from "../lessons";
 
 export type userState = {
+    active:true
     uid:string
     displayName:string
     email:string
@@ -16,6 +17,7 @@ export type userState = {
 };
 
 export type userFirebase = {
+    active:true
     uid:string
     displayName:string
     email:string

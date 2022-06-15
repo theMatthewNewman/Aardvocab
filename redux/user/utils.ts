@@ -29,6 +29,7 @@ export const createUser =(user:User, username?:string):userState => {
 
 
     return({
+        active:true,
         displayName,
         email,
         photoURL,
@@ -37,8 +38,8 @@ export const createUser =(user:User, username?:string):userState => {
         level:0,
         createdAt: new Date().getTime(),
         hearts:5,
-        lessonData: [{subLessons:0, percentage:0, errors:0, concept:'Vocabulary'}],
-        promptData: [{errors:0, concept:'Vocabulary',id:'test'}],
+        lessonData: new Array(100).fill({subLessons:0, percentage:0, errors:0, concept:'Vocabulary'}),
+        promptData: new Array(100).fill({errors:0, concept:'Vocabulary',id:'test'}),
         daysPracticed:[new Date().getTime()],
         levelsCompletedToday:{levels:0,date:new Date().getTime()}
     })

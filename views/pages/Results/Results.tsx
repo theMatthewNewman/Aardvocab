@@ -13,7 +13,7 @@ const Results = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dataAction.updateData(user) (dispatch)
-},[])
+  },[])
 
 
     return(

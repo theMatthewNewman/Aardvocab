@@ -22,6 +22,8 @@ import Login from "./Auth/Login";
 import { ScrollView } from "react-native-gesture-handler";
 import Example from "../componants/Alert/Example";
 import { size } from "../componants/globalStyle";
+import OtherProfile from "./otherProfile/OtherProfile";
+import Chat from "./Chat/Chat";
 
 
 function Home() {
@@ -39,8 +41,13 @@ function Home() {
         lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
         pageAction.changePage('Profile') (dispatch)
         pageAction.updateMessage({active:false, type:'correct'}) (dispatch)
-        x.value=width
-        setTimeout(() => {x.value = withSpring(0)},10)
+        x.value=-width
+        setTimeout(() => {
+        if (page.page==='Results'){
+            x.value=width
+        }
+        x.value = withSpring(0)},10)
+    
     }
     const goResults = () => {
         
@@ -62,12 +69,19 @@ function Home() {
         x.value=-width
         setTimeout(() => {x.value = withSpring(0)},10)
     }
+    const goChat = () => {
+        pageAction.changePage('Chat') (dispatch)
+        x.value=width
+        setTimeout(() => {x.value = withSpring(0)},10)
+
+    }
 
 
     const actions = [
         goProfile,
         goResults,
-        goLessons
+        goLessons,
+        goChat,
     ]
 
     const startingPosition = 0;
@@ -102,13 +116,17 @@ function Home() {
                 goResults()
             }else if (page.page==='Results'){
                 goProfile()
+            }else if (page.page==='Profile'){
+                goChat()
             }else{
                 x.value=0
             }
             
         }
         else if (x.value>=150){
-            if (page.page==='Profile'){
+            if (page.page==='Chat'){
+                goProfile()
+            }else if (page.page==='Profile'){
                 goResults()
             }else if (page.page==='Results'){
                 goLessons()
@@ -135,6 +153,9 @@ function Home() {
                     {page.page==="Lessons"? <Animated.View ><LessonPath/></Animated.View>: null}
                     {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
                     {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
+                    {page.page==="Chat"? <Animated.View><Chat/></Animated.View>: null}
+                    {page.page==="OtherProfile"? <OtherProfile user={page.otherUser}/> :null}
+
                 </Animated.View>
                 </PanGestureHandler>
                 {User.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3' && !lesson.lesson.active? <Example/>: null}

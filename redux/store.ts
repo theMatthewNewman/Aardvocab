@@ -1,6 +1,7 @@
 // for creating redux store
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
+import {createLogger} from "redux-logger";
 
 // reducers
 import * as user from "./user";
@@ -8,6 +9,10 @@ import * as lessons from "./lessons"
 import * as pages from "./pages";
 import * as graph from "./data";
 import * as ads from "./ads";
+
+const logger = createLogger({
+    collapsed: (getState, action, logEntry:any) => !logEntry.error
+})
 
 
 const rootReducer = combineReducers({

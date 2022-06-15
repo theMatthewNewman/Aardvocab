@@ -50,6 +50,10 @@ function Message() {
                 const ret:{prompt:typeof prompt, type:'correctmatch'} = {prompt,type:"correctmatch"}
                 return(ret)
             }
+            if (prompt.type==='sentence'){
+                const ret:{prompt:typeof prompt, type:'correctsentence'} = {prompt, type:'correctsentence'}
+                return(ret)
+            }
         }
         if (message.type==='wrong'){
             if (prompt.type==='build'){
@@ -62,6 +66,10 @@ function Message() {
             }
             if (prompt.type==='match'){
                 const ret:{prompt:typeof prompt, type:"wrongmatch"} = {prompt,type:"wrongmatch"}
+                return(ret)
+            }
+            if (prompt.type==='sentence'){
+                const ret:{prompt:typeof prompt, type:"wrongsentence"} = {prompt,type:'wrongsentence'}
                 return(ret)
             }
         }
@@ -129,7 +137,7 @@ function Message() {
                     <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
                 </View>
             </Animated.View>
-            : alertType.type==="correctmulti"|| alertType.type==="correctbuild"|| alertType.type==='correctmatch'? 
+            : alertType.type==="correctmulti"|| alertType.type==="correctbuild"|| alertType.type==='correctmatch' || alertType.type==='correctsentence'? 
             <Animated.View style={[style.correctBack,opacityStyles]}>
                 <View style={style.correct}>
                     <Animated.View style={[style.check, animatedStyles]}>
@@ -139,8 +147,22 @@ function Message() {
                 </View>
             </Animated.View>
             : alertType.type==='alert'?
-            <Text style={style.alert}>{alertType.message}
+            <Text style={style.alert}>
+                {alertType.message}
             </Text>
+            : alertType.type==='wrongsentence'?
+            <Animated.View style={[style.wrongBack,opacityStyles]}>
+                <View style={style.wrong}>
+                    <Animated.View style={[style.x, animatedStyles]}>
+                        <View style={style.box}>
+                            <Image style={style.image} source={ require('../../../images/x.png')} />
+                        </View>
+                        <Text style={style.text}>The correct answer was:</Text>
+                        <Text style={style.desc}>{alertType.prompt.correct}</Text>
+                    </Animated.View>
+                    <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
+                </View>
+            </Animated.View>
             :null}
         </>
      );

@@ -48,8 +48,12 @@ export type Prompt = {
                   photoURL?:string
               }|{active:false}|
               {
-                  type:'sentance'
+                  type:'sentence'
                   active:true
+                  prompt:{input:boolean,content:string}[]
+                  options:string[]
+                  correct:string
+
               }
 
 
@@ -66,7 +70,7 @@ export type lessonState = {
         }[]
     }|{active:false},
     lesson:{
-        id:number
+        id:string
         level:number
         active:true
         concept:concept
@@ -80,10 +84,10 @@ export type lessonState = {
 
 export type lessonFirebase ={
     concept:concept
-    id:number
+    id:string
     level:number
     subLessons:{
-        prompts:number[]
+        prompts:{id:string, concept:concept}[]
     }[]
 }
 

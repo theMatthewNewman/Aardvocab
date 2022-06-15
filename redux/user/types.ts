@@ -9,8 +9,8 @@ const CHANGE_PICTURE:"app/user/CHANGE_PICTURE" = "app/user/CHANGE_PICTURE";
 const CHANGE_NAME:"app/user/CHANGE_NAME" = "app/user/CHANGE_NAME";
 const LOSE_HEART:"app/user/LOSE_HEART" = "app/user/LOSE_HEART";
 const GAIN_HEART:"app/user/GAIN_HEART" = "app/user/GAIN_HEART";
-const SIGN_IN:"app/user/SIGN_IN" = "app/user/SIGN_IN";
-const SIGN_UP:"app/user/SIGN_UP" = "app/user/SIGN_UP";
+const SIGN_IN:"app/SIGN_IN" = "app/SIGN_IN";
+const SIGN_UP:"app/SIGN_UP" = "app/SIGN_UP";
 const UPDATE_USER:"app/user/UPDATE_USER" = "app/user/UPDATE_USER";
 const INCREASE_LESSON_PERCENTAGE:"app/user/INCREASE_LESSON_PERCENTAGE"="app/user/INCREASE_LESSON_PERCENTAGE"
 

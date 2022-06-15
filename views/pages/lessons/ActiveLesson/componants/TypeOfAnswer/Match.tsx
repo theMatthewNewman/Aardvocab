@@ -106,8 +106,7 @@ const styles = StyleSheet.create({
         borderWidth:size.thin,
         borderColor:'black',
         padding:size.smallest,
-        marginVertical:size.medium,
-        width:size.Whalf-size.Wmedium,
+        width:size.Wlarger+size.Wmedium,
     },
     choiceText:{
         fontSize:size.medium,
@@ -125,8 +124,7 @@ const styles = StyleSheet.create({
         borderWidth:size.thin,
         borderColor:'black',
         padding:size.smallest,
-        marginVertical:size.medium,
-        width:size.Whalf-size.Wmedium,
+        width:size.Wlarger+size.Wmedium,
     }
 
 })

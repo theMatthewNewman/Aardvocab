@@ -1,5 +1,5 @@
 import {View, Text, Pressable, StyleSheet} from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {useSelector, useDispatch} from '../../../../../../redux/hooks';
 import {lessonAction} from "../../../../../../redux/lessons"
@@ -18,6 +18,7 @@ function BuildUp({prompt}:buildup) {
     const [answer, setAnswer] = useState('')
     const dispatch = useDispatch()
     const [randomPrompts, setRandomPrompts] = useState(shuffleArray(prompt.parts))
+    useEffect(() => {setRandomPrompts(shuffleArray(prompt.parts))},[prompt.parts])
     
 
 
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         backgroundColor:"lightgray",
         justifyContent:'space-evenly',
-        margin:size.smaller,
+        marginHorizontal:size.smaller,
         padding:size.smallest,
         borderWidth:size.thin,
         borderRadius:size.small,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
         borderWidth:size.thin,
         borderColor:'black',
         padding:size.smallest,
-        marginVertical:size.medium,
+        marginVertical:size.thin,
         marginHorizontal:size.smallest
     },
     choiceText:{
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
         backgroundColor:"white",
         fontSize:size.medium,
         padding:size.smallest,
-        marginVertical:size.medium,
         borderWidth:size.thin,
         textAlign:"center",
         borderRadius:size.small,

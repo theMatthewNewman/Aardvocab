@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import {actions, Actions} from "./actions";
-import {Prompt, lessonState, lessonFirebase} from "./dataTypes"
+import {Prompt, lessonState, lessonFirebase, concept} from "./dataTypes"
 import {userState, userAction}from "../user"
 import { adAction, dataState } from "../ads";
 import {shuffleArray} from "./utils";
@@ -30,8 +30,8 @@ const getLessonFirebase = async(id:number) => {
     const dat:any = document.data()
     return(dat)
 }
-const getPromptFirebase = async(id:number) => {
-    const docRef = doc(db, "prompts", `${id}`);
+const getPromptFirebase = async(id:string, concept:concept) => {
+    const docRef = doc(db, `${concept}`, `${id}`);
     const document = await getDoc(docRef)
     const dat:any = document.data()
     return(dat)
@@ -39,8 +39,8 @@ const getPromptFirebase = async(id:number) => {
 const setLessonState = (id:number, user:userState) => async(dispatch:Dispatch) => {
     const preLesson:lessonFirebase = await getLessonFirebase(id)
     const subLessons:any = await Promise.all(preLesson.subLessons.map(async(lesson) => {
-        const prompts = shuffleArray(await Promise.all(lesson.prompts.map(async(id) => {
-            const prompt:Prompt = await getPromptFirebase(id)
+        const prompts = shuffleArray(await Promise.all(lesson.prompts.map(async(promptRef) => {
+            const prompt:Prompt = await getPromptFirebase(promptRef.id,promptRef.concept)
             return(prompt)
         })))
         return({prompts})
@@ -100,7 +100,7 @@ const completeLesson = (user:userState, lesson:lessonState, ad:dataState) => asy
             draft.levelsCompletedToday.levels +=1
         } else{
             draft.levelsCompletedToday.date = (newDay.getTime()/1000)
-            draft.levelsCompletedToday.levels = 0
+            draft.levelsCompletedToday.levels = 1
         }
         return(draft)
     })
@@ -117,6 +117,14 @@ const deactivateLesson = () => (dispatch:Dispatch) => {
     dispatch<Actions>(actions.deactivate_lesson())
 }
 
+const allIDs = () => {
+    db.collection("Vocabulary")
+        .onSnapshot((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                console.log(doc.id); // For doc name
+            })
+        })
+}
 export const lessonAction = {
     getLessonFirebase,
     getPromptFirebase,
@@ -127,5 +135,7 @@ export const lessonAction = {
     Incorrect,
     updateLesson,
     completeLesson,
-    deactivateLesson
+    deactivateLesson,
+    allIDs
+    
 }

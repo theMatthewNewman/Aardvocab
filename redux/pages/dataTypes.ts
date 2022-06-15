@@ -1,5 +1,8 @@
+import { userState } from "../user"
+
 export type pageState = {
-    page: "Lessons"| "Results" | "Profile" 
+    page: "Lessons"| "Results" | "Profile" |"OtherProfile"| "Chat"
+    otherUser:userState|{active:false}
     message:{
         active:boolean
         type:"correct"|"wrong"

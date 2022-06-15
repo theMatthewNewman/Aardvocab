@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         borderWidth:size.thin,
         padding:size.small,
         marginLeft:size.Wsmallest,
-        marginRight:size.largest,
+        marginRight:size.largest,   
         marginTop:size.small,
     }
 

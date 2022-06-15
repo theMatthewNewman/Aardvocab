@@ -42,7 +42,7 @@ export const bucketUsers = (data:dataFirebase, user:userState) => {
 const dailyUsers = (data:dataFirebase, user:userState) => {
     const newDay = new Date()
     const today = newDay.getFullYear()+'/'+(newDay.getMonth()+1)+'/'+newDay.getDate(); 
-    const userTimes = data.users.map(user => {
+    const userTimes = data.users.slice(0,10).map(user => {
         const day = new Date(user.levelsCompletedToday.date*1000)
         const lastDayPracticed = day.getFullYear()+'/'+(day.getMonth()+1)+'/'+day.getDate();
         if (lastDayPracticed === today){
@@ -51,10 +51,8 @@ const dailyUsers = (data:dataFirebase, user:userState) => {
             return({uid:user.uid,time:0})
         }
     })
+    
     userTimes.sort((a, b) => b.time - a.time)
-    const organizedUsers = userTimes.map(user => {
-        return(user.uid)
-    })
-    return(organizedUsers)
+    return(userTimes)
     
 }

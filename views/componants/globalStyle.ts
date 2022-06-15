@@ -40,7 +40,7 @@ export const color = {
     darkBlue:'#3c427c'
 }
 
-const headWidth = (3*width)
+export const headWidth = (3*width)
 export const globalStyling = StyleSheet.create({
     head:{
         backgroundColor:AardVocabBlue,

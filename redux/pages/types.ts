@@ -6,9 +6,10 @@
 
 const CHANGE_PAGE:"app/page/CHANGE_PAGE" = "app/page/CHANGE_PAGE"
 const UPDATE_MESSAGE:"app/page/UPDATE_MESSAGE" = "app/page/UPDATE_MESSAGE"
-
+const SET_OTHER_OSER:"app/SET_OTHER_USER" = "app/SET_OTHER_USER"
  
  export default {
     CHANGE_PAGE,
-    UPDATE_MESSAGE
+    UPDATE_MESSAGE,
+    SET_OTHER_OSER
  };

@@ -8,7 +8,7 @@ import {userAction} from "../../../redux/user";
 import {color, globalStyling, size} from "../../componants/globalStyle";
 import { lessonAction } from "../../../redux/lessons";
 import { ScrollView } from "react-native-gesture-handler";
-import Chat from "./Chat";
+
 import LeaderBoard from "./LeaderBoard";
 
 
@@ -47,7 +47,7 @@ function Profile() {
     return ( 
         <>
         <Text style={globalStyling.head}>Profile</Text>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <View style={ProfileStyles.back}>
                 <View style={ProfileStyles.info}>
                     <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
@@ -81,6 +81,7 @@ function Profile() {
                             title="Log Out"/>
                 </View>
             </View>
+            <LeaderBoard action="View profile" type="View profile"/>
             </ScrollView>
         </> 
     );
@@ -88,7 +89,7 @@ function Profile() {
 
 export default Profile;
 
-const ProfileStyles = StyleSheet.create({
+export const ProfileStyles = StyleSheet.create({
     input:{ 
         backgroundColor:"white",
         borderRadius:size.smallest,

@@ -1,7 +1,7 @@
 import { StyleSheet,  View} from 'react-native';
 
 import {useDispatch, useSelector} from "../../../../redux/hooks"
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 
 import ProgressBar from "./componants/ProgressBar";
 

@@ -13,6 +13,8 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
+import { lessonState } from "../lessons";
+import { Value } from "react-native-reanimated";
 
 
 const setUserFirebase = async(user:userState) => {
@@ -22,12 +24,18 @@ const setUserFirebase = async(user:userState) => {
 }
 
 const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
+    const data:any = await asyncFirebaseData(uid)
+    dispatch<Actions>(actions.updateUser(data))
+}
+
+const asyncFirebaseData = async(uid:string) => {
     const docRef = doc(db, "users", uid);
     try{
         const document = await getDoc(docRef)
         const dat = document.data()!
         try{
             const data:userState = {
+                active:true,
                 uid:dat.uid,
                 displayName:dat.displayName,
                 email:dat.email,
@@ -42,7 +50,7 @@ const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
                 levelsCompletedToday:dat.levelsCompletedToday
 
             }
-            dispatch<Actions>(actions.updateUser(data))
+            return(data)
         } catch(error:any){
             pageAction.updateMessage({type:'alert',active:true,message:error.toString()})
         }
@@ -55,16 +63,58 @@ const updateUser = (user:userState) => (dispatch:Dispatch) => {
     setUserFirebase(user)
     dispatch<Actions>(actions.updateUser(user))
 }
-const loseHeart = (user:userState) => (dispatch:Dispatch) => {
+const loseHeart = (user:userState, lesson:lessonState['lesson']) => (dispatch:Dispatch) => {
+    if (!lesson.active){return;}
     const newUser = produce(user,draft => {
         draft.hearts -= 1
+        var found = false
+        draft.promptData = user.promptData.map((value, index) => {
+            if (lesson.id===value.id && lesson.concept===value.concept){
+                found = true
+                return{
+                    errors:value.errors+2,
+                    id:value.id,
+                    concept:value.concept
+                }
+            }
+            return{...value}
+        })
+        if (!found){
+            draft.promptData.push({
+                errors:2,
+                id:lesson.id,
+                concept:lesson.concept
+            })
+        }
         return(draft)
     })
+
     updateUser(newUser) (dispatch)
 }
-const gainHeart = (user:userState) => (dispatch:Dispatch) => {
+const gainHeart = (user:userState,lesson:lessonState['lesson']) => (dispatch:Dispatch) => {
+    if (!lesson.active){return;}
     const newUser = produce(user,draft => {
         draft.hearts += 1
+        var found = false
+        draft.promptData = user.promptData.map((value, index) => {
+            if (lesson.id===value.id&& lesson.concept===value.concept){
+                found = true
+                if (value.errors===0){return{...value}}
+                return{
+                    errors:value.errors-1,
+                    concept:value.concept,
+                    id:value.id                    
+                }
+            }
+            return({...value})
+        })
+        if (!found){
+            draft.promptData.push({
+                id:lesson.id,
+                concept:lesson.concept,
+                errors:0
+            })
+        }
         return(draft)
     })
     updateUser(newUser) (dispatch)
@@ -72,10 +122,12 @@ const gainHeart = (user:userState) => (dispatch:Dispatch) => {
 
 const newUser = (authorizedUser:User, username?:string) => async(dispatch:Dispatch) => {
     const user = createUser(authorizedUser, username);
-    console.log(user)
-    updateUser(user) (dispatch)
+    dispatch<Actions>(actions.signIn(user))
 }
 
+const logIn = (user:userState) => (dispatch:Dispatch) => {
+    dispatch<Actions>(actions.signIn(user))
+}
 const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes:ImagePicker.MediaTypeOptions.Images
@@ -114,6 +166,7 @@ const addDay = (user:userState) => async(dispatch:Dispatch) =>{
         draft.daysPracticed.push(newDay.getTime()/1000)
         
     }
+
     return(draft)})
     setUserFirebase(newuser)
     dispatch<Actions>(actions.updateUser(newuser))
@@ -131,5 +184,6 @@ export const userAction = {
     newUser,
     getUserFirebase,
     setUserFirebase,
-    addDay
+    addDay,
+    asyncFirebaseData
 }

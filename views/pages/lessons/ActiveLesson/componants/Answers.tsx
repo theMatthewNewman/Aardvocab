@@ -3,6 +3,7 @@ import BuildUp from "./TypeOfAnswer/BuildUp";
 import MultiChoice from "./TypeOfAnswer/MultiChoice";
 import {Prompt} from "../../../../../redux/lessons";
 import Match from "./TypeOfAnswer/Match";
+import Sentence from "./TypeOfAnswer/Sentence";
 
 
 type answerType = {
@@ -17,7 +18,8 @@ function Answers({prompt}:answerType) {
             <>
             {prompt.type==="build"? <BuildUp prompt={prompt}/>:
              prompt.type==="multi"? <MultiChoice prompt={prompt}/>:
-             prompt.type==="match"? <Match prompt={prompt}/>: null}
+             prompt.type==="match"? <Match prompt={prompt}/>:
+             prompt.type==='sentence'? <Sentence prompt={prompt}/>: null}
             </>
         :null}
         </>

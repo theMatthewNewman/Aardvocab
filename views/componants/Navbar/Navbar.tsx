@@ -18,6 +18,9 @@ function Navbar({action}:navActions) {
         <View style={styles.background}>
 
         <Image style={styles.image} source={require('../../../images/logo.png')} />
+            <Buttons onPress={action[3]}
+                     style={page.page==="Chat"? "NavSelected":"Nav"}
+                     title="Chat"/>
 
             <Buttons onPress={action[0]}
                      style={page.page==="Profile"? "NavSelected":"Nav"}
@@ -30,7 +33,7 @@ function Navbar({action}:navActions) {
             <Buttons onPress={action[2]}
                      style={page.page==="Lessons"? "NavSelected":"Nav"}
                      title="Lessons"/>
-
+            
         </View>
         </>
      );

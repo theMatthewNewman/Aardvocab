@@ -1,9 +1,11 @@
 export type dataState = {
     bucketedLevels:number[]
     selfIndex:number
-    dailyTopUsers:string[]
+    dailyTopUsers:{uid:string, time:number}[]
+    messages:userMessages
 
-};
+}
+;
 
 export type dataFirebase = {
     users:{
@@ -13,3 +15,10 @@ export type dataFirebase = {
 
     }[]
 };
+
+export type userMessage = {
+        uid:string
+        sent:boolean
+        message:string
+}
+export type userMessages = {messages:userMessage[],active:true}|{active:false}

@@ -35,7 +35,7 @@ function Login() {
         try{
             await signInWithEmailAndPassword(auth,email,password)
             if (auth.currentUser) {userAction.getUserFirebase(auth.currentUser.uid) (dispatch)}
-            dataAction.updateData(user) (dispatch)
+            
         }
         catch(error:any){
             pageAction.updateMessage({active:true,type:'alert',message:error.toString()}) (dispatch)
@@ -46,7 +46,7 @@ function Login() {
         try {
             userAction.updateUser(exam) (dispatch)
             await signInWithEmailAndPassword(auth,"example@example.com","example")
-            dataAction.updateData(user) (dispatch)
+            
         }
         catch(error:any){
             pageAction.updateMessage({active:true,type:'alert',message:error.toString()}) (dispatch)
@@ -75,7 +75,7 @@ function Login() {
 
 export default Login;
 
-const styles=StyleSheet.create({
+export const styles=StyleSheet.create({
     container:{
         backgroundColor:"white",
         margin:size.small,

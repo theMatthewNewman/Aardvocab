@@ -6,6 +6,7 @@ import { pageState, } from "./dataTypes";
 
 const example:pageState = {
     page:"Lessons",
+    otherUser:{active:false},
     message:{
         active:false,
         type:"wrong"
@@ -22,6 +23,10 @@ export const reducer = (state:pageState = example, action:Actions) => {
             }
             case types.UPDATE_MESSAGE:{
                 draft.message = action.payload.message
+            return(draft);
+            }
+            case types.SET_OTHER_OSER:{
+                draft.otherUser = action.payload.user
             return(draft);
             }
         }
