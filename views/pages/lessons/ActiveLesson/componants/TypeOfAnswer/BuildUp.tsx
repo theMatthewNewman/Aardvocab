@@ -8,6 +8,7 @@ import { pageAction } from "../../../../../../redux/pages";
 import {Audio} from 'expo-av';
 
 import { buttons, size} from '../../../../../componants/globalStyle';
+import { userAction } from "../../../../../../redux/user";
 
 
 type buildup = {
@@ -16,6 +17,7 @@ type buildup = {
 
 function BuildUp({prompt}:buildup) {
     const [answer, setAnswer] = useState('')
+    const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [randomPrompts, setRandomPrompts] = useState(shuffleArray(prompt.parts))
     useEffect(() => {setRandomPrompts(shuffleArray(prompt.parts))},[prompt.parts])
@@ -26,6 +28,7 @@ function BuildUp({prompt}:buildup) {
                 
             if (answer === prompt.correct){
                 setAnswer("")
+                userAction.reduceErrors(user,prompt)(dispatch)
                 pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
                 const {sound} = await Audio.Sound.createAsync(
                     require('../../../../../../assets/Correct.mp3')
@@ -34,6 +37,7 @@ function BuildUp({prompt}:buildup) {
                 
             } else {
                 setAnswer("")
+                userAction.loseHeart(user, prompt) (dispatch)
                 pageAction.updateMessage({active:true, type:"wrong"}) (dispatch)
                 const {sound} = await Audio.Sound.createAsync(
                     require('../../../../../../assets/Wrong.mp3')

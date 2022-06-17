@@ -37,8 +37,8 @@ function Match({prompt}:input) {
             return;
         }
         if (active.id!==id){
-            console.log(active,id,type)
-            userAction.loseHeart(user) (dispatch)
+            
+            userAction.loseHeart(user, prompt) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Wrong.mp3')
             );
@@ -64,6 +64,7 @@ function Match({prompt}:input) {
             sound.playAsync();
         }
         if (from.length===0){
+            userAction.reduceErrors(user,prompt)(dispatch)
             pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Correct.mp3')

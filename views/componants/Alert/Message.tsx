@@ -13,7 +13,6 @@ import { styles } from '../../pages/Auth/Signup';
 
 
 
-
 function Message() {
     const message = useSelector(state => state.page.message)
     const lesson = useSelector(state => state.lesson)

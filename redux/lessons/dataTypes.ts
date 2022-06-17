@@ -2,6 +2,7 @@ export type concept = 'Vocabulary'| 'Spelling'|'Grammar'| 'Pros'
 
 export type Prompt = {
                 concept:concept
+                id:string
                 prompt: string
                 choices: {
                     title:string
@@ -18,6 +19,7 @@ export type Prompt = {
               }|
               {
                 concept:concept
+                id:string
                 prompt: string
                 parts: string[]
                 correct: string
@@ -32,6 +34,7 @@ export type Prompt = {
               }|
               {
                   concept:concept
+                  id:string
                   type:"match"
                   prompt:string
                   match:{
@@ -70,7 +73,7 @@ export type lessonState = {
         }[]
     }|{active:false},
     lesson:{
-        id:string
+        id:number
         level:number
         active:true
         concept:concept
@@ -84,7 +87,7 @@ export type lessonState = {
 
 export type lessonFirebase ={
     concept:concept
-    id:string
+    id:number
     level:number
     subLessons:{
         prompts:{id:string, concept:concept}[]

@@ -8,6 +8,7 @@ import Buttons from '../../../../../componants/Buttons/Button';
 import {pageAction} from "../../../../../../redux/pages";
 
 import {size} from "../../../../../componants/globalStyle";
+import { userAction } from '../../../../../../redux/user';
 
 
 type multichoiceType = {
@@ -25,6 +26,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
         if (choice.correct){
             
             pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
+            userAction.reduceErrors(user,prompt)(dispatch)
             
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Correct.mp3')
@@ -32,6 +34,7 @@ const MultiChoice = ({prompt}:multichoiceType) => {
             await sound.playAsync();
             
         } else {
+            userAction.loseHeart(user,prompt) (dispatch)
             pageAction.updateMessage({active:true, type:"wrong"}) (dispatch)
             const {sound} = await Audio.Sound.createAsync(
                 require('../../../../../../assets/Wrong.mp3')

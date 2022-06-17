@@ -34,17 +34,21 @@ const getPromptFirebase = async(id:string, concept:concept) => {
     const docRef = doc(db, `${concept}`, `${id}`);
     const document = await getDoc(docRef)
     const dat:any = document.data()
-    return(dat)
+    const ret = {...dat, id}
+    return(ret)
 }
 const setLessonState = (id:number, user:userState) => async(dispatch:Dispatch) => {
     const preLesson:lessonFirebase = await getLessonFirebase(id)
     const subLessons:any = await Promise.all(preLesson.subLessons.map(async(lesson) => {
-        const prompts = shuffleArray(await Promise.all(lesson.prompts.map(async(promptRef) => {
+        var newPrompts = await Promise.all(lesson.prompts.map(async(promptRef) => {
             const prompt:Prompt = await getPromptFirebase(promptRef.id,promptRef.concept)
             return(prompt)
-        })))
+        }))
+        const oldPrompts = await getOldPrompts(user,preLesson.concept)
+        var prompts = shuffleArray(newPrompts.concat(oldPrompts))
         return({prompts})
     }))
+    
     const lesson = {...preLesson,
                     subLessons, 
                     active:true, 
@@ -70,15 +74,28 @@ const correct = (user:userState, lesson:lessonState, ad:dataState) => (dispatch:
         
     }
 }
+const getOldPrompts = async(user:userState, concept:string) => {
+    const organized:any = await Promise.all(
+        user.promptData.filter((value, index) => {
+        return(value.concept===concept)
+    }).sort(value => value.errors).slice(0,).map(async(value) =>{
+        const prompt:Prompt = await getPromptFirebase(value.id,value.concept)
+        return(prompt)
+    }))
+    
+    
+    
+    return(organized)
+}
 const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) => {
-    userAction.loseHeart(user) (dispatch)
+    
     const newLessonState:lessonState = produce(lesson, draft => {
         if (draft.lesson.active && lesson.lesson.active){
             const subLessonIndex = lesson.lesson.subLessonIndex
             const promptIndex = lesson.lesson.promptIndex
             draft.lesson.subLessons[subLessonIndex].prompts.splice(promptIndex,1)
             draft.lesson.subLessons[subLessonIndex].prompts.push(lesson.lesson.subLessons[subLessonIndex].prompts[promptIndex])
-            console.log(draft.lesson.subLessons[subLessonIndex].prompts)
+            
         }
         return(draft)
     })

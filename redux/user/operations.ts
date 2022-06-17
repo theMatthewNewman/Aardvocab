@@ -13,12 +13,14 @@ import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {User} from "firebase/auth";
 
 import * as ImagePicker  from 'expo-image-picker';
-import { lessonState } from "../lessons";
+import { lessonState, Prompt } from "../lessons";
 import { Value } from "react-native-reanimated";
 
 
 const setUserFirebase = async(user:userState) => {
+    
     const docRef = doc(db,"users",user.uid)
+    
     await setDoc(docRef,user)
     return(true)
 }
@@ -63,13 +65,14 @@ const updateUser = (user:userState) => (dispatch:Dispatch) => {
     setUserFirebase(user)
     dispatch<Actions>(actions.updateUser(user))
 }
-const loseHeart = (user:userState, lesson:lessonState['lesson']) => (dispatch:Dispatch) => {
-    if (!lesson.active){return;}
+const loseHeart = (user:userState, prompt:Prompt) => (dispatch:Dispatch) => {
+    if (!prompt.active){return;}
+    if (prompt.type==='sentence'){return;}
     const newUser = produce(user,draft => {
         draft.hearts -= 1
         var found = false
         draft.promptData = user.promptData.map((value, index) => {
-            if (lesson.id===value.id && lesson.concept===value.concept){
+            if (prompt.id===value.id && prompt.concept===value.concept){
                 found = true
                 return{
                     errors:value.errors+2,
@@ -82,8 +85,8 @@ const loseHeart = (user:userState, lesson:lessonState['lesson']) => (dispatch:Di
         if (!found){
             draft.promptData.push({
                 errors:2,
-                id:lesson.id,
-                concept:lesson.concept
+                id:prompt.id,
+                concept:prompt.concept
             })
         }
         return(draft)
@@ -91,32 +94,46 @@ const loseHeart = (user:userState, lesson:lessonState['lesson']) => (dispatch:Di
 
     updateUser(newUser) (dispatch)
 }
-const gainHeart = (user:userState,lesson:lessonState['lesson']) => (dispatch:Dispatch) => {
-    if (!lesson.active){return;}
+const gainHeart = (user:userState) => (dispatch:Dispatch) => {
+    
     const newUser = produce(user,draft => {
         draft.hearts += 1
+        
+        return(draft)
+    })
+    updateUser(newUser) (dispatch)
+}
+const reduceErrors = (user:userState, prompt:Prompt) => (dispatch:Dispatch) => {
+    if (!prompt.active){return;}
+    if (prompt.type==='sentence'){return;}
+    const newUser = produce(user, draft => {
         var found = false
         draft.promptData = user.promptData.map((value, index) => {
-            if (lesson.id===value.id&& lesson.concept===value.concept){
+            if (value.id===prompt.id){
                 found = true
-                if (value.errors===0){return{...value}}
+                if (value.errors===0){return(value)}
                 return{
-                    errors:value.errors-1,
+                    id:value.id,
                     concept:value.concept,
-                    id:value.id                    
+                    errors:value.errors-1
                 }
             }
-            return({...value})
+            return(value)
         })
-        if (!found){
+        if(!found) {
             draft.promptData.push({
-                id:lesson.id,
-                concept:lesson.concept,
+                id:prompt.id,
+                concept:prompt.concept,
                 errors:0
             })
         }
+        
+
+        
         return(draft)
+        
     })
+    
     updateUser(newUser) (dispatch)
 }
 
@@ -185,5 +202,6 @@ export const userAction = {
     getUserFirebase,
     setUserFirebase,
     addDay,
-    asyncFirebaseData
+    asyncFirebaseData,
+    reduceErrors
 }
