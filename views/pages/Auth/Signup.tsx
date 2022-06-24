@@ -1,4 +1,4 @@
-import { View, TextInput, Pressable, Text, StyleSheet} from "react-native";
+import { View, TextInput, TouchableHighlight, Text, StyleSheet} from "react-native";
 import {useState} from "react";
 import {useDispatch} from "../../../redux/hooks"
 
@@ -49,12 +49,12 @@ function Signup({setNewUser}:any) {
                 <Text>Re-enter Password:</Text>
                 <TextInput onChangeText={setPasswordVerify} style={textInput.form}/>
                 <View style={{flexDirection:'row'}}>
-                    <Pressable onPress={() => {submitNewUser()}} style={buttons.strong}>
+                    <TouchableHighlight onPress={() => {submitNewUser()}} style={buttons.strong}>
                         <Text style={{color:'white'}}>Create New User</Text>
-                    </Pressable>
-                    <Pressable onPress={() => {setNewUser(false)}} style={buttons.strong}>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => {setNewUser(false)}} style={buttons.strong}>
                         <Text style={{color:'white'}}>Back to Sign in</Text>
-                    </Pressable>
+                    </TouchableHighlight>
                 </View>
             </View>
     );

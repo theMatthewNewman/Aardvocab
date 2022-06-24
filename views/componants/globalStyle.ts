@@ -102,7 +102,15 @@ export const buttons = StyleSheet.create({
         borderRadius:5,
         margin:4,
     },
-    strongText:{
+    example:{
+        backgroundColor:'yellow',
+        alignSelf:'center',
+        width:'80%',
+        padding:10,
+        borderRadius:size.curve,
+        borderWidth:size.thin,
+    },
+        strongText:{
         color:'white',
         fontSize:20,
     },

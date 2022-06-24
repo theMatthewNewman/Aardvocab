@@ -34,7 +34,7 @@ function Buttons(props:propsType) {
 
     return (    
         <View>
-            {props.style==='correct'?
+            {props.style==='correct'|| props.style==='Strong'||props.style==='Choice'?
             <TouchableHighlight onPress={props.onPress} style={ButtonStyle}>
                 <View>
                     <Text style={TextStyle}>{props.title}</Text>
@@ -73,7 +73,7 @@ const ButtonStyles = StyleSheet.create({
         borderColor:'black',
         width:"100%",
         padding:size.smallest,
-        marginVertical:size.medium,
+        
         
     },
     correct:{

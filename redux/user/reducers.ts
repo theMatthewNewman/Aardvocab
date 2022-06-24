@@ -15,7 +15,7 @@ export const exam:userState = {
     level:0,
     hearts:5,
     lessonData:new Array(100).fill({subLessons:0, percentage:0}),
-    promptData:[{errors:0,concept:'Pros',id:'test'}],
+    promptData:[],
     daysPracticed:[1652651988,1652751988],
     levelsCompletedToday:{date:1652651988,levels:0}
 }

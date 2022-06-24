@@ -9,7 +9,7 @@ function DaysGraph() {
       [new Date(day*1000).toISOString().substring(0,10)]:{selected:true, selectedColor:'cornflowerblue'}
     })}))
     return ( 
-        <View style={styles.backdrop}>
+        <View style={dayStyles.backdrop}>
           <Calendar
             markedDates={markedDates}
             hideArrows={true}
@@ -20,17 +20,17 @@ function DaysGraph() {
             disableArrowLeft={true}
             disableArrowRight={true}
             disableAllTouchEventsForDisabledDays={true}
-            style={styles.cal}
+            style={dayStyles.cal}
           />
-          <View style={styles.key}>
-            <Image style={styles.dot} source={require('../../../../images/dayDot.png')}/>
-            <Text style={styles.note}>Days Practiced</Text>
-            </View>
+          <View style={dayStyles.key}>
+            <Image style={dayStyles.dot} source={require('../../../../images/dayDot.png')}/>
+            <Text style={dayStyles.note}>Days Practiced</Text>
+          </View>
         </View>
      );
 }
 
-const styles = StyleSheet.create({
+export const dayStyles = StyleSheet.create({
   cal:{
     borderWidth:size.Wthin,
     width:size.Wlargester,

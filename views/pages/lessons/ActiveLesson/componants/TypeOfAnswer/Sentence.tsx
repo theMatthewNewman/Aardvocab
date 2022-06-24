@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View, Pressable, StyleSheet} from "react-native";
+import { Text, View, Pressable, StyleSheet, TouchableHighlight} from "react-native";
 import {Prompt, shuffleArray} from "../../../../../../redux/lessons";
 import Buttons from "../../../../../componants/Buttons/Button";
 import {buttons, size} from "../../../../../componants/globalStyle";
@@ -14,19 +14,37 @@ type input = {
 
 function Sentence({prompt}:input) {
     const [input, setInput] = useState('')
-    const [answer, setAnswer] = useState([''])
-    const randomOpts:any = shuffleArray(prompt.options)
+    const [answer, setAnswer] = useState(prompt.prompt.map(value => value.content))
+    const [activeIndex, setActiveIndex] = useState(0)
+    const [randomOpts,setRandomPrompts] = useState(shuffleArray(prompt.options))
     const dispatch = useDispatch()
-    console.log(answer)
 
-    const handlePress = (e:string) => {
-        setInput(e)
-        setAnswer(prompt.prompt.map((opt) => {
-            if (opt.input){
-                return(e);
-            } else{
-                return(opt.content)
+    const [inputIndex, setInputIndex] =  useState(prompt.prompt.map((prompt,index) => {
+        return({input:prompt.input,index})
+    }).filter((prompt) => prompt.input)
+    .map((prompt) =>prompt.index))
+
+    
+
+    const handlePress = (e:string, index:number) => {
+        setActiveIndex(activeIndex+1)
+        setAnswer(answer.map((input,ind) => {
+            if (ind===inputIndex[index]){
+                return(e)
+            }else{
+                return(input)
             }
+        }))
+        if (index>=inputIndex.length){
+            clear()
+        }
+        
+    }
+
+    const clear = () => {
+        setActiveIndex(0)
+        setAnswer(prompt.prompt.map(prompt => {
+            return(prompt.content)
         }))
     }
     const checkAnswer = async() => {
@@ -52,23 +70,22 @@ function Sentence({prompt}:input) {
             <View style={styles.sentence}>        
                 {prompt.prompt.map((part, index) => 
                     <View key={index}>
-                        {part.input?<>
-                            <Text style={styles.input}>{input}</Text>
-                        </>:<>
-                            <Text style={styles.part}>{part.content}</Text>
-                        </>}
+                        {!part.input?
+                            <Text style={styles.part}>{part.content}</Text>:
+                            <>
+                            {inputIndex[activeIndex]===index? 
+                            <Text style={styles.input}>{answer[index]}</Text>:<Text style={styles.active}>{answer[index]}</Text>}
+                            </>
+                        }
                     </View>
                 )}
             </View>
-            <View>
                 {randomOpts.map((choice:string, index:number) => 
-                    <Buttons key={index} onPress={()=>{handlePress(choice)}} style="Choice" title={choice}/>
+                    <Buttons key={index} onPress={()=>{handlePress(choice,activeIndex)}} style="Choice" title={choice}/>
                 )}
-
-            </View>
-            <Pressable onPress={checkAnswer} style={buttons.strong}>
+            <TouchableHighlight onPress={checkAnswer} style={buttons.strong}>
                 <Text style={buttons.strongText}>Check Answer</Text>
-            </Pressable>
+            </TouchableHighlight>
 
         </View>
      );
@@ -78,14 +95,15 @@ export default Sentence;
 
 const styles = StyleSheet.create({
     sentence:{
-        margin:size.small,
+        
         backgroundColor:'lightgrey',
         padding:size.small,
         borderWidth:size.thin,
         borderRadius:size.curve,
         display:'flex',
-        flexDirection:"row",
-        flexWrap:'wrap',
+        flexDirection:"column",
+        justifyContent:'center',
+        
     },
     part:{
         fontSize:size.medium,
@@ -98,9 +116,24 @@ const styles = StyleSheet.create({
         borderWidth:size.thin,
         textAlign:'center',
         borderRadius:size.small,
-        marginHorizontal:size.small
+        marginHorizontal:size.small,
+        marginVertical:size.small,
+        
+    },
+    active:{
+        backgroundColor:'lightgrey',
+        fontSize:size.medium,
+        minWidth:size.giant,
+        borderWidth:size.thin,
+        textAlign:'center',
+        borderRadius:size.small,
+        marginHorizontal:size.small,
+        marginVertical:size.small,
     },
     all:{
-        paddingHorizontal:size.small
+        paddingHorizontal:size.small,
+        display:'flex',
+        justifyContent:'space-evenly',
+        flex:1,
     }
 })

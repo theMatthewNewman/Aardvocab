@@ -1,5 +1,5 @@
 
-import {View, Text, Pressable, TextInput, StyleSheet} from "react-native";
+import {View, Text, TouchableHighlight, TextInput, StyleSheet} from "react-native";
 
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "../../../redux/hooks";
@@ -58,17 +58,22 @@ function Login() {
     return ( 
             <>
             {newUser? <Signup setNewUser={setNewUser}/>:
+            <View>
         <View style={styles.container}>
             <Text>Email:</Text>
             <TextInput onChangeText={setEmail} style={textInput.form}/>
             <Text>Password:</Text>
             <TextInput onChangeText={setPassword} style={textInput.form}/>
             <View style={{flexDirection:'row'}}>
-            <Pressable onPress={() => {signIn()}} style={buttons.strong}><Text style={{color:'white'}}>Sign in</Text></Pressable>
-            <Pressable onPress={() => {example()}} style={buttons.strong}><Text style={{color:'white'}}>Try Example</Text></Pressable>
-            <Pressable onPress={() => {setNewUser(true)}} style={buttons.strong}><Text style={{color:'white'}}>New User</Text></Pressable>
+            <TouchableHighlight onPress={() => {signIn()}} style={buttons.strong}><Text style={{color:'white'}}>Sign in</Text></TouchableHighlight>
+            
+            <TouchableHighlight onPress={() => {setNewUser(true)}} style={buttons.strong}><Text style={{color:'white'}}>New User</Text></TouchableHighlight>
             </View>
+            </View>
+            <TouchableHighlight onPress={() => {example()}} style={buttons.example}><Text style={{color:'black',fontSize:size.large,textAlign:'center'}}>Example</Text></TouchableHighlight>
+            
         </View>}
+        
         </>
      );
 }
