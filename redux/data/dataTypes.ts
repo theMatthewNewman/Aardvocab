@@ -1,7 +1,12 @@
 export type dataState = {
     bucketedLevels:number[]
     selfIndex:number
-    dailyTopUsers:{uid:string, time:number}[]
+    dailyTopUsers:{
+        uid:string, 
+        time:number,
+        displayName:string,
+        photoURL:string
+    }[]
     messages:userMessages
 
 }
@@ -11,6 +16,8 @@ export type dataFirebase = {
     users:{
         uid:string
         level:number
+        displayName:string
+        photoURL:string
         levelsCompletedToday:{date:number, levels:number}
 
     }[]

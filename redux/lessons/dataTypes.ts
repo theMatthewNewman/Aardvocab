@@ -1,4 +1,4 @@
-export type concept = 'Vocabulary'| 'Spelling'|'Grammar'| 'Pros'
+export type concept = 'Vocabulary'| 'Spelling'|'Grammar'| 'Pros'|'any'
 
 export type Prompt = {
                 concept:concept
@@ -63,14 +63,7 @@ export type Prompt = {
 export type lessonState = {
     globalLessons:{
         active:true
-        lessons:{
-            name:string
-            pictureURL:string
-            level:number
-            id:number
-            concept:concept
-            description:string
-        }[]
+        lessons:gLesson[]
     }|{active:false},
     lesson:{
         id:number
@@ -83,6 +76,14 @@ export type lessonState = {
             prompts:Prompt[]
         }[]
     }|{active:false}
+}
+export type gLesson = {
+    name:string
+    pictureURL:string
+    level:number
+    id:number
+    concept:concept
+    description:string
 }
 
 export type lessonFirebase ={

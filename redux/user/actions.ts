@@ -1,10 +1,13 @@
 import { userState } from "./dataTypes";
 import types from "./types";
-import { lessonState } from "../lessons";
+import { concept, lessonState } from "../lessons";
 
 
-const completeLesson = () => ({
-    type: types.COMPLETE_LESSON
+const completeLesson = (type:concept) => ({
+    type: types.COMPLETE_LESSON,
+    payload:{
+        type
+    }
 });
 
 

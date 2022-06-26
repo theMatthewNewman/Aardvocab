@@ -24,6 +24,10 @@ const setUserFirebase = async(user:userState) => {
     await setDoc(docRef,user)
     return(true)
 }
+const setOtherUser = (uid:userState['uid']) => async(dispatch:Dispatch) => {
+    const otherUser = await asyncFirebaseData(uid)
+    if (otherUser) {userAction.updateUser(otherUser) (dispatch)}
+}
 
 const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
     const data:any = await asyncFirebaseData(uid)
@@ -45,6 +49,10 @@ const asyncFirebaseData = async(uid:string) => {
                 emailVerified:dat.emailVerified,
                 createdAt:dat.createdAt,
                 level:dat.level,
+                grammarLevel:dat.grammarLevel,
+                spellingLevel:dat.spellingLevel,
+                vocabLevel:dat.vocabLevel,
+                prosLevel:dat.prosLevel,
                 hearts:dat.hearts,
                 lessonData:dat.lessonData,
                 promptData:dat.promptData,
@@ -142,9 +150,7 @@ const newUser = (authorizedUser:User, username?:string) => async(dispatch:Dispat
     dispatch<Actions>(actions.signIn(user))
 }
 
-const logIn = (user:userState) => (dispatch:Dispatch) => {
-    dispatch<Actions>(actions.signIn(user))
-}
+
 const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes:ImagePicker.MediaTypeOptions.Images
@@ -203,5 +209,6 @@ export const userAction = {
     setUserFirebase,
     addDay,
     asyncFirebaseData,
-    reduceErrors
+    reduceErrors,
+    setOtherUser
 }

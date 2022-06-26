@@ -104,11 +104,23 @@ const Incorrect = (user:userState, lesson:lessonState) => (dispatch:Dispatch) =>
 const completeLesson = (user:userState, lesson:lessonState, ad:dataState) => async(dispatch:Dispatch) => {
     await adAction.playAd(ad) (dispatch)
     const newUser = produce(user,draft => {
+        draft.level +=1 
         if (lesson.lesson.active){
             draft.lessonData[lesson.lesson.id].subLessons += 1
             draft.lessonData[lesson.lesson.id].percentage += (100/lesson.lesson.subLessons.length)
+            if (lesson.lesson.concept==='Grammar'){
+                draft.grammarLevel+=1;
+            }
+            if (lesson.lesson.concept==='Spelling'){
+                draft.spellingLevel+=1;
+            }
+            if (lesson.lesson.concept==='Pros'){
+                draft.prosLevel+=1;
+            }
+            if (lesson.lesson.concept==='Vocabulary'){
+                draft.vocabLevel+=1;
+            }
         }
-        draft.level +=1
         const newDay= new Date()
         const today = newDay.getFullYear()+'/'+(newDay.getMonth()+1)+'/'+newDay.getDate(); 
         const day = new Date(draft.levelsCompletedToday.date*1000)

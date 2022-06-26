@@ -13,6 +13,10 @@ export const exam:userState = {
     photoURL:"https://avatars.dicebear.com/api/identicon/5.8906013843601315.png",
     createdAt:1652651988,
     level:0,
+    grammarLevel:0,
+    vocabLevel:0,
+    spellingLevel:0,
+    prosLevel:0,
     hearts:5,
     lessonData:new Array(100).fill({subLessons:0, percentage:0}),
     promptData:[],
@@ -29,6 +33,18 @@ export const reducer = (state:userState = exam, action:Actions) => {
             }
             case types.COMPLETE_LESSON:{
                 draft.level += 1;
+                if (action.payload.type==='Grammar'){
+                    draft.grammarLevel+=1;
+                }
+                if (action.payload.type==='Spelling'){
+                    draft.spellingLevel+=1;
+                }
+                if (action.payload.type==='Pros'){
+                    draft.prosLevel+=1;
+                }
+                if (action.payload.type==='Vocabulary'){
+                    draft.vocabLevel+=1;
+                }
             return(draft);
             }
             case types.CHANGE_NAME:{

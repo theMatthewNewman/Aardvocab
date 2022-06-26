@@ -46,9 +46,9 @@ const dailyUsers = (data:dataFirebase, user:userState) => {
         const day = new Date(user.levelsCompletedToday.date*1000)
         const lastDayPracticed = day.getFullYear()+'/'+(day.getMonth()+1)+'/'+day.getDate();
         if (lastDayPracticed === today){
-            return({uid:user.uid,time:user.levelsCompletedToday.levels})
+            return({uid:user.uid,time:user.levelsCompletedToday.levels,displayName:user.displayName,photoURL:user.photoURL})
         } else{
-            return({uid:user.uid,time:0})
+            return({uid:user.uid,time:0,displayName:user.displayName,photoURL:user.photoURL})
         }
     })
     

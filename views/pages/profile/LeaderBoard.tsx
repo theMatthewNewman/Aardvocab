@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "../../../redux/hooks";
 import { color, size } from "../../componants/globalStyle";
 import {userAction, userState} from "../../../redux/user"
-import { useState } from "react";
+
 import Buttons from "../../componants/Buttons/Button";
 import {pageAction, pageState} from "../../../redux/pages";
 import {useDispatch} from "../../../redux/hooks";
@@ -17,36 +17,14 @@ type props = {
 
 function LeaderBoard({action,type}:props) {
     const users = useSelector(state => state.graph)
-    const [allUsers, setAllUsers] = useState<any>([{active:false}])
     const dispatch =useDispatch()
-    
-    const addUsers = async() => {
-        const allUsers = await Promise.all(users.dailyTopUsers.map(async(value, index) => {
-            const ret:any =await userAction.asyncFirebaseData(value.uid)
-            if (ret !== undefined){
-                return(ret)
-            }else {
-                return({active:false})
-            }
-            
-        }))
-        if (allUsers){
-            setAllUsers(allUsers)
-            
-        }
-        else {
-            return(false)
-        }
-    }
 
-    addUsers()
     return ( 
         <View style={leaderStyles.all}>
             <Text style={leaderStyles.head}>Leader Board</Text>
             <View style={leaderStyles.board}>
-            {allUsers.map((value:userState, index:number) => 
+            {users.dailyTopUsers.map((value, index:number) => 
                 <View key={index} style={leaderStyles.user}>
-                    {value.active? 
                     <>
                         <Image source={{uri:value.photoURL}} style={leaderStyles.image}/>
                         <Text style={leaderStyles.name}>{value.displayName}</Text>
@@ -54,7 +32,7 @@ function LeaderBoard({action,type}:props) {
                         
                         <View style={leaderStyles.button}>
                             {type==='View profile'?
-                                <Buttons style="Strong" onPress={() => {pageAction.updateUser(value) (dispatch);pageAction.changePage("OtherProfile") (dispatch)}} title='View profile'/>
+                                <Buttons style="Strong" onPress={() => {userAction.setOtherUser(value.uid) (dispatch);pageAction.changePage("OtherProfile") (dispatch)}} title='View profile'/>
                             : null}
                             {type==="Send message"?
                                 <Buttons style="Strong" onPress={() => {action(value)}} title='Send Message'/>
@@ -63,7 +41,6 @@ function LeaderBoard({action,type}:props) {
                         </View>
                         
                     </>
-                    : null}
                 </View>
 
             )}

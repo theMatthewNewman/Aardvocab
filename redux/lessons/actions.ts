@@ -1,8 +1,11 @@
-import { lessonState, globalLessonFirebase } from "./dataTypes";
+import { lessonState, globalLessonFirebase, concept } from "./dataTypes";
 import types from "./types";
 
-const completeLesson = () => ({
-    type: types.COMPLETE_LESSON
+const completeLesson = (type:concept) => ({
+    type: types.COMPLETE_LESSON,
+    payload:{
+        type
+    }
 });
 
 const updateGlobalLessons = (store:globalLessonFirebase) =>({

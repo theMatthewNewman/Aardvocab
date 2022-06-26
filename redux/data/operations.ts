@@ -21,14 +21,22 @@ const setDataFirebase = async(user:userState, userLevels:dataFirebase) => {
                 return({
                     level:user.level,
                     uid:user.uid,
-                    levelsCompletedToday:user.levelsCompletedToday
+                    levelsCompletedToday:user.levelsCompletedToday,
+                    displayName:user.displayName,
+                    photoURL:user.photoURL
                 })
             } else{
                 return(otherUser)
             }
         })
     if (found === false){
-        data.push({level:user.level,uid:user.uid,levelsCompletedToday:user.levelsCompletedToday})
+        data.push({
+            level:user.level,
+            uid:user.uid,
+            levelsCompletedToday:user.levelsCompletedToday,
+            displayName:user.displayName,
+            photoURL:user.photoURL
+        })
     }
     await setDoc(docRef,{users:data})
     return(data)
