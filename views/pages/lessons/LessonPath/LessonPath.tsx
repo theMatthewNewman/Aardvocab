@@ -1,5 +1,5 @@
 import {View, ScrollView, Text, Image, StyleSheet} from "react-native";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import ActiveLesson from "../ActiveLesson/ActiveLesson";
 import {useDispatch, useSelector} from "../../../../redux/hooks";
@@ -18,12 +18,15 @@ function lessonPath() {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [xpReady, setXpReady] = useState(false)
+    const myRef:any = useRef()
+    const [dataSourceCords, setDataSourceCords] = useState<number[]>([])
+    
     
     
 
     useEffect(() => {
         if(lesson.globalLessons.active) {return;}
-         lessonAction.setGlobalLessonsState() (dispatch)
+         lessonAction.setGlobalLessonsState(user) (dispatch)
     },[])
 
     useEffect(() => {
@@ -49,9 +52,9 @@ function lessonPath() {
     const animValue = useSharedValue(0)
     const animation = useAnimatedStyle(() => {
         return{
-            backgroundColor:`rgb(${animValue.value*255+((-1*animValue.value)+1)*255},
-                                ${animValue.value*255+((-1*animValue.value)+1)*255},
-                                ${animValue.value*51+((-1*animValue.value)+1)*255})`
+            backgroundColor:`rgb(${animValue.value*0+((-1*animValue.value)+1)*255},
+                                ${animValue.value*0+((-1*animValue.value)+1)*255},
+                                ${animValue.value*0+((-1*animValue.value)+1)*255})`
         }
     })
     const animateColor = async() => {
@@ -69,12 +72,16 @@ function lessonPath() {
             <>
             <Text style={globalStyling.head}>Lessons</Text>
             <View>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {lesson.globalLessons.active? lesson.globalLessons.lessons.map(lesson => 
-                    <View key={lesson.id}>
-                        <LessonCard lesson={lesson} activateLesson={(activateLesson)} user={user} progress={
-                            user.lessonData[lesson.id].percentage
-                        }/>
+            <ScrollView showsVerticalScrollIndicator={false} ref={myRef}>
+                {lesson.globalLessons.active? lesson.globalLessons.lessons.map(less => 
+                    <View key={less.id} onLayout={event => {
+                        const layout = event.nativeEvent.layout;
+                        dataSourceCords[less.id] = layout.y; // we store this offset values in an array
+                        }}>
+                        {lesson.globalLessons.active?
+                        <LessonCard reef={myRef} cords={dataSourceCords} lesson={less} lessons={lesson.globalLessons.lessons} activateLesson={(activateLesson)} user={user} progress={
+                            user.lessonData[less.id].percentage
+                        }/>:null}
                     </View>
                 ): null}
                 <Image style={{width:'100%', resizeMode:'contain'}} source={require('../../../../images/cautionTape.png')}/>

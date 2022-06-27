@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import {actions, Actions} from "./actions";
-import {Prompt, lessonState, lessonFirebase, concept} from "./dataTypes"
+import {Prompt, lessonState, lessonFirebase, concept, gLesson, globalLessonFirebase} from "./dataTypes"
 import {userState, userAction}from "../user"
 import { adAction, dataState } from "../ads";
-import {shuffleArray} from "./utils";
+import {checkActive, shuffleArray} from "./utils";
 import { pageAction } from "../pages";
 
 import {produce} from "immer"
@@ -13,12 +13,19 @@ import { doc, getDoc} from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 
-const getGlobalLessonsFirebase = async() => {
+const getGlobalLessonsFirebase = async(user:userState) => {
     try{
     const docRef = doc(db, "lessons", "globalLessons");
     const document = await getDoc(docRef)
     const dat:any = document.data()
-    return(dat)
+    const ret:gLesson[] = dat.lessons.map((less:any) => {return({
+        ...less,
+        active:checkActive(user,less)
+    })});
+    
+
+    
+    return(ret)
     }
     catch(error){
         
@@ -56,9 +63,9 @@ const setLessonState = (id:number, user:userState) => async(dispatch:Dispatch) =
                     subLessonIndex:user.lessonData[preLesson.id].subLessons}
     dispatch<Actions>(actions.updateLesson(lesson))
 }
-const setGlobalLessonsState = () => async(dispatch:Dispatch) => {
-    const newGlobalLessonsState = await getGlobalLessonsFirebase()
-    dispatch<Actions>(actions.updateGlobalLessons({...newGlobalLessonsState, active:true}))
+const setGlobalLessonsState = (user:userState) => async(dispatch:Dispatch) => {
+    const newGlobalLessonsState = await getGlobalLessonsFirebase(user)
+    if (newGlobalLessonsState){dispatch<Actions>(actions.updateGlobalLessons(newGlobalLessonsState))}
 }
 const updateLesson = (lesson:lessonState) => (dispatch:Dispatch) => {
     dispatch<Actions>(actions.updateLesson(lesson["lesson"]))
@@ -108,18 +115,18 @@ const completeLesson = (user:userState, lesson:lessonState, ad:dataState) => asy
         if (lesson.lesson.active){
             draft.lessonData[lesson.lesson.id].subLessons += 1
             draft.lessonData[lesson.lesson.id].percentage += (100/lesson.lesson.subLessons.length)
-            if (lesson.lesson.concept==='Grammar'){
-                draft.grammarLevel+=1;
-            }
-            if (lesson.lesson.concept==='Spelling'){
-                draft.spellingLevel+=1;
-            }
-            if (lesson.lesson.concept==='Pros'){
-                draft.prosLevel+=1;
-            }
-            if (lesson.lesson.concept==='Vocabulary'){
-                draft.vocabLevel+=1;
-            }
+        if (lesson.lesson.concept==='Grammar'){
+            draft.grammarLevel+=1;
+        }
+        if (lesson.lesson.concept==='Spelling'){
+            draft.spellingLevel+=1;
+        }
+        if (lesson.lesson.concept==='Pros'){
+            draft.prosLevel+=1;
+        }
+        if (lesson.lesson.concept==='Vocabulary'){
+            draft.vocabLevel+=1;
+        }
         }
         const newDay= new Date()
         const today = newDay.getFullYear()+'/'+(newDay.getMonth()+1)+'/'+newDay.getDate(); 
@@ -146,6 +153,16 @@ const deactivateLesson = () => (dispatch:Dispatch) => {
     dispatch<Actions>(actions.deactivate_lesson())
 }
 
+const changeActivation = (lessons:gLesson[], gLesson:gLesson) => (dispatch:Dispatch) => {
+    const updated = lessons.map((lesson) => {
+        if(lesson.id===gLesson.id){
+            return(gLesson)
+        }
+        return(lesson)
+    })
+    dispatch<Actions>(actions.updateGlobalLessons(updated))
+}
+
 const allIDs = () => {
     db.collection("Vocabulary")
         .onSnapshot((querySnapshot) => {
@@ -165,6 +182,7 @@ export const lessonAction = {
     updateLesson,
     completeLesson,
     deactivateLesson,
-    allIDs
+    allIDs,
+    changeActivation
     
 }

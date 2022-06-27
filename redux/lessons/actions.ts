@@ -1,4 +1,4 @@
-import { lessonState, globalLessonFirebase, concept } from "./dataTypes";
+import { lessonState, globalLessonFirebase, concept, gLesson } from "./dataTypes";
 import types from "./types";
 
 const completeLesson = (type:concept) => ({
@@ -8,7 +8,7 @@ const completeLesson = (type:concept) => ({
     }
 });
 
-const updateGlobalLessons = (store:globalLessonFirebase) =>({
+const updateGlobalLessons = (store:gLesson[]) =>({
     type: types.ACTIVATE_GLOBAL_LESSONS,
     payload:{
         store
@@ -30,6 +30,8 @@ const completePrompt = () => ({
 const deactivate_lesson = () =>({
     type: types.DEACTIVATE_LESSON
 })
+
+
 
 
 export type Actions = ReturnType<typeof completeLesson> |

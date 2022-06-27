@@ -64,6 +64,12 @@ function Match({prompt}:input) {
             sound.playAsync();
         }
         if (from.length===0){
+            setTo(shuffleArray(prompt.match.map(obj => {
+                return(obj.to)
+            })))
+            setFrom(shuffleArray(prompt.match.map(obj => {
+                return(obj.from)
+            })))
             userAction.reduceErrors(user,prompt)(dispatch)
             pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
             const {sound} = await Audio.Sound.createAsync(

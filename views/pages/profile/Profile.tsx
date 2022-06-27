@@ -123,6 +123,7 @@ export const ProfileStyles = StyleSheet.create({
         display:"flex",
         flexDirection:"row",
         justifyContent:"space-evenly",
+        marginBottom:size.medium
     },
     userName:{
         fontSize:size.large,

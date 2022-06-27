@@ -10,6 +10,10 @@ export type pageState = {
         active:boolean
         type:'alert'
         message:string
+    } | {
+        active:boolean
+        type:'unlockLesson'
+        run:any
     }
 
 }

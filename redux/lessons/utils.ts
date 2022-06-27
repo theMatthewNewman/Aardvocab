@@ -1,3 +1,5 @@
+import { userState } from "../user";
+import { gLesson } from "./dataTypes";
 
 
 export const shuffleArray = (originalArray:any) => {
@@ -20,3 +22,42 @@ export const shuffleArray = (originalArray:any) => {
   return array;
 }
 
+export const checkActive = (user:userState, lesson:gLesson) => {
+          
+if (user.lessonData[lesson.id].percentage>=100){
+    return(false);
+}
+
+switch(lesson.concept){
+    case 'Grammar':{
+        if (lesson.level<=user.grammarLevel){
+            return(true);
+        }
+        return(false);
+    }
+    case 'Pros':{
+        if (lesson.level<=user.prosLevel){
+            return(true);
+        }
+        return(false);
+    }
+    case 'Spelling':{
+        if (lesson.level<=user.spellingLevel){
+            return(true);
+        }
+        return(false);
+    }
+    case 'Vocabulary':{
+        if (lesson.level<=user.vocabLevel){
+            return(true);
+        }
+        return(false);
+    }
+    case 'any':{
+        if (lesson.level<=user.level){
+            return(true);
+        }
+        return(false);
+    }
+  }
+}

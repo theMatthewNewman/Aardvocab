@@ -84,6 +84,8 @@ export type gLesson = {
     id:number
     concept:concept
     description:string
+    active:boolean
+    
 }
 
 export type lessonFirebase ={

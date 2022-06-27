@@ -1,11 +1,10 @@
 #Need to work on...
-    Fix complete the sentence prompt.
+    Active lessons... add undo button.
     database rules... make app more secure.
-    Global lessons... progress lessons based on catagory
-    Global lesosns... animations when unlocked new lesson
-    Global lessons... display xp gained today
-    Leader board... rewrite so it has fewer database calls.
-    Leader board... make board local instead of global.
+    leaderboard... fix so is working properly.
+    make sure that profile pic upload is working.
+    make sure otherprofile works.
+    make sure login/createuser is working.
     chat... fix so looks nice.
     chat... disable for example.
     need many more lessons and prompts

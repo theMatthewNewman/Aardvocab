@@ -6,8 +6,9 @@ import {lessonAction}  from "../../../redux/lessons";
 import {Prompt} from "../../../redux/lessons";
 import { useEffect } from 'react';
 import {size} from "../globalStyle"
+import { Audio } from 'expo-av';
 
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
 import { repeat } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/repeat';
 import { styles } from '../../pages/Auth/Signup';
 
@@ -20,9 +21,22 @@ function Message() {
     const ad = useSelector(state => state.ads)
     const dispatch = useDispatch()
 
+    const playCorrect = async() => {
+        
+        const {sound} = await Audio.Sound.createAsync(
+            require('../../../assets/Correct.mp3')
+        );
+        await sound.playAsync();
+    }
+
     const alertType = (() => {
         var prompt:Prompt = {active:false}
         type inactiveType = {prompt:typeof prompt, type:"INACTIVE"}
+        if (message.type==='unlockLesson'){
+            playCorrect()
+            const ret:{type:'unlockLesson',run:any} = {type:'unlockLesson',run:message.run}
+            return(ret)
+        }
         if (message.type==='alert'){
             const ret:{type:'alert', message:string} = {type:'alert', message:message.message}
             return(ret)
@@ -162,6 +176,19 @@ function Message() {
                     <Buttons onPress={() => {handlePress()}} style="correct" title="Next Question"/>
                 </View>
             </Animated.View>
+            :alertType.type==='unlockLesson'?
+            <Animated.View style={[style.unlock,opacityStyles]}>
+                <View style={style.wrong}>
+                    <Animated.View style={[style.x, animatedStyles]}>
+                        <View style={style.box}>
+                            <Image style={style.image} source={ require('../../../images/party.png')} />    
+                        </View>                        
+                        <Text style={style.text}>Congratulations!</Text>
+                        <Text style={style.desc}>You unlocked a new lesson</Text>
+                    </Animated.View>
+                    <Buttons onPress={() => {alertType.run();pageAction.updateMessage({active:false,type:'correct'}) (dispatch)}} style="correct" title="Continue"/>
+                </View>
+            </Animated.View>
             :null}
         </>
      );
@@ -211,6 +238,14 @@ const style = StyleSheet.create({
         borderWidth:size.thin,
         marginTop:size.larger,
         paddingBottom:size.medium,
+    },
+    unlock:{
+        backgroundColor:'cornflowerblue',
+        padding:size.small,
+        position:"absolute",
+        bottom:0,
+        height:size.full,
+        width:size.fullWidth,
     },
     text:{
         color:'black',

@@ -72,7 +72,7 @@ function Chat() {
                     {leadOpen?<LeaderBoard type="Send message" action={handleOtherUser}/>:null}
                 </ScrollView>
             </Animated.View>
-            <View style={{alignSelf:'center',display:'flex', flexDirection:'row',justifyContent:'center', backgroundColor:'lightgrey',borderBottomWidth:size.thin,width:headWidth}}>
+            <View style={{alignSelf:'center',display:'flex', flexDirection:'row',justifyContent:'space-evenly', backgroundColor:'lightgrey',borderWidth:size.thin,width:size.fullWidth}}>
             <Buttons style="Strong" onPress={handleConnections} title="Connections"/>
             <Buttons style="Strong" onPress={handleLeader} title="Leader Board"/>
             </View>
