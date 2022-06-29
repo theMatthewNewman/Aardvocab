@@ -154,7 +154,7 @@ function Home() {
                     {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
                     {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
                     {page.page==="Chat"? <Animated.View><Chat/></Animated.View>: null}
-                    {page.page==="OtherProfile"? <OtherProfile user={page.otherUser}/> :null}
+                    {page.page==="OtherProfile"? <OtherProfile/> :null}
 
                 </Animated.View>
                 </PanGestureHandler>

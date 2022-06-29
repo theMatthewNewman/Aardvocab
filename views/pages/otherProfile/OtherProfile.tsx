@@ -1,15 +1,15 @@
 import { Text, View, Image } from "react-native";
+import { useSelector } from "../../../redux/hooks";
 import { pageState } from "../../../redux/pages";
 import { userState } from "../../../redux/user";
 import Buttons from "../../componants/Buttons/Button";
 import Chat from "../Chat/Chat";
 import {ProfileStyles}from "../profile/Profile";
 
-type input = {
-    user:pageState['otherUser']
-}
 
-function OtherProfile({user}:input) {
+function OtherProfile() {
+    const user = useSelector(state => state.page.otherUser)
+
     return ( 
         <View>
             {user.active?

@@ -26,7 +26,9 @@ const setUserFirebase = async(user:userState) => {
 }
 const setOtherUser = (uid:userState['uid']) => async(dispatch:Dispatch) => {
     const otherUser = await asyncFirebaseData(uid)
-    if (otherUser) {userAction.updateUser(otherUser) (dispatch)}
+    
+    if (otherUser) {pageAction.updateUser(otherUser) (dispatch)}
+    else{pageAction.updateMessage({active:true,type:'alert',message:'Error getting user profile.'})}
 }
 
 const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
