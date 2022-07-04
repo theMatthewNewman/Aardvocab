@@ -29,7 +29,9 @@ function Messages({otherUser}:props) {
         var newMessage:userMessage={
             uid:otherUser.uid,
             sent:true,
-            message
+            message,
+            displayName:otherUser.displayName,
+            photoURL:otherUser.photoURL
         }
         if (draft.active){
             draft.messages.push(newMessage)
@@ -46,7 +48,9 @@ function Messages({otherUser}:props) {
                 return({
                     uid:user.uid,
                     sent:!message.sent,
-                    message:message.message
+                    message:message.message,
+                    photoURL:user.photoURL,
+                    displayName:user.displayName
                 })
             })
         return(draft);
@@ -61,7 +65,7 @@ function Messages({otherUser}:props) {
     
 
     return ( 
-        <View style={{...leaderStyles.all, marginBottom:size.giant, flex:1,display:'flex'}}>
+        <View style={otherUser.active?{...leaderStyles.all, marginBottom:size.giant, flex:1,display:'flex'}:{...leaderStyles.all,flex:1,marginBottom:size.half}}>
             <View style={messageStyles.all}>
             {otherUser.active? 
                 <>
@@ -81,7 +85,9 @@ function Messages({otherUser}:props) {
                         <Buttons onPress={sendMessage} style='Strong' title="Send Message"/>
                     </View>
                 </>
-                :null}
+                :
+                <Text style={messageStyles.select}>Select a person to have a conversation.</Text>
+                }
             </View>
         </View>
      );
@@ -147,5 +153,14 @@ const messageStyles = StyleSheet.create({
         
         overflow:'hidden',
         
+    },
+    select:{
+        fontSize:size.large,
+        textAlign:'center',
+        margin:size.medium,
+        backgroundColor:'yellow',
+        padding:size.small,
+        borderRadius:size.curve,
+        borderWidth:size.thin
     }
 })

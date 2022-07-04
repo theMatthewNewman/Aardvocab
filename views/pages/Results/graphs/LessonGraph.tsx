@@ -7,16 +7,20 @@ import { chartConfig} from "../../../../redux/data"
 import {useState} from 'react'
 
 import { size } from "../../../componants/globalStyle";
+import { userState } from "../../../../redux/user";
 
+type props = {
+    data:number[]
+    selfIndex:number
+    user:userState
+}
 
-
-const LessonGraph = () => {
+const LessonGraph = ({data,selfIndex,user}:props) => {
     const [height, setHeight] = useState(0)
     const [width, setWidth] = useState(0)
 
-    const data = useSelector(state => state.graph.bucketedLevels);
-    const selfIndex = useSelector(state => state.graph.selfIndex)
-    const user = useSelector(state => state.user);
+    
+    
     
     
 

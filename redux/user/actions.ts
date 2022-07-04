@@ -39,19 +39,13 @@ const increaseLessonPercentage = (lesson:lessonState) => ({
     }
 })
 
-const signIn = (user:userState) => ({
-    type:types.SIGN_IN,
-    payload:{
-        user
-    }
-})
 
 export type Actions = ReturnType<typeof completeLesson> | 
                       ReturnType<typeof changePicture> |
                       ReturnType<typeof changeName> |
                       ReturnType<typeof updateUser> |
-                      ReturnType<typeof increaseLessonPercentage> |
-                      ReturnType<typeof signIn>
+                      ReturnType<typeof increaseLessonPercentage> 
+
 
 
 export const actions = {
@@ -59,7 +53,5 @@ export const actions = {
     changePicture,
     changeName,
     updateUser,
-    increaseLessonPercentage,
-    signIn
-
+    increaseLessonPercentage
 };

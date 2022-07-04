@@ -7,8 +7,12 @@ import { DarkTheme } from "@react-navigation/native";
 import { userState } from "../../../../redux/user";
 import { concept } from "../../../../redux/lessons";
 
-function AccuracyGraph() {
-    const user = useSelector(state => state.user)
+type props = {
+    user:userState
+}
+
+function AccuracyGraph({user}:props) {
+    
 
     const evaluate = (user:userState, type:concept) => {
         const prompts = user.promptData.filter(dat => {

@@ -25,6 +25,8 @@ export type dataFirebase = {
 
 export type userMessage = {
         uid:string
+        photoURL:string
+        displayName:string
         sent:boolean
         message:string
 }

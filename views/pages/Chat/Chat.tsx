@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { userState } from "../../../redux/user";
+import { userAction, userState } from "../../../redux/user";
 import { globalStyling, headWidth, size } from "../../componants/globalStyle";
 import LeaderBoard, { leaderStyles } from "../profile/LeaderBoard";
 import Connections from "./Connections";
@@ -13,12 +13,16 @@ import { useDispatch, useSelector } from "../../../redux/hooks";
 function Chat() {
     const [leadOpen, setLeadOpen] = useState(false)
     const [connectOpen, setConnectOpen] = useState(false)
-    const [otherUser, setOtherUser] = useState<userState|{active:false}>({active:false})
+    const otherUser = useSelector(state => state.page.otherUser)
+
+    
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+
     useEffect(() => {
         dataAction.updateData(user) (dispatch)
-      },[])
+    },[])
+    
     const expand = useSharedValue(0)
     const animation = useAnimatedStyle(() => {
         return{
@@ -57,8 +61,10 @@ function Chat() {
         }
     }
     const handleOtherUser = (event:any) => {
-        setOtherUser(event)
-        handleLeader()
+        userAction.setOtherUser(event.uid) (dispatch)
+        setLeadOpen(false)
+        setConnectOpen(false)
+        expand.value=withTiming(0)
     }
 
     
@@ -66,16 +72,17 @@ function Chat() {
         <>
             <Text style={globalStyling.head}>Chat</Text>
             <View style={{ height:'100%', display:'flex',flexDirection:'column-reverse'}}>
-            <Messages otherUser={otherUser}/>
-            <Animated.View style={[styles.proto,animation]}>
-                <ScrollView style={{paddingTop:size.largest}}>
+                <Messages otherUser={otherUser}/>
+                <Animated.View style={[styles.proto,animation]}>
+                    <ScrollView style={{paddingTop:size.largest}}>
                     {leadOpen?<LeaderBoard type="Send message" action={handleOtherUser}/>:null}
-                </ScrollView>
-            </Animated.View>
-            <View style={{alignSelf:'center',display:'flex', flexDirection:'row',justifyContent:'space-evenly', backgroundColor:'lightgrey',borderWidth:size.thin,width:size.fullWidth}}>
-            <Buttons style="Strong" onPress={handleConnections} title="Connections"/>
-            <Buttons style="Strong" onPress={handleLeader} title="Leader Board"/>
-            </View>
+                    {connectOpen?<Connections action={handleOtherUser}/>:null}
+                    </ScrollView>
+                </Animated.View>
+                <View style={{alignSelf:'center',display:'flex', flexDirection:'row',justifyContent:'space-evenly', backgroundColor:'lightgrey',borderWidth:size.thin,width:size.fullWidth}}>
+                    <Buttons style="Strong" onPress={handleConnections} title="Connections"/>
+                    <Buttons style="Strong" onPress={handleLeader} title="Leader Board"/>
+                </View>
             </View>
         </>
     );

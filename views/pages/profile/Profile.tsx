@@ -3,13 +3,14 @@ import {useSelector} from "../../../redux/hooks";
 import Button from "../../componants/Buttons/Button"
 import {auth} from "../../../firebase.config";
 import {useDispatch} from "../../../redux/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {userAction} from "../../../redux/user";
 import {color, globalStyling, size} from "../../componants/globalStyle";
 import { lessonAction } from "../../../redux/lessons";
 import { ScrollView } from "react-native-gesture-handler";
 
 import LeaderBoard from "./LeaderBoard";
+import { dataAction } from "../../../redux/data";
 
 
 function Profile() {
@@ -18,6 +19,10 @@ function Profile() {
     const [displayName, setDisplayName] = useState(user.displayName);
     const dispatch = useDispatch();
     const [active, setActive] = useState(false);
+    useEffect(() => {
+        dataAction.updateData(user) (dispatch)
+      },[])
+      
 
     const nameChange = (event:any) => {
         setDisplayName(event);
@@ -58,7 +63,7 @@ function Profile() {
                             onChangeText={(event) => {nameChange(event)}}
                             onSubmitEditing = {nameSubmit}/> :
 
-                            <Text style={ProfileStyles.userName}>{displayName}</Text>
+                            <Text style={ProfileStyles.userName}>{user.displayName}</Text>
                         }
                         <Text style={ProfileStyles.date}>
                             {`Created: ${new Date(user.createdAt).toDateString()}`}

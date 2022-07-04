@@ -18,6 +18,7 @@ type props = {
 function LeaderBoard({action,type}:props) {
     const users = useSelector(state => state.graph)
     const dispatch =useDispatch()
+    
 
     return ( 
         <View style={leaderStyles.all}>

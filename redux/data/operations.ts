@@ -42,6 +42,7 @@ const setDataFirebase = async(user:userState, userLevels:dataFirebase) => {
     return(data)
 }
 const setMessagesFirebase = async(user:userState, messages:userMessages) => {
+
     const docRef = doc(db,"data", user.uid)
     await setDoc(docRef,messages)
 }
@@ -65,6 +66,7 @@ const getDataFirebase = async() => {
 const getMessagesFirebase = async(user:userState) => {
     const docRef = doc(db,"data", user.uid)
     const document = await getDoc(docRef)
+    
     const dat = document.data()!
     const messages:userMessage[] = dat.messages
     return(messages)

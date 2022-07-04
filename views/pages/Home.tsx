@@ -116,7 +116,7 @@ function Home() {
                 goResults()
             }else if (page.page==='Results'){
                 goProfile()
-            }else if (page.page==='Profile'){
+            }else if (page.page==='Profile'|| page.page==='OtherProfile'){
                 goChat()
             }else{
                 x.value=0
@@ -126,7 +126,7 @@ function Home() {
         else if (x.value>=150){
             if (page.page==='Chat'){
                 goProfile()
-            }else if (page.page==='Profile'){
+            }else if (page.page==='Profile'|| page.page==='OtherProfile'){
                 goResults()
             }else if (page.page==='Results'){
                 goLessons()
@@ -154,7 +154,7 @@ function Home() {
                     {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
                     {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
                     {page.page==="Chat"? <Animated.View><Chat/></Animated.View>: null}
-                    {page.page==="OtherProfile"? <OtherProfile/> :null}
+                    {page.page==="OtherProfile"? <Animated.View><OtherProfile/></Animated.View> :null}
 
                 </Animated.View>
                 </PanGestureHandler>

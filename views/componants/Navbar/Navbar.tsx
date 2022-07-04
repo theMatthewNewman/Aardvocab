@@ -4,6 +4,7 @@ import Buttons from "../Buttons/Button";
 import { useSelector } from "../../../redux/hooks";
 
 import {size} from "../globalStyle";
+import { Pattern } from "react-native-svg";
 
 type navActions = {
   action:any[]
@@ -23,7 +24,7 @@ function Navbar({action}:navActions) {
                      title="Chat"/>
 
             <Buttons onPress={action[0]}
-                     style={page.page==="Profile"? "NavSelected":"Nav"}
+                     style={page.page==="Profile"|| page.page==='OtherProfile'? "NavSelected":"Nav"}
                      title="Profile"/>
 
             <Buttons onPress={action[1]}

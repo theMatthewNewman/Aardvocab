@@ -15,6 +15,7 @@ import {User} from "firebase/auth";
 import * as ImagePicker  from 'expo-image-picker';
 import { lessonState, Prompt } from "../lessons";
 import { Value } from "react-native-reanimated";
+import { dataAction } from "../data";
 
 
 const setUserFirebase = async(user:userState) => {
@@ -33,6 +34,7 @@ const setOtherUser = (uid:userState['uid']) => async(dispatch:Dispatch) => {
 
 const getUserFirebase = (uid:string) => async(dispatch:Dispatch) => {
     const data:any = await asyncFirebaseData(uid)
+
     dispatch<Actions>(actions.updateUser(data))
 }
 
@@ -149,7 +151,9 @@ const reduceErrors = (user:userState, prompt:Prompt) => (dispatch:Dispatch) => {
 
 const newUser = (authorizedUser:User, username?:string) => async(dispatch:Dispatch) => {
     const user = createUser(authorizedUser, username);
-    dispatch<Actions>(actions.signIn(user))
+    setUserFirebase(user)
+    dataAction.setMessagesFirebase(user,{active:true,messages:[]})
+    dispatch<Actions>(actions.updateUser(user))
 }
 
 

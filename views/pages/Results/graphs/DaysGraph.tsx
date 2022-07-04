@@ -1,10 +1,15 @@
 import {View, Text, StyleSheet, Image} from "react-native";
 import {Calendar} from 'react-native-calendars';
 import {useSelector} from '../../../../redux/hooks';
+import { userState } from "../../../../redux/user";
 import {size} from "../../../componants/globalStyle";
 
-function DaysGraph() {
-    const user = useSelector(state => state.user)
+type props = {
+  user:userState
+}
+
+function DaysGraph({user}:props) {
+    
     const markedDates:any = Object.assign({}, ...user.daysPracticed.map((day:any) => {return({
       [new Date(day*1000).toISOString().substring(0,10)]:{selected:true, selectedColor:'cornflowerblue'}
     })}))
