@@ -1,7 +1,7 @@
 import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
-import { useSelector } from "../../../redux/hooks";
-import { pageState } from "../../../redux/pages";
-import { userState } from "../../../redux/user";
+import { useDispatch, useSelector } from "../../../redux/hooks";
+import { pageAction, pageState } from "../../../redux/pages";
+import { userAction, userState } from "../../../redux/user";
 import Buttons from "../../componants/Buttons/Button";
 import { color, size } from "../../componants/globalStyle";
 import Chat from "../Chat/Chat";
@@ -12,34 +12,42 @@ import LessonGraph from "../Results/graphs/LessonGraph";
 
 
 function OtherProfile() {
-    const user = useSelector(state => state.page.otherUser)
+    const otherUser = useSelector(state => state.page.otherUser)
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+
+    const reportUser = () => {
+        if(!otherUser.active){return;}
+        if(user.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3'){return;}
+        userAction.reportUser(user, otherUser)
+    }
 
     return ( 
         <ScrollView>
-            {user.active?
+            {otherUser.active?
             <>
                 <View style={ProfileStyles.back}>
                     <View style={ProfileStyles.info}>
-                        <Image style={ProfileStyles.pic} source={{uri: user.photoURL }}/>
+                        <Image style={ProfileStyles.pic} source={{uri: otherUser.photoURL }}/>
                         <View style={ProfileStyles.about}>
-                            <Text style={ProfileStyles.userName}>{user.displayName}</Text>
+                            <Text style={ProfileStyles.userName}>{otherUser.displayName}</Text>
                             <Text style={ProfileStyles.date}>
-                                {`Created: ${new Date(user.createdAt).toDateString()}`}
+                                {`Created: ${new Date(otherUser.createdAt).toDateString()}`}
                             </Text>
                         </View>
 
                     </View>
                 </View>
-                <AccuracyGraph user={user}/>
-                <DaysGraph user={user}/>
+                <AccuracyGraph user={otherUser}/>
+                <DaysGraph user={otherUser}/>
                 <View style={otherUserStyles.total}>
                     <Text style={otherUserStyles.title}>Total xp gain:</Text>
-                    <Text style={otherUserStyles.xp}>{user.level*15}xp</Text>
+                    <Text style={otherUserStyles.xp}>{otherUser.level*15}xp</Text>
                 </View>
-                
-                <Buttons onPress={() => {}} title="Send message" style="Strong"/>
-                <Buttons onPress={() => {}} title="Report user for inappropriate content." style="Strong"/>
-
+                <View style={otherUserStyles.buttons}>
+                    <Buttons onPress={() => {pageAction.changePage('Chat') (dispatch)}} title="Send message" style="Strong"/>
+                    <Buttons onPress={reportUser} title="Report user" style="red"/>
+                </View>
             </>
             :null}
             
@@ -70,5 +78,13 @@ const otherUserStyles = StyleSheet.create({
         color:'white',
         fontSize:size.medium,
         marginBottom:size.small
+    },
+    buttons:{
+        marginBottom:size.largest,
+        display:'flex',
+        flexDirection:'row',
+        flexWrap:'wrap',
+        justifyContent:'space-evenly',
+
     }
 })

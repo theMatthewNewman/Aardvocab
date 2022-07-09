@@ -1,12 +1,5 @@
 #Need to work on...
-    Active lessons... add undo button.
     database rules... make app more secure.
-    leaderboard... fix so is working properly.
-    make sure that profile pic upload is working.
-    make sure otherprofile works.
-    make sure login/createuser is working.
-    chat... fix so looks nice.
-    chat... disable for example.
     need many more lessons and prompts
 
 #needs funding.

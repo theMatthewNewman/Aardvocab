@@ -67,27 +67,35 @@ function Messages({otherUser}:props) {
     return ( 
         <View style={otherUser.active?{...leaderStyles.all, marginBottom:size.giant, flex:1,display:'flex'}:{...leaderStyles.all,flex:1,marginBottom:size.half}}>
             <View style={messageStyles.all}>
-            {otherUser.active? 
+            {user.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3'? 
                 <>
-                    <View style={messageStyles.otherUser}>
-                        <Image source={{uri:otherUser.photoURL}} style={leaderStyles.image}/>
-                        <Text style={messageStyles.name}>{otherUser.displayName}</Text>
-                    </View>
-                    {messages.active?
-                    <ScrollView style={messageStyles.text}>
-                        {messages.messages.filter((message) => {return(message.uid===otherUser.uid||message.uid===user.uid);}).slice(-10).map((message, index) => 
-                            <Text key={index} style={message.sent? messageStyles.sent: messageStyles.received}>{message.message}</Text>
-                        )}
-                    </ScrollView>
-                    :null}
-                    <View style={messageStyles.input}>
-                        <TextInput value={message} onChangeText={(e) => {setMessage(e)}} style={{...textInput.form, flex:1,marginVertical:size.smaller}}/>
-                        <Buttons onPress={sendMessage} style='Strong' title="Send Message"/>
-                    </View>
-                </>
-                :
-                <Text style={messageStyles.select}>Select a person to have a conversation.</Text>
+                    <Text style={messageStyles.select}>Log into an account to use chat.</Text>
+                </>:
+                <>
+                {otherUser.active? 
+                    <>
+                        <View style={messageStyles.otherUser}>
+                            <Image source={{uri:otherUser.photoURL}} style={leaderStyles.image}/>
+                            <Text style={messageStyles.name}>{otherUser.displayName}</Text>
+                        </View>
+                        {messages.active?
+                        <ScrollView style={messageStyles.text}>
+                            {messages.messages.filter((message) => {return(message.uid===otherUser.uid||message.uid===user.uid);}).slice(-10).map((message, index) => 
+                                <Text key={index} style={message.sent? messageStyles.sent: messageStyles.received}>{message.message}</Text>
+                            )}
+                        </ScrollView>
+                        :null}
+                        <View style={messageStyles.input}>
+                            <TextInput value={message} onChangeText={(e) => {setMessage(e)}} style={{...textInput.form, flex:1,marginVertical:size.smaller}}/>
+                            <Buttons onPress={sendMessage} style='Strong' title="Send Message"/>
+                        </View>
+                    </>
+                    :
+                    <Text style={messageStyles.select}>Select a person to have a conversation.</Text>
                 }
+                </>
+                }
+            
             </View>
         </View>
      );

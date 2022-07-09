@@ -9,7 +9,6 @@ type questionType = {
 }
 
 function Question({prompt}:any) {
-    console.log(prompt)
     
     return ( 
         <View>

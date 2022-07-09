@@ -202,7 +202,16 @@ const addDay = (user:userState) => async(dispatch:Dispatch) =>{
 
 }
 
-
+const reportUser = async(user:userState,otherUser:userState) => {
+    const docRef = doc(db,"reports",otherUser.uid)
+    const document = {
+        from:user.uid,
+        to:otherUser.uid,
+        at:new Date()
+    }
+    await setDoc(docRef,document)
+    return(true)
+}
 
 
 export const userAction = {
@@ -216,5 +225,6 @@ export const userAction = {
     addDay,
     asyncFirebaseData,
     reduceErrors,
-    setOtherUser
+    setOtherUser,
+    reportUser
 }

@@ -3,7 +3,7 @@ import {size} from "../globalStyle"
 
 type propsType= {
     onPress:any
-    style:"Nav" | "NavSelected" | "Strong" | "Choice" |"correct"
+    style:"Nav" | "NavSelected" | "Strong" | "Choice" |"correct" | 'red'
     title:string
 }
 
@@ -13,6 +13,10 @@ function Buttons(props:propsType) {
     var TextStyle = TextStyles.default
 
     switch (props.style) {
+        case 'red':
+            ButtonStyle= ButtonStyles.red;
+            TextStyle = TextStyles.red;
+        break;
         case "Nav":
             ButtonStyle = ButtonStyles.Nav
         break;
@@ -34,7 +38,7 @@ function Buttons(props:propsType) {
 
     return (    
         <View>
-            {props.style==='correct'|| props.style==='Strong'||props.style==='Choice'?
+            {props.style==='correct'|| props.style==='Strong'||props.style==='Choice' || props.style==='red'?
             <TouchableHighlight onPress={props.onPress} style={ButtonStyle}>
                 <View>
                     <Text style={TextStyle}>{props.title}</Text>
@@ -66,6 +70,14 @@ const ButtonStyles = StyleSheet.create({
         borderRadius:size.smallest,
         margin:size.smallest
     },
+    red:{
+        backgroundColor:'red',
+        alignSelf:'center',
+        padding:size.smaller,
+        borderRadius:size.smallest,
+        margin:size.smallest,
+        
+    },
     Choice:{
         backgroundColor:'white',
         borderRadius:size.smaller,
@@ -92,6 +104,9 @@ const ButtonStyles = StyleSheet.create({
 
 const TextStyles = StyleSheet.create({
     Strong:{
+        color:'white',
+    },
+    red:{
         color:'white',
     },
     Choice:{

@@ -9,6 +9,8 @@ import {Audio} from 'expo-av';
 
 import { buttons, size} from '../../../../../componants/globalStyle';
 import { userAction } from "../../../../../../redux/user";
+import Buttons from "../../../../../componants/Buttons/Button";
+import { JumpingTransition } from "react-native-reanimated";
 
 
 type buildup = {
@@ -48,13 +50,21 @@ function BuildUp({prompt}:buildup) {
     // currently correct answers have to have a space at the end... this is dumb and I should fix it.
 
     const handleButton = (choice:string) => {
-        setAnswer(answer + choice + ' ')
+        const newAnswer = answer + choice + ' '
+        if (newAnswer.length >= prompt.correct.length +10){
+            setAnswer('')                                   // Clear answer if it is too long.
+            return;
+        }
+        setAnswer(newAnswer)
     }
 
     return ( 
         <>
             <View style={styles.answer}>
-            <Text style={styles.text}>{answer}</Text>
+            <View style={styles.text}>
+                <Text style={styles.font}>{answer}</Text>
+                <Buttons style="Strong" onPress={() => {setAnswer('')}} title='Clear'/>
+            </View>
             <View style={styles.builder}>
                 {randomPrompts.map((choice:string, id:number) => 
                     <Pressable key={id} onPress={() =>{handleButton(choice)}} style={styles.choice} android_ripple={{color: 'rgb(200,200,200)'}}>
@@ -105,13 +115,18 @@ const styles = StyleSheet.create({
         width:"90%",
         alignSelf:"center",
         backgroundColor:"white",
-        fontSize:size.medium,
-        padding:size.smallest,
         borderWidth:size.thin,
-        textAlign:"center",
         borderRadius:size.small,
         minHeight:size.larger,
+        display:"flex",
+        flexDirection:'row',
+        justifyContent:'space-between'
 
+    },
+    font:{
+        fontSize:size.medium,
+        margin:size.smallest,
+        width:'70%',
     }
 })
 export default BuildUp;
