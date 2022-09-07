@@ -1,7 +1,8 @@
-import { View, StyleSheet, Text, TouchableHighlight, ScrollView } from "react-native";
+import { View, StyleSheet, Text, TouchableHighlight, ScrollView, Linking } from "react-native";
 import {size, color} from "../../../../componants/globalStyle"
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
 import { useState } from "react";
+import Buttons from "../../../../componants/Buttons/Button";
 
 
 
@@ -43,11 +44,23 @@ function Info() {
             {active?
             <View style={styles.textBox}>
                 <View style={styles.text}>
-                <Text style={styles.title}>-- Hello --</Text>
-                <Text style={styles.writ}>I created AardVocab to share my desire to become a better writer.</Text>
-                <Text style={styles.writ}>I wanted a way to learn grammar, spelling, and vocabulary, that was more entertaining than a style guide.</Text>
-                <Text style={styles.writ}>If you have any suggestions, feel free to reach out to me on social media. Let's make learning grammar fun!</Text>
+                <Text style={styles.writ}>The process of writing a thoughtfull and compelling narative is a thuroughly enjoyable one,
+                                            or at least it should be.</Text>
+                <Text style={styles.writ}>I have felt conflicted about my poor spelling and grammar for most of my life.
+                                            I would often write simple and uncreative sentences, just to avoid making an error.</Text>
+                <Text style={styles.writ}>When I went to find help, the available resources were often lacking.</Text>
+                <Text style={styles.writ}>Writing tutors are expensive,
+                                            style guids are dull,
+                                            and grammar checkers aren't that great at checking grammar.</Text>
+                <Text style={styles.writ}>This app is my attempt to build something more entertaining.</Text>
+                <View style={styles.links}>
+                    <Buttons onPress={() => {Linking.openURL('https://www.facebook.com/profile.php?id=100078253692120')}} title='Twitter' style="Strong"/>
+                    <Buttons onPress={() => {Linking.openURL('https://twitter.com/AardVocab')}} title='Facebook' style="Strong"/>
+                    <Buttons onPress={() => {Linking.openURL('https://aardvocab.com')}} title='AardVocab.com' style="Strong"/>
                 </View>
+                </View>
+                
+                
             </View>
             :null}
 
@@ -102,5 +115,9 @@ const styles = StyleSheet.create({
         margin:size.small,
         color:'cornflowerblue',
         alignSelf:'center',
+    },
+    links:{
+        display:'flex',
+        flexDirection:'row',
     }
 })

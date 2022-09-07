@@ -27,19 +27,24 @@ type LessonCardType = {
 
 function LessonCard(props:LessonCardType) {
     const [description, setDescription] = useState(false);
+    const [pressed, setPressed] = useState(false)
     const dispatch = useDispatch()
     const myRef:any = useRef()
     useEffect(() => {activateLesson()}, [])
     
+    
 
-    const handlePress = () => {   
+    const handlePress = () => {
+        
+        
         if (props.lesson.active){
-            setTimeout(() => {
-                setDescription(!description)
-            },100)
-            if(!description){
+            setTimeout(() => setDescription(!description),100)
+            
+            if(description === false){
                 height.value=withTiming(size.giant)
-            }else{
+            }
+            if(description === true){
+                
                 height.value=withTiming(0)
             }
             
@@ -53,14 +58,16 @@ function LessonCard(props:LessonCardType) {
 
         }
     }
+    
 
     const handleStartLesson = () => {
         props.activateLesson(props.lesson.id)
     }
+    
 
     const activateLesson = () => {
-        
         const glesson = props.lesson
+
         const wasActive = props.lesson.active
         if (props.progress>=100 && wasActive){
             lessonAction.changeActivation(props.lessons,{...glesson,active:false}) (dispatch)
@@ -102,7 +109,7 @@ function LessonCard(props:LessonCardType) {
             }
         }
     }
-
+    
     const rotatex = useSharedValue(0)
     const rotatey = useSharedValue(0)
     const rotatez = useSharedValue(0)
@@ -131,6 +138,7 @@ function LessonCard(props:LessonCardType) {
         <>  
             <Animated.View style={[{},animStyle]} ref={myRef}>
             <Pressable onPress={handlePress} style={props.lesson.active? styles.all: styles.deactive}>
+
                 <View style={styles.content}>
                     <Image source={{uri: props.lesson.pictureURL}} style={styles.image}/>
                     <View style={styles.description}>
@@ -139,16 +147,15 @@ function LessonCard(props:LessonCardType) {
                     </View>
                 </View>
                 <ProgressBar progress={props.progress}/>
-
+                
                 {description? 
-                    <View style={[styles.about,animStyle]}>
+                    <View style={styles.about}>
                         
                         <Text>
                             {props.lesson.description}
                         </Text>
                         <Buttons onPress={handleStartLesson} style="Strong" title="Start Lesson"/>
                     </View>: null}
-
             </Pressable>
             </Animated.View>
         </>

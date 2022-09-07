@@ -1,4 +1,4 @@
-import {View, ScrollView, Text, Image, StyleSheet} from "react-native";
+import {View, ScrollView, Text, Image, StyleSheet, FlatList} from "react-native";
 import {useEffect, useRef, useState} from "react";
 
 import ActiveLesson from "../ActiveLesson/ActiveLesson";
@@ -8,6 +8,7 @@ import {lessonAction} from "../../../../redux/lessons";
 import {globalStyling, size} from "../../../componants/globalStyle"
 import Info from "./componants/Info";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { gLesson } from "../../../../redux/lessons/dataTypes";
 
 
 
@@ -40,6 +41,7 @@ function lessonPath() {
     },[lesson.lesson.active])
 
     const activateLesson = (id:number) => {
+        
         if (lesson.globalLessons.active){
             if (lesson.globalLessons.lessons[id].level <= user.level){
                 lessonAction.setLessonState(id, user) (dispatch)
@@ -72,20 +74,22 @@ function lessonPath() {
             <>
             <Text style={globalStyling.head}>Lessons</Text>
             <View>
-            <ScrollView showsVerticalScrollIndicator={false} ref={myRef}>
-                {lesson.globalLessons.active? lesson.globalLessons.lessons.map(less => 
-                    <View key={less.id} onLayout={event => {
+                {lesson.globalLessons.active?
+                    <FlatList
+                    data={lesson.globalLessons.lessons}
+                    renderItem={({item}) => 
+                    <View key={item.id} onLayout={event => {
                         const layout = event.nativeEvent.layout;
-                        dataSourceCords[less.id] = layout.y; // we store this offset values in an array
+                        dataSourceCords[item.id] = layout.y; // we store this offset values in an array
                         }}>
                         {lesson.globalLessons.active?
-                        <LessonCard reef={myRef} cords={dataSourceCords} lesson={less} lessons={lesson.globalLessons.lessons} activateLesson={(activateLesson)} user={user} progress={
-                            user.lessonData[less.id].percentage
+                        <LessonCard reef={myRef} cords={dataSourceCords} lesson={item} lessons={lesson.globalLessons.lessons} activateLesson={(activateLesson)} user={user} progress={
+                            user.lessonData[item.id].percentage
                         }/>:null}
                     </View>
-                ): null}
-                <Image style={{width:'100%', resizeMode:'contain'}} source={require('../../../../images/cautionTape.png')}/>
-            </ScrollView>
+                    
+                    }/>
+                :null}
             <Animated.Text style={[styles.xp,animation]}>{user.levelsCompletedToday.levels*15}xp</Animated.Text>
             <Info/>
             </View>
