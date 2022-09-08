@@ -6,6 +6,7 @@ import * as Device from 'expo-device';
 import { Platform } from "react-native";
 import { dataState } from "./dataTypes";
 
+
 const testID = 'ca-app-pub-3940256099942544/8691691433'
 
 const productionID:any = Platform.select({
@@ -18,11 +19,13 @@ const productionID:any = Platform.select({
 const adUnitID = Device.isDevice && !__DEV__ ? productionID : testID;
 
 const loadAd = () => async(dispatch:Dispatch) => {
+    
     await AdMobRewarded.setAdUnitID(testID);
     AdMobRewarded.requestAdAsync();
     dispatch<Actions>(actions.loadAd())
 }
 const playAd = (ad:dataState) => async(dispatch:Dispatch) => {
+    if (Platform.OS==='web'){return;}
     if (ad.countDown >0){
         loadAd() (dispatch)
         dispatch<Actions>(actions.setCount(false))

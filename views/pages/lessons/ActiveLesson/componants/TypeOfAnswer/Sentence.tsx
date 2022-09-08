@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, View, Pressable, StyleSheet, TouchableHighlight} from "react-native";
 import {Prompt, shuffleArray} from "../../../../../../redux/lessons";
 import Buttons from "../../../../../componants/Buttons/Button";
@@ -13,10 +13,10 @@ type input = {
 }
 
 function Sentence({prompt}:input) {
-    const [input, setInput] = useState('')
     const [answer, setAnswer] = useState(prompt.prompt.map(value => value.content))
     const [activeIndex, setActiveIndex] = useState(0)
-    const [randomOpts,setRandomPrompts] = useState(shuffleArray(prompt.options))
+    const randomOpts = prompt.options
+    
     const dispatch = useDispatch()
 
     const [inputIndex, setInputIndex] =  useState(prompt.prompt.map((prompt,index) => {
@@ -27,6 +27,7 @@ function Sentence({prompt}:input) {
     
 
     const handlePress = (e:string, index:number) => {
+        console.log(prompt.options)
         setActiveIndex(activeIndex+1)
         setAnswer(answer.map((input,ind) => {
             if (ind===inputIndex[index]){
@@ -49,6 +50,7 @@ function Sentence({prompt}:input) {
     }
     const checkAnswer = async() => {
         const ans = answer.join(" ");
+        setAnswer([])
         if (ans===prompt.correct){
             pageAction.updateMessage({active:true, type:"correct"}) (dispatch)
             
