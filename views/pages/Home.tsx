@@ -1,27 +1,22 @@
-import { View, StyleSheet, useWindowDimensions, addons } from "react-native";
-import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, withTiming} from "react-native-reanimated"
+import { View, StyleSheet, useWindowDimensions} from "react-native";
+import Animated, {useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler} from "react-native-reanimated"
 import { PanGestureHandler,GestureHandlerRootView } from "react-native-gesture-handler";
+
 import { useSelector, useDispatch } from "../../redux/hooks";
+import {pageAction}from "../../redux/pages";
+import { lessonAction } from "../../redux/lessons";
+
 import LessonPath from "./lessons/LessonPath/LessonPath";
 import Results from "./Results/Results";
 import Profile from "./profile/Profile";
-import { useEffect, useRef} from "react";
 
 
-import {pageAction}from "../../redux/pages";
-import { lessonAction } from "../../redux/lessons";
 import Message from "../componants/Alert/Message";
-
 import Navbar from "../componants/Navbar/Navbar";
-import { adAction } from "../../redux/ads";
-
-//authentication
 import {auth} from "../../firebase.config"
 import { useAuthState } from "react-firebase-hooks/auth";
 import Login from "./Auth/Login";
-import { ScrollView } from "react-native-gesture-handler";
 import Example from "../componants/Alert/Example";
-import { size } from "../componants/globalStyle";
 import OtherProfile from "./otherProfile/OtherProfile";
 import Chat from "./Chat/Chat";
 
@@ -32,11 +27,8 @@ function Home() {
     const lesson = useSelector(state => state.lesson)
     const User = useSelector(state => state.user)
     const dispatch = useDispatch()
-    const {height, width} = useWindowDimensions()
-    const ad = useSelector(state => state.ads)
+    const {width} = useWindowDimensions()
     
-    
-
     const goProfile = async() => {
         lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
         pageAction.changePage('Profile') (dispatch)
@@ -47,10 +39,9 @@ function Home() {
             x.value=width
         }
         x.value = withSpring(0)},10)
-    
     }
+
     const goResults = () => {
-        
         lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
         pageAction.changePage('Results') (dispatch)
         pageAction.updateMessage({active:false, type:'correct'}) (dispatch)
@@ -59,7 +50,8 @@ function Home() {
         if (page.page==='Lessons'){
             x.value=width
         }
-        x.value = withSpring(0)},10)}
+        x.value = withSpring(0)},10)
+    }
 
     const goLessons = () => {
         lessonAction.updateLesson({...lesson,lesson:{active:false}}) (dispatch)
@@ -133,46 +125,35 @@ function Home() {
             }else{
                 x.value=0
             }
-            
         }
-        
     }
 
     return ( 
         <View style={styles.container}>
             <GestureHandlerRootView style={styles.container}>
-            
-            
             {user? 
                 <>
-                
-                <Navbar action={actions}/>
-                
-                <PanGestureHandler onGestureEvent={eventHandler} activeOffsetX={[-10, 10]} onEnded={checkSwitch} >
-                <Animated.View style={[styles.pages, uas]}>
-                    {page.page==="Lessons"? <Animated.View ><LessonPath/></Animated.View>: null}
-                    {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
-                    {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
-                    {page.page==="Chat"? <Animated.View><Chat/></Animated.View>: null}
-                    {page.page==="OtherProfile"? <Animated.View><OtherProfile/></Animated.View> :null}
-
-                </Animated.View>
-                </PanGestureHandler>
-                {User.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3' && !lesson.lesson.active? <Example/>: null}
+                    <Navbar action={actions}/>
+                    <PanGestureHandler onGestureEvent={eventHandler} activeOffsetX={[-10, 10]} onEnded={checkSwitch} >
+                    <Animated.View style={[styles.pages, uas]}>
+                        {page.page==="Lessons"? <Animated.View ><LessonPath/></Animated.View>: null}
+                        {page.page==="Results"? <Animated.View ><Results/></Animated.View> : null}
+                        {page.page==="Profile"? <Animated.View ><Profile/></Animated.View> : null}
+                        {page.page==="Chat"? <Animated.View><Chat/></Animated.View>: null}
+                        {page.page==="OtherProfile"? <Animated.View><OtherProfile/></Animated.View> :null}
+                    </Animated.View>
+                    </PanGestureHandler>
+                    {User.uid==='QZ4DAXWWJcdywxbxoidHphggR4F3' && !lesson.lesson.active? <Example/>: null}
                 </>
-                
-            :<Login/>}
-            
+                :<Login/>
+            }
             <Message/>
-            
             </GestureHandlerRootView>
-            
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-
     container: {
         width:'100%',
         height:'100%',
@@ -181,14 +162,10 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         justifyContent:"space-evenly",  
         overflow:'hidden',
-
-
       },
       pages: {
         width:'100%',
         flex:1,
-        
-        
       }
     })
 
