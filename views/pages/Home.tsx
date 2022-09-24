@@ -81,14 +81,14 @@ function Home() {
     const x = useSharedValue(startingPosition);
 
     const eventHandler = useAnimatedGestureHandler({  
-        onStart: (event, ctx) => {
+        onStart: () => {
             pressed.value = true;  
         },  
-        onActive: (event, ctx) => {     
+        onActive: (event) => {     
             x.value = startingPosition + event.translationX;
             
         },  
-        onEnd: (event, ctx) => {
+        onEnd: () => {
             pressed.value = false;
             if (x.value<=-150 || x.value>=158){
                 return;
