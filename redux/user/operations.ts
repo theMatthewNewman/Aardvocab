@@ -163,15 +163,15 @@ const changeProfilePicture = (user:userState) => async(dispatch:Dispatch) => {
     })
     if (!result.cancelled) {
         try{
-        const {height, width, type, uri} = result;
-        dispatch<Actions>(actions.changePicture(uri))
-        const blob = await fetch(uri);
-        const file = await blob.blob();
-        const fileLink = `profileImages/${user.uid}`;
-        const storageRef = ref(storage,fileLink);
-        await uploadBytes(storageRef,file)
-        const url = await getDownloadURL(storageRef)
-        setUserFirebase({...user, photoURL:url})
+            const {height, width, type, uri} = result;
+            dispatch<Actions>(actions.changePicture(uri))
+            const blob = await fetch(uri);
+            const file = await blob.blob();
+            const fileLink = `profileImages/${user.uid}`;
+            const storageRef = ref(storage,fileLink);
+            await uploadBytes(storageRef,file)
+            const url = await getDownloadURL(storageRef)
+            setUserFirebase({...user, photoURL:url})
         }catch(error){
             console.log(error)
         }

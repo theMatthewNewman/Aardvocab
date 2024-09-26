@@ -3,13 +3,13 @@ import { useSelector } from "../../../../redux/hooks";
 import {ProgressChart} from "react-native-chart-kit";
 import {dayStyles} from "./DaysGraph";
 import { color, size } from "../../../componants/globalStyle";
-import { DarkTheme } from "@react-navigation/native";
 import { userState } from "../../../../redux/user";
 import { concept } from "../../../../redux/lessons";
 
 type props = {
     user:userState
 }
+
 
 function AccuracyGraph({user}:props) {
     
